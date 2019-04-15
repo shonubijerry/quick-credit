@@ -2,12 +2,8 @@ body {
     background: lavender;
     margin: 0;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    overflow-x: hidden;
 }
 
-/*section {
-    padding: 2em 0; 
-}*/
 
 /* ------------------------------
    Header
@@ -48,7 +44,7 @@ body {
     height: 30px;
 }
 
-ul {
+#navbar {
     list-style-type:none;
     margin-right:10px;
     padding:0;
@@ -56,12 +52,12 @@ ul {
     float: right;
 }
 
-li {
+#navbar li {
     float: left;
     margin-right: 5px;
 }
 
-li a {
+#navbar li a {
     border-radius: 10px;
     display:block;
     min-width:100px;
@@ -75,7 +71,7 @@ li a {
     text-decoration: none;
 }
 
-li:hover a {
+#navbar li:hover a {
     background: #3f3f91;
     color: #f1f1f1;
 }
@@ -85,18 +81,18 @@ li:hover a {
         display:block;
     }  
     
-    ul {
+    #navbar {
         position: static;
         display: none;
         width: 100%;
         margin: 0;
     }
     
-    li {
+    #navbar li {
         margin: 0 0 1px 0;
     }
     
-    ul li, li a {
+    #navbar li, #navbar li a {
         width: 100%;
         border-radius: 0;
     }
@@ -113,7 +109,7 @@ input[type=checkbox]:checked ~ #navbar{
 
 
 /* ------------------------------
-   Forms
+   Sign up page
  ------------------------------*/
 
 .signup-content { 
@@ -177,6 +173,42 @@ input[type=checkbox]:checked ~ #navbar{
     }
   }
 
+/* ------------------------------
+   homepage
+ ------------------------------*/
+
+ .home-div {
+    position: relative;
+    text-align: center;
+    color: #313131;
+ }
+
+ .home-bg {
+    width: 100%;
+    height: fit-content;
+    object-fit: cover;
+ }
+
+ .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .cta li a {
+    border-radius: 10px;
+    display:block;
+    min-width:100px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    color: #5555bf;
+    background: #f1f1f1;
+    text-decoration: none;
+}
 
 /* ------------------------------
    Footer
