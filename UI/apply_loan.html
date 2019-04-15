@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	
+    <title>Sign Up | Quick Cash</title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+    
+  </head>
+
+  <body>
+    <header class="main-header">
+      <div class="nav">
+          <span class="navbar-title"><a href="index.html"><h2>QUICK CREDIT</h2></a></span>
+          <label for="show-navbar" class="show-navbar"><img src="assets/images/menu-icon.png"/></label>
+          <input type="checkbox" id="show-navbar" role="button">
+          <ul id="navbar">
+              <li><a href="index.html">HOME</a></li>
+              <li><a href="loans.html">LOANS</a></li>
+              <li><a href="logout.html">LOG OUT</a></li>
+          </ul>
+      </div>      
+    </header>
+    <div class="container">
+      <section>
+        <form action="#" >
+          <div class="signup-content">
+            <h1>Loan Application</h1>
+            <p>Apply for loan now.</p>
+            <hr>
+            <label for="tenor"><b>Tenor</b></label>
+            <input type="text" name="tenor" minlength="8" id="tenor" placeholder="Enter Tenor" required>
+
+            <label for="amount"><b>Amount</b></label>
+            <input type="text" name="amount" minlength="8" id="amount" placeholder="Enter amount" required>
+
+            <label for="pay_installment"><b>Payment Installment</b></label>
+            <input type="text" name="pay_installment" minlength="8" id="pay_installment" placeholder="Enter payment installment" required>
+            
+        
+            <div class="clearfix">
+              <button type="submit" class="signupbtn">Apply</button>
+            </div>
+            
+          </div>
+        </form>
+      </section>
+    </div>
+    <footer class="bg-dark text-white text-center">
+      <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
+      <p>Copyright © 2019</p>
+    </footer>
+    <script src="js/main.js"></script>
+  </body>
+</html>
