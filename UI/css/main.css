@@ -10,7 +10,7 @@ body {
  ------------------------------*/
 
 .nav {
-    background: #5555bf;
+    background: #0378A6;
     display: inline-block;
     width: 100%;
 }
@@ -66,13 +66,13 @@ body {
     line-height: 40px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 500;
-    color: #5555bf;
+    color: #0378A6;
     background: #f1f1f1;
     text-decoration: none;
 }
 
 #navbar li:hover a {
-    background: #3f3f91;
+    background: #005778;
     color: #f1f1f1;
 }
 
@@ -142,7 +142,7 @@ input[type=checkbox]:checked ~ #navbar{
   }
   
   button {
-    background-color: #5555bf;
+    background-color: #0378A6;
     color: white;
     padding: 14px 20px;
     margin: 8px 0;
@@ -205,7 +205,7 @@ input[type=checkbox]:checked ~ #navbar{
     line-height: 40px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 500;
-    color: #5555bf;
+    color: #0378A6;
     background: #f1f1f1;
     text-decoration: none;
 }
@@ -222,6 +222,8 @@ footer {
     background: #313131;
     color: #ffffff;
     padding: 1.5em 0;
+    bottom: 0;
+    left: 0;
 }
 
 footer p{
