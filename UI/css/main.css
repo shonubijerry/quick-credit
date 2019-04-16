@@ -8,6 +8,14 @@ body {
   overflow: hidden;
 }
 
+.admin-signin {
+  background: url('../assets/images/signup-login-bg.jpg') no-repeat center center;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+}
+
 /* ------------------------------
    Header
  ------------------------------*/
@@ -116,11 +124,11 @@ input[type=checkbox]:checked ~ #navbar{
  ------------------------------*/
 
 .signup-content { 
-    width: 400px;
+    width: 350px;
     margin: 2em auto;
     border-radius: 15px;
     border:1px solid #ccc;
-    background: #f1f1f1;
+    background: rgb(255,255,255,0.6);
     padding: 10px;
 }
 
