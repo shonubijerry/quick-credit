@@ -1,11 +1,10 @@
-const toggleNavIcon = () => {
-    var myTopNav = document.querySelector("#myTopnav");
-    if (myTopNav.className === "topnav") {
-      myTopNav.className += " responsive";
-    } else {
-      myTopNav.className = "topnav";
-    }
+
+const showMessageBox = (title="", msg, link) => {
+  document.querySelector("#mb_title").innerHTML = title;
+  document.querySelector("#mb_msg").innerHTML = msg;
+  document.querySelector("#mb_link").href = link;
+  const messageBoxTrigger = document.querySelector(".popup1-trigger");
+  messageBoxTrigger.click();
 }
 
-const navButton = document.querySelector("#navButton");
-navButton.addEventListener('click', toggleNavIcon);
+
