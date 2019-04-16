@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    
+    <title>Admin | Quick Cash</title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
+    
+  </head>
+
+  <body class="">
+    <header class="main-header">
+        <div class="nav">
+            <span class="navbar-title"><a href="index.html"><h2>QUICK CREDIT</h2></a></span>
+            <label for="show-navbar" class="show-navbar"><img src="../assets/images/menu-icon.png"/></label>
+            <input type="checkbox" id="show-navbar" role="button">
+            <ul id="navbar">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="signin.html">SIGN IN</a></li>
+            </ul>
+        </div>      
+    </header>
+    <div class="container">
+        <a class="popup1-trigger" href="#popup1">Let me Pop up</a>
+        <div id="popup1" class="overlay">
+            <div class="popup">
+                <h2 id="mb_title">Message</h2>
+                <a id="mb_link" class="close" href="#">&times;</a>
+                <div id="mb_msg" class="content">
+                    Loan application pending review.
+                </div>
+            </div>
+        </div>
+      <section>
+        <div class="table-container">
+            <h2>Clients List</h2>
+            <p>You can veryfy a particular client by clicking the "Verify" button.</p>
+
+            <table class="users">
+            <tr class="table-head">
+                <th>S/N</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>Shonubi</td>
+                <td>Oluwakorede</td>
+                <td>33, Ahmed Oghere Street, Idimu</td>
+                <td>shonubijerry@gmail.com</td>
+                <td id="verify"><img src="../assets/images/ic_verified.png" /></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Adenekan</td>
+                <td>Quadri</td>
+                <td>6, Felix Street, Ikotun</td>
+                <td>adenekan2017@gmail.com</td>
+                <td id="verify"><img src="../assets/images/ic_verified.png" /></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>Gbenga</td>
+                <td>Badmus</td>
+                <td>4, Rhodes Crescent, Apapa</td>
+                <td>badmanga@yahoo.com</td>
+                <td id="verify"><a href="#verify" class="btn-verify">Verify</a></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>Chisom</td>
+                <td>Nwosu</td>
+                <td>12, Mukandasi Street, Ago</td>
+                <td>chiboy155@gmail.com</td>
+                <td id="verify"><img src="../assets/images/ic_verified.png" /></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>Mohammed</td>
+                <td>Shehu</td>
+                <td>17, Fidel Streen, Garki</td>
+                <td>shehumohammed@gmail.com</td>
+                <td id="verify"><a href="#verify" class="btn-verify">Verify</a></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>Mike</td>
+                <td>Ogbuehi</td>
+                <td>9, Ahmed Fashola Street, Yaba</td>
+                <td>mikeo007@gmail.com</td>
+                <td id="verify"><img src="../assets/images/ic_verified.png" /></td>
+            </tr>
+            
+            </table>
+        </div>
+      </section>
+    </div>
+    <footer class="">
+    <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
+    <p>Copyright © 2019</p>
+    </footer>
+    <script src="../js/main.js"></script>
+  </body>
+</html>
