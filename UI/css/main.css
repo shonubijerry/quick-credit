@@ -411,7 +411,7 @@ only screen and (max-width: 760px),
    Admin styling
  ------------------------------*/
 
-.btn-verify {
+.btn-danger {
   border-radius: 12px;
   display:block;
   max-width:55px;
@@ -420,6 +420,19 @@ only screen and (max-width: 760px),
   font-size: 12px;
   line-height: 20px;
   background: rgb(166, 41, 3);
+  color: #f1f1f1;
+  text-decoration: none;
+}
+
+.btn-success {
+  border-radius: 12px;
+  display:block;
+  max-width:55px;
+  height: 22px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 20px;
+  background: rgb(1, 150, 13);
   color: #f1f1f1;
   text-decoration: none;
 }
