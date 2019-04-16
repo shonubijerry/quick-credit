@@ -4,6 +4,9 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+.home-body {
+  overflow: hidden;
+}
 
 /* ------------------------------
    Header
@@ -109,7 +112,7 @@ input[type=checkbox]:checked ~ #navbar{
 
 
 /* ------------------------------
-   Sign up page
+   Sign up and Log in page
  ------------------------------*/
 
 .signup-content { 
@@ -190,7 +193,7 @@ input[type=checkbox]:checked ~ #navbar{
  }
 
  .centered {
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -395,7 +398,6 @@ only screen and (max-width: 760px),
 
 footer {
     width: 100%;
-    position: relative;
     overflow: hidden;
     text-align: center;
     background: #313131;
@@ -403,6 +405,10 @@ footer {
     padding: 1.5em 0;
     bottom: 0;
     left: 0;
+}
+
+.home-footer {
+  position: absolute;
 }
 
 footer p{
