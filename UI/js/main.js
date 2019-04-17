@@ -7,4 +7,8 @@ const showMessageBox = (title="", msg, link) => {
   messageBoxTrigger.click();
 }
 
-
+ 
+const filterLoan = (option) => {
+  // When using real data, This will be handled by 
+  window.location.href = option.value +'.html';
+}

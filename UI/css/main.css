@@ -319,7 +319,7 @@ input[type=checkbox]:checked ~ #navbar{
   tr:nth-child(even){background-color: #f2f2f2}
   
   th {
-    background-color: #00bcd4;
+    background-color: #339CC6;
     color: white;
   }
 
@@ -371,9 +371,10 @@ only screen and (max-width: 760px),
 	td:nth-of-type(3):before { content: "Tenor"; }
 	td:nth-of-type(4):before { content: "Installment"; }
 	td:nth-of-type(5):before { content: "Balance"; }
-	td:nth-of-type(6):before { content: "Date"; }
-	td:nth-of-type(7):before { content: "Status"; }
-  td:nth-of-type(8):before { content: "Repaid"; }
+	td:nth-of-type(6):before { content: "Interest"; }
+	td:nth-of-type(7):before { content: "Date"; }
+	td:nth-of-type(8):before { content: "Status"; }
+  td:nth-of-type(9):before { content: "Repaid"; }
   
   .users td:nth-of-type(2):before { content: "Firstname"; }
   .users td:nth-of-type(3):before { content: "Lastname"; }
@@ -408,6 +409,51 @@ only screen and (max-width: 760px),
 }
 
   /* ------------------------------
+   Select Options
+ ------------------------------*/
+
+ .filter-title {
+  width: 55px;
+  float: left;
+  padding: 5px 0;
+ }
+
+ .filter {
+  background: #339CC6 url('../assets/images/select-option.png') no-repeat 96% 0;
+  height: 29px;
+  overflow: hidden;
+  width: 240px;
+  margin-bottom: 1em;
+}
+
+.filter select {
+  background: transparent;
+  color: #ffffff;
+  border: none;
+  font-size: 14px;
+  height: 29px;
+  padding: 5px; /* If you add too much padding here, the options won't show in IE */
+  width: 268px;
+}
+
+.semi-square {
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+ .blue select { color: #313131; }
+
+  /* ------------------------------
+   Tooltip
+ ------------------------------*/
+
+ .tooltip:hover {-webkit-transition: all 0.8s;  -moz-transition: all 0.8s;  transition: all 0.8s;}
+.tooltip span {display: none; position: absolute; bottom: 0; left: 0; right: 0; background: #333; color: #fff; }
+
+.tooltip:hover span {display: block; width: 100px; border-radius: 5px;text-align: center;}
+
+  /* ------------------------------
    Admin styling
  ------------------------------*/
 
@@ -419,8 +465,8 @@ only screen and (max-width: 760px),
   text-align: center;
   font-size: 12px;
   line-height: 20px;
-  background: rgb(166, 41, 3);
-  color: #f1f1f1;
+  background: #F25056;
+  color: #ffffff;
   text-decoration: none;
 }
 
