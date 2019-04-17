@@ -16,6 +16,10 @@ body {
   -o-background-size: cover;
 }
 
+.container {
+  margin: 0 0 2em;
+}
+
 /* ------------------------------
    Header
  ------------------------------*/
@@ -80,11 +84,17 @@ body {
     color: #0378A6;
     background: #f1f1f1;
     text-decoration: none;
+    transition: background-color .3s;
 }
 
 #navbar li:hover a {
     background: #005778;
     color: #f1f1f1;
+}
+
+#navbar .active a {
+  background: #F25056;
+  color: #f1f1f1;
 }
 
 @media screen and (max-width : 760px){
@@ -206,20 +216,6 @@ input[type=checkbox]:checked ~ #navbar{
     left: 50%;
     transform: translate(-50%, -50%);
   }
-
-  .cta li a {
-    border-radius: 10px;
-    display:block;
-    min-width:100px;
-    height: 40px;
-    text-align: center;
-    line-height: 40px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 500;
-    color: #0378A6;
-    background: #f1f1f1;
-    text-decoration: none;
-}
 
 /* ------------------------------
    Dialog box
@@ -443,6 +439,35 @@ only screen and (max-width: 760px),
 }
 
  .blue select { color: #313131; }
+
+  /* ------------------------------
+   Pagination
+ ------------------------------*/
+
+.pagination-center {
+  text-align: center;
+}
+
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: #313131;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+.pagination a.active {
+  background-color: #0378A6;
+  color: #ffffff;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: rgb(182, 182, 182);
+}
 
   /* ------------------------------
    Tooltip
