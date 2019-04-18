@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    
+    <title>Admin | Quick Cash</title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
+    
+  </head>
+
+  <body class="">
+    <header class="main-header">
+        <div class="nav">
+            <span class="navbar-title"><a href="index.html"><h2>QUICK CREDIT</h2></a></span>
+            <label for="show-navbar" class="show-navbar"><img src="../assets/images/menu-icon.png"/></label>
+            <input type="checkbox" id="show-navbar" role="button">
+            <ul id="navbar">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="users.html">USERS</a></li>
+                <li class="active"><a href="loans.html">LOANS</a></li>
+                <li><a href="signout.html">SIGN OUT</a></li>
+            </ul>
+        </div>      
+    </header>
+    <div class="container">
+        <a class="popup1-trigger" href="#popup1"></a>
+        <div id="popup1" class="overlay">
+            <div class="popup">
+                <h2 id="mb_title">Message</h2>
+                <a id="mb_link" class="close" href="#">&times;</a>
+                <div id="mb_msg" class="content">
+                    Loan application Approved.
+                </div>
+            </div>
+        </div>
+      <section>
+        <div class="table-container">
+            <h2>All Loans</h2>
+            <p>You can view all loans and filter by state.</p>
+            <div class="">
+                <span class="filter-title"><strong>Filter: </strong></span>
+                <div class="filter blue semi-square">                
+                    <select name="filter-loan" onchange="filterLoan(this)">
+                        <option value="loans">All Loans</option>
+                        <option value="current" selected >Current Loans</option>
+                        <option value="repaid">Repaid Loans</option>
+                        <option value="pending">Pending Loans</option>
+                        <!-- <option value="rejected">Rejected Loans</option> -->
+                    </select>
+                </div>
+            </div>
+            
+
+            <table id="table-data">
+            <tr class="table-head">
+                <th>S/N</th>
+                <th>Amount(₦)</th>
+                <th>Tenor(Months)</th>
+                <th>Installment(₦)</th>
+                <th>Balance(₦)</th>
+                <th>Interest(₦)</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Repaid</th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>50,000</td>
+                <td>2</td>
+                <td>26,250</td>
+                <td>52,500</td>
+                <td>2,500</td>
+                <td>09/04/2019</td>
+                <td class="tooltip"><img src="../assets/images/ic_approved.png" /><span>Approved</span></td>
+                <td>No</td>
+                <td class="tooltip"><a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a><span>View details</span></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>350,000</td>
+                <td>3</td>
+                <td>122,500</td>
+                <td>245,000</td>
+                <td>17,500</td>
+                <td>09/03/2019</td>
+                <td class="tooltip"><img src="../assets/images/ic_approved.png" /><span>Approved</span></td>
+                <td>No</td>
+                <td class="tooltip"><a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a><span>View details</span></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>150,000</td>
+                <td>4</td>
+                <td>39,375</td>
+                <td>78,750</td>
+                <td>7,500</td>
+                <td>20/02/2019</td>
+                <td class="tooltip"><img src="../assets/images/ic_approved.png" /><span>Approved</span></td>
+                <td>No</td>
+                <td class="tooltip"><a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a><span>View details</span></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>1,000,000</td>
+                <td>10</td>
+                <td>105,000</td>
+                <td>735,000</td>
+                <td>50,000</td>
+                <td>05/11/2018</td>
+                <td class="tooltip"><img src="../assets/images/ic_approved.png" /><span>Approved</span></td>
+                <td>No</td>
+                <td class="tooltip"><a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a><span>View details</span></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>100,000</td>
+                <td>6</td>
+                <td>17,500</td>
+                <td>87,500</td>
+                <td>5,000</td>
+                <td>18/04/2019</td>
+                <td class="tooltip"><img src="../assets/images/ic_approved.png" /><span>Approved</span></td>
+                <td>No</td>
+                <td class="tooltip"><a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a><span>View details</span></td>
+            </tr>
+            </table>
+        </div>
+        <br/>
+        <div class="pagination-center">
+            <div class="pagination">
+                <a href="#">&laquo;</a>
+                <a class="active" href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">&raquo;</a>
+            </div>
+        </div>
+        
+      </section>
+    </div>
+    <footer class="">
+    <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
+    <p>Copyright © 2019</p>
+    </footer>
+    <script src="../js/main.js"></script>
+  </body>
+</html>
