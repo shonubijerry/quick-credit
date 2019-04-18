@@ -160,6 +160,7 @@ input[type=text]:focus, input[type=password]:focus {
 
 hr {
   border: 1px solid #e2e2e2;
+  margin-bottom: 25px;
 }
 
 .signup-content button {
@@ -227,6 +228,16 @@ button:hover {
  Dialog box
 ------------------------------*/
 
+.box {
+  width: 40%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.2);
+  padding: 35px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+  background-clip: padding-box;
+  text-align: center;
+}
 .popup1-trigger {
   display: none;
 }
@@ -249,13 +260,13 @@ button:hover {
 }
 
 .popup {
-  margin: 20vh auto;
+  margin: 70px auto;
   padding: 20px;
   background: #fff;
   border-radius: 5px;
   width: 30%;
   position: relative;
-  transition: all 1s ease-in-out;
+  transition: all 5s ease-in-out;
 }
 
 .popup h2 {
@@ -432,7 +443,7 @@ td:nth-of-type(9):before { content: "Repaid"; }
 .sl-container td:nth-of-type(3):before { content: "Email"; }
 .sl-container td:nth-of-type(4):before { content: "Amount"; }
 .sl-container td:nth-of-type(5):before { content: "Tenor"; }
-.sl-container td:nth-of-type(6):before { content: "Payment Installment"; }
+.sl-container td:nth-of-type(6):before { content: "Installment"; }
 .sl-container td:nth-of-type(7):before { content: "Balance"; }
 .sl-container td:nth-of-type(8):before { content: "Interest"; }
 .sl-container td:nth-of-type(9):before { content: "Date"; }
@@ -457,9 +468,6 @@ background: #f1f1f1;
 }
 .card-content {
 padding: 1em;
-}
-.card-content p {
-  display: flex;
 }
 
 .card .first {
@@ -563,10 +571,6 @@ background-color: rgb(182, 182, 182);
   display: -webkit-inline-box;
 }
 
-.cta-div {
-  margin: 1em 0;
-}
-
 .cta a{
   cursor: pointer;
 }
@@ -584,14 +588,13 @@ border: 0;
 margin-left: 0.5em;
 cursor: pointer;
 text-decoration: none;
-box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 .btn-danger-big {
-max-width: 120px;
-min-width: 90px;
+max-width: 80px;
 font-size: 13px;
 line-height: 35px;
+margin-bottom: 1em;
 }
 
 .btn-success {
@@ -607,48 +610,14 @@ border: 0;
 margin-left: 0.5em;
 cursor: pointer;
 text-decoration: none;
-box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 .btn-success-big {
-max-width: 120px;
-min-width: 90px;
+max-width: 80px;
 font-size: 13px;
 line-height: 35px;
 }
 
-.btn-primary {
-border-radius: 12px;
-display:block;
-max-width:55px;
-text-align: center;
-font-size: 12px;
-line-height: 16px;
-background: #0378A6;
-color: #f1f1f1;
-border: 0;
-margin-left: 0.5em;
-cursor: pointer;
-text-decoration: none;
-box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-}
-
-.btn-primary-big {
-max-width: 120px;
-min-width: 90px;
-font-size: 13px;
-line-height: 35px;
-}
-
-.btn-primary, .btn-danger, .btn-success  {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-@media only screen and (max-width: 430px) {
-  .btn-primary-big, .btn-danger-big, .btn-success-big  {
-    min-width: 120px;
-  }
-}
 
 /* ------------------------------
  Footer
@@ -671,6 +640,5 @@ position: absolute;
 
 footer p{
   text-align: center;
-  padding: 0 1em;
 }
 
