@@ -134,7 +134,7 @@ input[type=checkbox]:checked ~ #navbar{
  ------------------------------*/
 
 .signup-content { 
-    width: 350px;
+    max-width: 400px;
     margin: 2em auto;
     border-radius: 15px;
     border:1px solid #ccc;
@@ -191,6 +191,12 @@ input[type=checkbox]:checked ~ #navbar{
   @media screen and (max-width: 300px) {
     .signupbtn {
        width: 100%;
+    }
+  }
+
+  @media screen and (max-width: 450px){
+    .signup-content {
+      margin: 2em 1em; 
     }
   }
 
@@ -319,9 +325,7 @@ input[type=checkbox]:checked ~ #navbar{
     color: white;
   }
 
-  @media 
-only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
+  @media only screen and (max-width: 760px) {
 
 	table, th, tbody, th, td, tr { 
 		display: block; 
@@ -378,8 +382,64 @@ only screen and (max-width: 760px),
   .users td:nth-of-type(5):before { content: "Email"; }
   .users td:nth-of-type(6):before { content: "Status"; }
   
-  
 }
+
+.sl-container table, .sl-container tbody, .sl-container th, 
+.sl-container th, .sl-container td, .sl-container tr { 
+		display: block; 
+	}
+	
+	.sl-container th tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+  }
+  
+  .sl-container .table-head {
+    display: none;
+  }
+
+  .sl-container tbody {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+	
+	.sl-container tr {
+    overflow-x: scroll;
+    margin: 0 1em 1em 0;
+    padding: 1em;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+  }
+	
+	.sl-container td { 
+		border: none;
+		border-bottom: 1px solid #eee; 
+		position: relative;
+		padding-left: 50%; 
+	}
+	
+	.sl-container td:before { 
+		position: absolute;
+    top: 6px;
+    font-weight: 700;
+		left: 6px;
+    width: 45%; 
+		padding-right: 10px;
+		white-space: nowrap;
+  }
+  
+  .sl-container td:nth-of-type(1):before { content: "Full Name"; }
+  .sl-container td:nth-of-type(2):before { content: "Address"; }
+  .sl-container td:nth-of-type(3):before { content: "Email"; }
+	.sl-container td:nth-of-type(4):before { content: "Amount"; }
+	.sl-container td:nth-of-type(5):before { content: "Tenor"; }
+	.sl-container td:nth-of-type(6):before { content: "Installment"; }
+	.sl-container td:nth-of-type(7):before { content: "Balance"; }
+	.sl-container td:nth-of-type(8):before { content: "Interest"; }
+	.sl-container td:nth-of-type(9):before { content: "Date"; }
+	.sl-container td:nth-of-type(10):before { content: "Status"; }
+  .sl-container td:nth-of-type(11):before { content: "Repaid"; }
 
   /* ------------------------------
    Cards
@@ -393,16 +453,33 @@ only screen and (max-width: 760px),
  .card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
-  margin: 0 1em 1em 0;
+  margin: 1em auto;
+  max-width: 500px;
+  background: #f1f1f1;
+}
+.card-content {
+  padding: 1em;
+}
+
+.card .first {
+  background: #0378A6;
+  color: #f1f1f1
+}
+
+.card .entry-value {
+  width: 70%;
+}
+
+.card .entry-title {
+  width: 30%;
+  float: left;
+  font-weight: 600;
 }
 
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
-.card-content {
-  padding: 2px 16px;
-}
 
   /* ------------------------------
    Select Options
@@ -479,7 +556,7 @@ only screen and (max-width: 760px),
 .tooltip:hover span {display: block; width: 100px; border-radius: 5px;text-align: center;}
 
   /* ------------------------------
-   Admin styling
+   Widgets
  ------------------------------*/
 
 .btn-danger {
@@ -495,6 +572,14 @@ only screen and (max-width: 760px),
   text-decoration: none;
 }
 
+.btn-danger-big {
+  max-width: 80px;
+  height: 35px;
+  font-size: 13px;
+  line-height: 35px;
+  margin-bottom: 1em;
+}
+
 .btn-success {
   border-radius: 12px;
   display:block;
@@ -506,6 +591,13 @@ only screen and (max-width: 760px),
   background: rgb(1, 150, 13);
   color: #f1f1f1;
   text-decoration: none;
+}
+
+.btn-success-big {
+  max-width: 80px;
+  height: 35px;
+  font-size: 13px;
+  line-height: 35px;
 }
 
 
