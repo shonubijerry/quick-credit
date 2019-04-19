@@ -11,7 +11,7 @@
     
   </head>
 
-  <body>
+  <body class="admin-signin">
     <header class="main-header">
       <div class="nav">
           <span class="navbar-title"><a href="index.html"><h2>QUICK CREDIT</h2></a></span>
@@ -20,8 +20,8 @@
           <ul id="navbar">
               <li><a href="index.html">HOME</a></li>
               <li><a href="loans.html">LOANS</a></li>
-              <li><a href="signin.html">SIGN IN</a></li>
-              <li class="active"><a href="signup.html">SIGN UP</a></li>
+              <li class="active"><a href="signin.html">SIGN IN</a></li>
+              <li><a href="signup.html">SIGN UP</a></li>
           </ul>
       </div>      
     </header>
@@ -29,34 +29,30 @@
       <section>
         <form action="#" >
           <div class="signup-content">
-            <h1>Sign Up</h1>
-            <p>Create an account now.</p>
+            <h1>Sign In</h1>
+            <p>Signin to your account.</p>
             <hr>
-            <label for="firstname"><b>First name</b></label>
-            <input type="text" name="firstname" minlength="3" id="firstname" placeholder="Enter First name" required>
-
-            <label for="lastname"><b>Last name</b></label>
-            <input type="text" name="lastname" minlength="3" id="lastname" placeholder="Enter Last name" required>
-
-            <label for="address"><b>Address</b></label>
-            <input type="text" name="address" id="address" placeholder="Enter Address" required>
 
             <label for="email"><b>Email</b></label>
             <input type="text" placeholder="Enter Email" name="email" required>
         
             <label for="psw"><b>Password</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>            
+            <input type="password" placeholder="Enter Password" name="psw" required>
+        
+            <!-- <label for="psw-repeat"><b>Repeat Password</b></label>
+            <input type="password" placeholder="Repeat Password" name="psw-repeat" required> -->
+            
         
             <div class="clearfix">
-              <button type="submit" class="signupbtn">Sign Up</button>
+              <button type="submit" class="signupbtn">Sign In</button>
             </div>
 
-            <p>Already have an account? <a href="signin.html">Signin</a></p>
+            <p>No account yet? <a href="signup.html">Sign up</a> for free</p>
           </div>
         </form>
       </section>
     </div>
-    <footer class="bg-dark text-white text-center">
+    <footer class="signin-footer bg-dark text-white text-center">
       <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
       <p>Copyright © 2019</p>
     </footer>
