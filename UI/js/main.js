@@ -1,11 +1,21 @@
 
 const showMessageBox = (title="", msg, link) => {
+  const messageBoxTrigger = document.querySelector(".popup1-trigger");
   document.querySelector("#mb_title").innerHTML = title;
   document.querySelector("#mb_msg").innerHTML = msg;
   document.querySelector("#mb_link").href = link;
-  const messageBoxTrigger = document.querySelector(".popup1-trigger");
   messageBoxTrigger.click();
 }
+
+const showConfirmBox = (title="", msg, link) => {
+  const confirmBoxTrigger = document.querySelector(".confirmation-trigger");  
+  document.querySelector("#confirm_title").innerHTML = title;
+  document.querySelector("#confirm_msg").innerHTML = msg;
+  document.querySelector("#confirm_next").setAttribute('href', link);
+  confirmBoxTrigger.click();
+}
+
+
 
  
 const filterLoan = (option) => {
