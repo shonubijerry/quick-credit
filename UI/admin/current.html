@@ -27,6 +27,7 @@
     </header>
     <div class="container">
         <a class="popup1-trigger" href="#popup1"></a>
+        <a class="confirmation-trigger" href="#confirm_action"></a>
         <div id="popup1" class="overlay">
             <div class="popup">
                 <h2 id="mb_title">Message</h2>
@@ -36,9 +37,17 @@
                 </div>
             </div>
         </div>
+        <div id="confirm_action" class="overlay">
+            <div class="popup">
+                <h2 id="confirm_title"></h2>
+                <a id="mb_link" onclick="history.back(-2)" class="close" href="#">&times;</a>
+                <div id="confirm_msg" class="content"></div>
+                <p><a id="confirm_next" onclick="history.back(-2)" class="btn-success btn-success-big" href="#">Proceed</a></p>
+            </div>
+        </div>
       <section>
         <div class="table-container">
-            <h2>All Loans</h2>
+            <h2>Current Loans</h2>
             <p>You can view all loans and filter by state.</p>
             <div class="">
                 <span class="filter-title"><strong>Filter: </strong></span>
@@ -77,7 +86,10 @@
                 <td>09/04/2019</td>
                 <td class="tooltip"><img src="../assets/images/ic_approved.png" /><span>Approved</span></td>
                 <td>No</td>
-                <td class="tooltip"><a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a><span>View details</span></td>
+                <td class="tooltip">
+                    <a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a>
+                    <a id="repay" onclick="showConfirmBox('Confirm payment?','Monthly installment of ₦17,500 will be paid.<br/>After this action your balance will be ₦52,500.', '#')" ><img src="../assets/images/ic_pay.png"/></a>
+                </td>
             </tr>
             <tr>
                 <td>2</td>
@@ -89,7 +101,10 @@
                 <td>09/03/2019</td>
                 <td class="tooltip"><img src="../assets/images/ic_approved.png" /><span>Approved</span></td>
                 <td>No</td>
-                <td class="tooltip"><a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a><span>View details</span></td>
+                <td class="tooltip">
+                    <a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a>
+                    <a id="repay" onclick="showConfirmBox('Confirm payment?','Monthly installment of ₦17,500 will be paid.<br/>After this action your balance will be ₦52,500.', '#')" ><img src="../assets/images/ic_pay.png"/></a>
+                </td>
             </tr>
             <tr>
                 <td>3</td>
@@ -101,7 +116,10 @@
                 <td>20/02/2019</td>
                 <td class="tooltip"><img src="../assets/images/ic_approved.png" /><span>Approved</span></td>
                 <td>No</td>
-                <td class="tooltip"><a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a><span>View details</span></td>
+                <td class="tooltip">
+                    <a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a>
+                    <a id="repay" onclick="showConfirmBox('Confirm payment?','Monthly installment of ₦17,500 will be paid.<br/>After this action your balance will be ₦52,500.', '#')" ><img src="../assets/images/ic_pay.png"/></a>
+                </td>
             </tr>
             <tr>
                 <td>4</td>
@@ -113,7 +131,10 @@
                 <td>05/11/2018</td>
                 <td class="tooltip"><img src="../assets/images/ic_approved.png" /><span>Approved</span></td>
                 <td>No</td>
-                <td class="tooltip"><a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a><span>View details</span></td>
+                <td class="tooltip">
+                    <a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a>
+                    <a id="repay" onclick="showConfirmBox('Confirm payment?','Monthly installment of ₦17,500 will be paid.<br/>After this action your balance will be ₦52,500.', '#')" ><img src="../assets/images/ic_pay.png"/></a>
+                </td>
             </tr>
             <tr>
                 <td>5</td>
@@ -125,7 +146,10 @@
                 <td>18/04/2019</td>
                 <td class="tooltip"><img src="../assets/images/ic_approved.png" /><span>Approved</span></td>
                 <td>No</td>
-                <td class="tooltip"><a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a><span>View details</span></td>
+                <td class="tooltip">
+                    <a href="view_loan.html"><img src="../assets/images/ic_view.png"/></a>
+                    <a id="repay" onclick="showConfirmBox('Confirm payment?','Monthly installment of ₦17,500 will be paid.<br/>After this action your balance will be ₦52,500.', '#')" ><img src="../assets/images/ic_pay.png"/></a>
+                </td>
             </tr>
             </table>
         </div>
