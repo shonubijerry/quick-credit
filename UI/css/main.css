@@ -1,230 +1,230 @@
 body {
-    background: lavender;
-    margin: 0;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: lavender;
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 
 /* ------------------------------
-   Header
- ------------------------------*/
+ Header
+------------------------------*/
 
 .nav {
-    background: #5555bf;
-    display: inline-block;
-    width: 100%;
+  background: #5555bf;
+  display: inline-block;
+  width: 100%;
 }
 
 
 /* ------------------------------
-   Nav
- ------------------------------*/
+ Nav
+------------------------------*/
 .navbar-title {
-    float: left;
-    overflow: hidden; 
-    width: 200px;
-    margin-left: 20px;
+  float: left;
+  overflow: hidden; 
+  width: 200px;
+  margin-left: 20px;
 }
 
 .navbar-title a {
-    text-decoration: none;
-    color: #ffffff
+  text-decoration: none;
+  color: #ffffff
 }
 
 .show-navbar {
-    display: none;
-    width: 51px;
-    height: 42px;
-    float: right;
+  display: none;
+  width: 51px;
+  height: 42px;
+  float: right;
 }
 
 .show-navbar img{
-    margin-top: 15px;
-    width: 35px;
-    height: 30px;
+  margin-top: 15px;
+  width: 35px;
+  height: 30px;
 }
 
 #navbar {
-    list-style-type:none;
-    margin-right:10px;
-    padding:0;
-    overflow: hidden;
-    float: right;
+  list-style-type:none;
+  margin-right:10px;
+  padding:0;
+  overflow: hidden;
+  float: right;
 }
 
 #navbar li {
-    float: left;
-    margin-right: 5px;
+  float: left;
+  margin-right: 5px;
 }
 
 #navbar li a {
-    border-radius: 10px;
-    display:block;
-    min-width:100px;
-    height: 40px;
-    text-align: center;
-    line-height: 40px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 500;
-    color: #5555bf;
-    background: #f1f1f1;
-    text-decoration: none;
+  border-radius: 10px;
+  display:block;
+  min-width:100px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  color: #5555bf;
+  background: #f1f1f1;
+  text-decoration: none;
 }
 
 #navbar li:hover a {
-    background: #3f3f91;
-    color: #f1f1f1;
+  background: #3f3f91;
+  color: #f1f1f1;
 }
 
 @media screen and (max-width : 760px){
-    .show-navbar {
-        display:block;
-    }  
-    
-    #navbar {
-        position: static;
-        display: none;
-        width: 100%;
-        margin: 0;
-    }
-    
-    #navbar li {
-        margin: 0 0 1px 0;
-    }
-    
-    #navbar li, #navbar li a {
-        width: 100%;
-        border-radius: 0;
-    }
-    
+  .show-navbar {
+      display:block;
+  }  
+  
+  #navbar {
+      position: static;
+      display: none;
+      width: 100%;
+      margin: 0;
+  }
+  
+  #navbar li {
+      margin: 0 0 1px 0;
+  }
+  
+  #navbar li, #navbar li a {
+      width: 100%;
+      border-radius: 0;
+  }
+  
 }
 
 input[type=checkbox]{
-    display: none;
+  display: none;
 }
 
 input[type=checkbox]:checked ~ #navbar{
-    display: block;
+  display: block;
 }
 
 
 /* ------------------------------
-   Sign up page
- ------------------------------*/
+ Sign up page
+------------------------------*/
 
 .signup-content { 
-    width: 400px;
-    margin: 2em auto;
-    border-radius: 15px;
-    border:1px solid #ccc;
-    background: #f1f1f1;
-    padding: 10px;
+  width: 400px;
+  margin: 2em auto;
+  border-radius: 15px;
+  border:1px solid #ccc;
+  background: #f1f1f1;
+  padding: 10px;
 }
 
- input[type=text], input[type=password], input {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #e2e2e2;
-  }
-  
-  input[type=text]:focus, input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-  }
-  
-  hr {
-    border: 1px solid #e2e2e2;
-    margin-bottom: 25px;
-  }
-  
-  button {
-    background-color: #5555bf;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-  }
-  
-  button:hover {
-    opacity:1;
-  }
-  
+input[type=text], input[type=password], input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #e2e2e2;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #e2e2e2;
+  margin-bottom: 25px;
+}
+
+button {
+  background-color: #5555bf;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+.signupbtn {
+  float: left;
+  width: 50%;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+@media screen and (max-width: 300px) {
   .signupbtn {
-    float: left;
-    width: 50%;
+     width: 100%;
   }
-  
-  .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-  
-  @media screen and (max-width: 300px) {
-    .signupbtn {
-       width: 100%;
-    }
-  }
-
-/* ------------------------------
-   homepage
- ------------------------------*/
-
- .home-div {
-    position: relative;
-    text-align: center;
-    color: #313131;
- }
-
- .home-bg {
-    width: 100%;
-    height: fit-content;
-    object-fit: cover;
- }
-
- .centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .cta li a {
-    border-radius: 10px;
-    display:block;
-    min-width:100px;
-    height: 40px;
-    text-align: center;
-    line-height: 40px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 500;
-    color: #5555bf;
-    background: #f1f1f1;
-    text-decoration: none;
 }
 
 /* ------------------------------
-   Footer
- ------------------------------*/
+ homepage
+------------------------------*/
+
+.home-div {
+  position: relative;
+  text-align: center;
+  color: #313131;
+}
+
+.home-bg {
+  width: 100%;
+  height: fit-content;
+  object-fit: cover;
+}
+
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cta li a {
+  border-radius: 10px;
+  display:block;
+  min-width:100px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 500;
+  color: #5555bf;
+  background: #f1f1f1;
+  text-decoration: none;
+}
+
+/* ------------------------------
+ Footer
+------------------------------*/
 
 footer {
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-    text-align: center;
-    background: #313131;
-    color: #ffffff;
-    padding: 1.5em 0;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  background: #313131;
+  color: #ffffff;
+  padding: 1.5em 0;
 }
 
 footer p{
-    text-align: center;
+  text-align: center;
 }
 
