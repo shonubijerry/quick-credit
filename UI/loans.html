@@ -38,19 +38,21 @@
         </div>
       <section>
         <div class="table-container">
-            <h2>Loan Repayment History</h2>
+            <h2>My Loans</h2>
             <p>All loans have interest rate of 5%</p>
 
-            <table>
-            <tr class="table-head">
+            <table id="table-data">
+              <tr class="table-head">
                 <th>S/N</th>
                 <th>Amount(₦)</th>
                 <th>Tenor(Months)</th>
                 <th>Installment(₦)</th>
                 <th>Balance(₦)</th>
+                <th>Interest(₦)</th>
                 <th>Date</th>
                 <th>Status</th>
                 <th>Repaid</th>
+                <th></th>
             </tr>
             <tr>
                 <td>1</td>
@@ -58,9 +60,11 @@
                 <td>2</td>
                 <td>26,250</td>
                 <td>52,500</td>
+                <td>2,500</td>
                 <td>09/04/2019</td>
-                <td><img src="assets/images/ic_pending.png" /></td>
+                <td class="tooltip"><img src="assets/images/ic_pending.png" /><span>Pending</span></td>
                 <td>No</td>
+                <td><a href="repayments.html"><img src="assets/images/ic_view.png"/></a></td>
             </tr>
             <tr>
                 <td>2</td>
@@ -68,9 +72,11 @@
                 <td>3</td>
                 <td>122,500</td>
                 <td>0</td>
+                <td>17,500</td>
                 <td>09/12/2018</td>
-                <td><img src="assets/images/ic_approved.png" /></td>
+                <td class="tooltip"><img src="assets/images/ic_approved.png" /><span>Approved</span></td>
                 <td>Yes</td>
+                <td><a href="repayments.html"><img src="assets/images/ic_view.png"/></a></td>
             </tr>
             <tr>
                 <td>3</td>
@@ -78,9 +84,11 @@
                 <td>4</td>
                 <td>39,375</td>
                 <td>0</td>
+                <td>7,500</td>
                 <td>20/10/2018</td>
-                <td><img src="assets/images/ic_approved.png" /></td>
+                <td class="tooltip"><img src="assets/images/ic_approved.png" /><span>Approved</span></td>
                 <td>Yes</td>
+                <td><a href="repayments.html"><img src="assets/images/ic_view.png"/></a></td>
             </tr>
             <tr>
                 <td>4</td>
@@ -88,9 +96,11 @@
                 <td>10</td>
                 <td>105,000</td>
                 <td>1,050,000</td>
+                <td>50,000</td>
                 <td>05/11/2018</td>
-                <td><img src="assets/images/ic_rejected.png" /></td>
+                <td class="tooltip"><img src="assets/images/ic_rejected.png" /><span>Rejected</span></td>
                 <td>No</td>
+                <td><a href="repayments.html"><img src="assets/images/ic_view.png"/></a></td>
             </tr>
             <tr>
                 <td>5</td>
@@ -98,9 +108,11 @@
                 <td>6</td>
                 <td>17,500</td>
                 <td>0</td>
+                <td>5,000</td>
                 <td>18/06/2017</td>
-                <td><img src="assets/images/ic_approved.png" /></td>
+                <td class="tooltip"><img src="assets/images/ic_approved.png" /><span>Approved</span></td>
                 <td>Yes</td>
+                <td><a href="repayments.html"><img src="assets/images/ic_view.png"/></a></td>
             </tr>
             <tr>
                 <td>6</td>
@@ -108,11 +120,26 @@
                 <td>4</td>
                 <td>13,125</td>
                 <td>0</td>
+                <td>2,500</td>
                 <td>03/02/2017</td>
-                <td><img src="assets/images/ic_approved.png" /></td>
+                <td class="tooltip"><img src="assets/images/ic_approved.png" /><span>Approved</span></td>
                 <td>Yes</td>
+                <td><a href="repayments.html"><img src="assets/images/ic_view.png"/></a></td>
             </tr>
             </table>
+        </div>
+        <br/>
+        <div class="pagination-center">
+            <div class="pagination">
+                <a href="#">&laquo;</a>
+                <a class="active" href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <a href="#">&raquo;</a>
+            </div>
         </div>
       </section>
     </div>
