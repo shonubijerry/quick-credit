@@ -1,450 +1,725 @@
 body {
-    background: lavender;
-    margin: 0;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
-.home-body {
-  overflow: hidden;
+  background: lavender;
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.85em;
 }
 
 .admin-signin {
-  background: url('../assets/images/signup-login-bg.jpg') no-repeat center center;
+background: url('../assets/images/signup-login-bg.jpg') no-repeat center center;
+background-size: cover;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+height: -webkit-fill-available;
+}
+
+.user-signup {
+  height: auto;
+}
+
+@media only screen and (min-width: 1440px){
+  .user-signup {
+    height: -webkit-fill-available;
+  }
+}
+
+.admin-home {
+  background: url('../assets/images/admin-bg.jpg') no-repeat center center;
   background-size: cover;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
+  height: -webkit-fill-available;
+}
+
+.home-body {
+  background: url('../assets/images/home-bg.jpg') no-repeat center center;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  height: -webkit-fill-available;
+}
+
+.container {
+  margin: 0 0 2em;
+}
+
+a {
+  cursor: pointer;
 }
 
 /* ------------------------------
-   Header
- ------------------------------*/
+ Header
+------------------------------*/
 
 .nav {
-    background: #0378A6;
-    display: inline-block;
-    width: 100%;
+  background: #0378A6;
+  display: inline-block;
+  width: 100%;
 }
 
+.page-title {
+  padding: 1em;
+}
 
 /* ------------------------------
-   Nav
- ------------------------------*/
+ Nav
+------------------------------*/
 .navbar-title {
-    float: left;
-    overflow: hidden; 
-    width: 200px;
-    margin-left: 20px;
+  float: left;
+  overflow: hidden; 
+  width: 200px;
+  margin-left: 20px;
 }
 
 .navbar-title a {
-    text-decoration: none;
-    color: #ffffff
+  text-decoration: none;
+  color: #ffffff
 }
 
 .show-navbar {
-    display: none;
-    width: 51px;
-    height: 42px;
-    float: right;
+  display: none;
+  width: 51px;
+  height: 42px;
+  float: right;
 }
 
 .show-navbar img{
-    margin-top: 20px;
-    width: 30px;
-    height: 25px;
+  margin-top: 20px;
+  width: 30px;
+  height: 25px;
 }
 
 #navbar {
-    list-style-type:none;
-    margin-right:10px;
-    padding:0;
-    overflow: hidden;
-    float: right;
+  list-style-type:none;
+  margin-right:10px;
+  padding:0;
+  overflow: hidden;
+  float: right;
 }
 
 #navbar li {
-    float: left;
-    margin-right: 5px;
+  float: left;
+  margin-right: 5px;
 }
 
 #navbar li a {
-    border-radius: 10px;
-    display:block;
-    min-width:100px;
-    height: 40px;
-    text-align: center;
-    font-size: 13px;
-    line-height: 40px;
-    font-weight: 500;
-    color: #0378A6;
-    background: #f1f1f1;
-    text-decoration: none;
+  border-radius: 10px;
+  display:block;
+  min-width:100px;
+  height: 40px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 40px;
+  font-weight: 500;
+  color: #0378A6;
+  background: #f1f1f1;
+  text-decoration: none;
+  transition: background-color .3s;
 }
 
 #navbar li:hover a {
-    background: #005778;
-    color: #f1f1f1;
+  background: #005778;
+  color: #f1f1f1;
+}
+
+#navbar .active a {
+background: #F25056;
+color: #f1f1f1;
 }
 
 @media screen and (max-width : 760px){
-    .show-navbar {
-        display:block;
-    }  
-    
-    #navbar {
-        position: static;
-        display: none;
-        width: 100%;
-        margin: 0;
-    }
-    
-    #navbar li {
-        margin: 0 0 1px 0;
-    }
-    
-    #navbar li, #navbar li a {
-        width: 100%;
-        border-radius: 0;
-    }
-    
+  .show-navbar {
+      display:block;
+  }  
+  
+  #navbar {
+      position: static;
+      display: none;
+      width: 100%;
+      margin: 0;
+  }
+  
+  #navbar li {
+      margin: 0 0 1px 0;
+  }
+  
+  #navbar li, #navbar li a {
+      width: 100%;
+      border-radius: 0;
+  }
+  
 }
 
 input[type=checkbox]{
-    display: none;
+  display: none;
 }
 
 input[type=checkbox]:checked ~ #navbar{
-    display: block;
+  display: block;
 }
 
 
 /* ------------------------------
-   Sign up and Log in page
- ------------------------------*/
+ Sign up and Log in page
+------------------------------*/
 
 .signup-content { 
-    width: 350px;
-    margin: 2em auto;
-    border-radius: 15px;
-    border:1px solid #ccc;
-    background: rgb(255,255,255,0.6);
-    padding: 10px;
-}
-
- input[type=text], input[type=password], input {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #e2e2e2;
-  }
-  
-  input[type=text]:focus, input[type=password]:focus {
-    background-color: #ddd;
-    outline: none;
-  }
-  
-  hr {
-    border: 1px solid #e2e2e2;
-    margin-bottom: 25px;
-  }
-  
-  button {
-    background-color: #0378A6;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-  }
-  
-  button:hover {
-    opacity:1;
-  }
-  
-  .signupbtn {
-    float: left;
-    width: 50%;
-  }
-  
-  .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-  
-  @media screen and (max-width: 300px) {
-    .signupbtn {
-       width: 100%;
-    }
-  }
-
-/* ------------------------------
-   homepage
- ------------------------------*/
-
- .home-div {
-    position: relative;
-    text-align: center;
-    color: #313131;
- }
-
- .home-bg {
-    width: 100%;
-    height: fit-content;
-    object-fit: cover;
- }
-
- .centered {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .cta li a {
-    border-radius: 10px;
-    display:block;
-    min-width:100px;
-    height: 40px;
-    text-align: center;
-    line-height: 40px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 500;
-    color: #0378A6;
-    background: #f1f1f1;
-    text-decoration: none;
-}
-
-/* ------------------------------
-   Dialog box
- ------------------------------*/
-
-.box {
-    width: 40%;
-    margin: 0 auto;
-    background: rgba(255,255,255,0.2);
-    padding: 35px;
-    border: 2px solid #fff;
-    border-radius: 20px/50px;
-    background-clip: padding-box;
-    text-align: center;
-  }
-  .popup1-trigger {
-    display: none;
-  }
-  
-  .overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.7);
-    transition: opacity 500ms;
-    visibility: hidden;
-    opacity: 0;
-  }
-  .overlay:target {
-    visibility: visible;
-    opacity: 1;
-  }
-  
-  .popup {
-    margin: 70px auto;
-    padding: 20px;
-    background: #fff;
-    border-radius: 5px;
-    width: 30%;
-    position: relative;
-    transition: all 5s ease-in-out;
-  }
-  
-  .popup h2 {
-    margin-top: 0;
-    color: #333;
-    font-family: Tahoma, Arial, sans-serif;
-  }
-  .popup .close {
-    position: absolute;
-    top: 20px;
-    right: 30px;
-    transition: all 200ms;
-    font-size: 30px;
-    font-weight: bold;
-    text-decoration: none;
-    color: #333;
-  }
-  .popup .close:hover {
-    color: #06D85F;
-  }
-  .popup .content {
-    max-height: 30%;
-    overflow: auto;
-  }
-  
-  @media screen and (max-width: 700px){
-    .box{
-      width: 70%;
-    }
-    .popup{
-      width: 70%;
-    }
-  }
-
-  /* ------------------------------
-   Tables
- ------------------------------*/
-
- .table-container {
-    padding: 1em;
-    overflow-x:auto;
-  }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-  }
-  
-  th, td {
-    text-align: left;
-    padding: 8px;
-  }
-  
-  tr:nth-child(even){background-color: #f2f2f2}
-  
-  th {
-    background-color: #00bcd4;
-    color: white;
-  }
-
-  @media 
-only screen and (max-width: 760px),
-(min-device-width: 768px) and (max-device-width: 1024px)  {
-
-	table, th, tbody, th, td, tr { 
-		display: block; 
-	}
-	
-	th tr { 
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
-  }
-  
-  .table-head {
-    display: none;
-  }
-	
-	tr {
-    overflow-x: scroll;
-    margin: 0 1em 1em 0;
-    padding: 1em;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-  }
-	
-	td { 
-		border: none;
-		border-bottom: 1px solid #eee; 
-		position: relative;
-		padding-left: 50%; 
-	}
-	
-	td:before { 
-		position: absolute;
-    top: 6px;
-    font-weight: 700;
-		left: 6px;
-    width: 45%; 
-		padding-right: 10px; 
-		white-space: nowrap;
-  }
-  
-	td:nth-of-type(1):before { content: "S/N"; }
-	td:nth-of-type(2):before { content: "Amount"; }
-	td:nth-of-type(3):before { content: "Tenor"; }
-	td:nth-of-type(4):before { content: "Installment"; }
-	td:nth-of-type(5):before { content: "Balance"; }
-	td:nth-of-type(6):before { content: "Date"; }
-	td:nth-of-type(7):before { content: "Status"; }
-  td:nth-of-type(8):before { content: "Repaid"; }
-  
-  .users td:nth-of-type(2):before { content: "Firstname"; }
-  .users td:nth-of-type(3):before { content: "Lastname"; }
-  .users td:nth-of-type(4):before { content: "Address"; }
-  .users td:nth-of-type(5):before { content: "Email"; }
-  .users td:nth-of-type(6):before { content: "Status"; }
-  
-  
-}
-
-  /* ------------------------------
-   Cards
- ------------------------------*/
-
- .card-container {
+  max-width: 400px;
+  margin: 2em auto;
+  border-radius: 15px;
+  border:1px solid #ccc;
+  background: rgb(255,255,255,0.6);
   padding: 10px;
-  display: inline-grid;
-  grid-template-columns: 10em;
- }
- .card {
+}
+
+input[type=text], input[type=password], input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #e2e2e2;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #e2e2e2;
+}
+
+.signup-content button {
+  background-color: #0378A6;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+button:hover {
+  opacity:1;
+}
+
+.signupbtn {
+  float: left;
+  width: 50%;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+@media screen and (max-width: 300px) {
+  .signupbtn {
+     width: 100%;
+  }
+}
+
+@media screen and (max-width: 450px){
+  .signup-content {
+    margin: 2em 1em; 
+  }
+}
+
+/* ------------------------------
+ homepage
+------------------------------*/
+
+.home-div {
+  margin: 0 auto;
+  display: table;
+  height: 70vh;
+  overflow: hidden;
+  text-align: center;
+}
+
+.home-bg {
+  width: 100%;
+  height: -webkit-fill-available;
+  object-fit: cover;
+  overflow: hidden;
+}
+
+.centered {
+  display: table-cell; vertical-align: middle;
+}
+
+/* ------------------------------
+ Dialog box
+------------------------------*/
+
+.popup1-trigger {
+  display: none;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 99;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 20vh auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 1s ease-in-out;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #0378A6;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+
+/* ------------------------------
+ Tables
+------------------------------*/
+
+.table-container {
+  padding: 1em;
+  overflow-x:auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+th {
+  background-color: #339CC6;
+  color: white;
+}
+
+/** styling for mobile **/
+
+@media only screen and (max-width: 760px) {
+
+table, th, tbody, th, td, tr { 
+  display: block; 
+}
+
+th tr { 
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.table-head {
+  display: none;
+}
+
+tr {
+  overflow-x: scroll;
+  margin: 0 1em 1em 0;
+  padding: 1em;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   transition: 0.3s;
+}
+
+td { 
+  border: none;
+  border-bottom: 1px solid #eee; 
+  position: relative;
+  padding-left: 50%; 
+}
+
+td:before { 
+  position: absolute;
+  top: 6px;
+  font-weight: 700;
+  left: 6px;
+  width: 45%; 
+  padding-right: 10px; 
+  white-space: nowrap;
+}
+
+td:nth-of-type(1):before { content: "S/N"; }
+td:nth-of-type(2):before { content: "Amount"; }
+td:nth-of-type(3):before { content: "Tenor"; }
+td:nth-of-type(4):before { content: "Installment"; }
+td:nth-of-type(5):before { content: "Balance"; }
+td:nth-of-type(6):before { content: "Interest"; }
+td:nth-of-type(7):before { content: "Date"; }
+td:nth-of-type(8):before { content: "Status"; }
+td:nth-of-type(9):before { content: "Repaid"; }
+
+.pending td:nth-of-type(9):before { content: "Action"; }
+
+.users td:nth-of-type(2):before { content: "Firstname"; }
+.users td:nth-of-type(3):before { content: "Lastname"; }
+.users td:nth-of-type(4):before { content: "Address"; }
+.users td:nth-of-type(5):before { content: "Email"; }
+.users td:nth-of-type(6):before { content: "Status"; }
+
+
+}
+
+/* Styling for single loan view page */
+
+.sl-container table, .sl-container tbody, .sl-container th, 
+.sl-container th, .sl-container td, .sl-container tr { 
+  display: block; 
+}
+
+.sl-container th tr { 
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+}
+
+.sl-container .table-head {
+  display: none;
+}
+
+.sl-container tbody {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.sl-container tr {
+  overflow-x: scroll;
   margin: 0 1em 1em 0;
+  padding: 1em;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+}
+
+.sl-container td { 
+  border: none;
+  border-bottom: 1px solid #eee; 
+  position: relative;
+  padding-left: 50%; 
+}
+
+.sl-container td:before { 
+  position: absolute;
+  top: 6px;
+  font-weight: 700;
+  left: 6px;
+  width: 45%; 
+  padding-right: 10px;
+  white-space: nowrap;
+}
+
+.sl-container td:nth-of-type(1):before { content: "Full Name"; }
+.sl-container td:nth-of-type(2):before { content: "Address"; }
+.sl-container td:nth-of-type(3):before { content: "Email"; }
+.sl-container td:nth-of-type(4):before { content: "Amount"; }
+.sl-container td:nth-of-type(5):before { content: "Tenor"; }
+.sl-container td:nth-of-type(6):before { content: "Payment Installment"; }
+.sl-container td:nth-of-type(7):before { content: "Balance"; }
+.sl-container td:nth-of-type(8):before { content: "Interest"; }
+.sl-container td:nth-of-type(9):before { content: "Date"; }
+.sl-container td:nth-of-type(10):before { content: "Status"; }
+.sl-container td:nth-of-type(11):before { content: "Repaid"; }
+
+/* ------------------------------
+ Cards
+------------------------------*/
+
+.card-container {
+padding: 10px;
+display: inline-grid;
+grid-template-columns: 10em;
+}
+.card {
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+transition: 0.3s;
+margin: 1em auto;
+max-width: 500px;
+background: #f1f1f1;
+}
+.card-content {
+padding: 1em;
+}
+.card-content p {
+  display: flex;
+}
+
+.card .first {
+background: #0378A6;
+color: #f1f1f1
+}
+
+.card .entry-value {
+width: 68%;
+}
+
+.card .entry-title {
+width: 32%;
+float: left;
+font-weight: 600;
 }
 
 .card:hover {
-  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-}
-
-.card-content {
-  padding: 2px 16px;
-}
-
-  /* ------------------------------
-   Admin styling
- ------------------------------*/
-
-.btn-verify {
-  border-radius: 12px;
-  display:block;
-  max-width:55px;
-  height: 22px;
-  text-align: center;
-  font-size: 12px;
-  line-height: 20px;
-  background: rgb(166, 41, 3);
-  color: #f1f1f1;
-  text-decoration: none;
+box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 
 /* ------------------------------
-   Footer
- ------------------------------*/
+ Select Options
+------------------------------*/
+
+.filter-title {
+width: 55px;
+float: left;
+padding: 5px 0;
+}
+
+.filter {
+background: #339CC6 url('../assets/images/select-option.png') no-repeat 96% 0;
+height: 29px;
+overflow: hidden;
+width: 240px;
+margin-bottom: 1em;
+}
+
+.filter select {
+background: transparent;
+color: #ffffff;
+border: none;
+font-size: 14px;
+height: 29px;
+padding: 5px; /* If you add too much padding here, the options won't show in IE */
+width: 268px;
+}
+
+.semi-square {
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+.blue select { color: #313131; }
+
+/* ------------------------------
+ Pagination
+------------------------------*/
+
+.pagination-center {
+text-align: center;
+}
+
+.pagination {
+display: inline-block;
+}
+
+.pagination a {
+color: #313131;
+float: left;
+padding: 8px 16px;
+text-decoration: none;
+transition: background-color .3s;
+}
+
+.pagination a.active {
+background-color: #0378A6;
+color: #ffffff;
+}
+
+.pagination a:hover:not(.active) {
+background-color: rgb(182, 182, 182);
+}
+
+/* ------------------------------
+ Tooltip
+------------------------------*/
+
+.tooltip:hover {-webkit-transition: all 0.8s;  -moz-transition: all 0.8s;  transition: all 0.8s;}
+.tooltip span {display: none; position: absolute; bottom: 0; left: 0; right: 0; background: #333; color: #fff; }
+
+.tooltip:hover span {display: block; width: 100px; border-radius: 5px;text-align: center;}
+
+/* ------------------------------
+ Widgets
+------------------------------*/
+.cta {
+  display: -webkit-inline-box;
+}
+
+.cta-div {
+  margin: 1em 0;
+}
+
+.cta a{
+  cursor: pointer;
+}
+
+.text-white {
+  color: #f1f1f1;
+}
+
+.btn-danger {
+border-radius: 12px;
+display:block;
+max-width:55px;
+text-align: center;
+font-size: 12px;
+line-height: 16px;
+background: #F25056;
+color: #f1f1f1;
+border: 0;
+margin-left: 0.5em;
+cursor: pointer;
+text-decoration: none;
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.btn-danger-big {
+max-width: 120px;
+min-width: 90px;
+font-size: 13px;
+line-height: 35px;
+}
+
+.btn-success {
+border-radius: 12px;
+display:block;
+max-width:55px;
+text-align: center;
+font-size: 12px;
+line-height: 16px;
+background: rgb(1, 150, 13);
+color: #f1f1f1;
+border: 0;
+margin-left: 0.5em;
+cursor: pointer;
+text-decoration: none;
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.btn-success-big {
+max-width: 120px;
+min-width: 90px;
+font-size: 13px;
+line-height: 35px;
+}
+
+.btn-primary {
+border-radius: 12px;
+display:block;
+max-width:55px;
+text-align: center;
+font-size: 12px;
+line-height: 16px;
+background: #0378A6;
+color: #f1f1f1;
+border: 0;
+margin-left: 0.5em;
+cursor: pointer;
+text-decoration: none;
+box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.btn-primary-big {
+max-width: 120px;
+min-width: 90px;
+font-size: 13px;
+line-height: 35px;
+}
+
+.btn-primary, .btn-danger, .btn-success  {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+@media only screen and (max-width: 430px) {
+  .btn-primary-big, .btn-danger-big, .btn-success-big  {
+    min-width: 120px;
+  }
+}
+
+/* ------------------------------
+ Footer
+------------------------------*/
 
 footer {
-    width: 100%;
-    overflow: hidden;
-    text-align: center;
-    background: #313131;
-    color: #ffffff;
-    padding: 1.5em 0;
-    bottom: 0;
-    left: 0;
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  background: #313131;
+  color: #ffffff;
+  padding: 1.5em 0;
+  bottom: 0;
+  left: 0;
 }
 
 .home-footer {
   position: absolute;
 }
 
+@media only screen and (min-width: 769px) {
+  .signin-footer {
+    position: absolute;
+  }
+}
+
+@media only screen and (min-width: 1560px){
+  .signup-footer {
+    position: absolute;
+  }
+
+}
+
 footer p{
-    text-align: center;
+  text-align: center;
+  padding: 0 1em;
 }
 
