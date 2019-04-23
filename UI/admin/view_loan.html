@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    
+    <title>Admin | Quick Cash</title>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
+    
+  </head>
+
+  <body class="">
+    <header class="main-header">
+        <div class="nav">
+            <span class="navbar-title"><a href="index.html"><h2>QUICK CREDIT</h2></a></span>
+            <label for="show-navbar" class="show-navbar"><img src="../assets/images/menu-icon.png"/></label>
+            <input type="checkbox" id="show-navbar" role="button">
+            <ul id="navbar">
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="users.html">USERS</a></li>
+                <li class="active"><a href="loans.html">LOANS</a></li>
+                <li><a href="signout.html">SIGN OUT</a></li>
+            </ul>
+        </div>      
+    </header>
+    <div class="container">
+        <a class="popup1-trigger" href="#popup1"></a>
+        <a class="confirmation-trigger" href="#confirm_action"></a>
+        <div id="popup1" class="overlay">
+            <div class="popup">
+                <h2 id="mb_title">Message</h2>
+                <a id="mb_link" onclick="history.back(-2)" class="close" href="#">&times;</a>
+                <div id="mb_msg" class="content">
+                    Loan application Approved.
+                </div>
+            </div>
+        </div>
+        <div id="confirm_action" class="overlay">
+            <div class="popup">
+                <h2 id="confirm_title"></h2>
+                <a id="mb_link" onclick="history.back(-2)" class="close" href="#">&times;</a>
+                <div id="confirm_msg" class="content"></div>
+                <p><a id="confirm_next" onclick="history.back(-2)" class="btn-success btn-success-big" href="#">Proceed</a></p>
+            </div>
+        </div>
+      <section>
+            <div class="card">
+                <div class="card-content first">
+                    <p><span class="entry-title">Full Name:</span><span class="entry-value">Abel Abaimu</span></span></p>
+                    <p><span class="entry-title">Address:</span><span class="entry-value">6, Felix Street, Ijegun</span></p>
+                    <p><span class="entry-title">Email:</span><span class="entry-value">abelabaimu34@yahoo.com</span></p>
+                </div>
+                <div class="card-content">
+                    <p><span class="entry-title">Amount:</span><span class="entry-value">₦100,000</span></p>
+                    <p><span class="entry-title">Tenor:</span><span class="entry-value">6 Months</span></p>
+                    <p><span class="entry-title">Payment installment:</span><span class="entry-value">₦35,500</span></p>
+                    <p><span class="entry-title">Balance:</span><span class="entry-value">₦70,000</span></p>
+                    <p><span class="entry-title">Interest:</span><span class="entry-value">₦5,000</span></p>
+                    <p><span class="entry-title">Date:</span><span class="entry-value">18/04/2018</span></p>
+                    <p><span class="entry-title">Status:</span><span class="entry-value"><img src="../assets/images/ic_approved.png" /></span></p>
+                    <p><span class="entry-title">Repaid:</span><span class="entry-value">No</span></p>
+                    <hr>
+                    <div class="cta cta-div">
+                        <a id="repay" class="btn-primary btn-primary-big" onclick="showConfirmBox('Confirm payment?','Monthly installment of ₦17,500 will be paid.<br/>After this action your balance will be ₦52,500.', '#')">Repay</a>
+                        <a class="btn-primary btn-primary-big" href="repayments.html">Repayments</a>
+                    </div>
+                    <div class="cta cta-div">
+                            <a id="approve" class="btn-success btn-success-big" onclick="showMessageBox('Approved','Loan approved', '#approved')">Approve</a>
+                            <a id="reject" class="btn-danger btn-danger-big" onclick="showMessageBox('Rejected','Loan rejected', '#rejected')">Reject</a>
+                    </div>
+                    
+                </div>
+            </div>
+        
+      </section>
+    </div>
+    <footer class="">
+    <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
+    <p>Copyright © 2019</p>
+    </footer>
+    <script src="../js/main.js"></script>
+  </body>
+</html>
