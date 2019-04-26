@@ -1,0 +1,47 @@
+{
+  "name": "quick-cash",
+  "version": "1.0.0",
+  "description": "Quick Credit is an online lending platform that provides short term soft loans to individuals. This helps solve problems of financial inclusion as a way to alleviate poverty and empower low income earners.",
+  "main": "app.js",
+  "author": "Shonubi Oluwakorede",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint ./server",
+    "start": "set NODE_ENV=development&& node_modules/.bin/nodemon app.js --exec babel-node --",
+    "test": "set NODE_ENV=test&& nyc --reporter=html --reporter=text mocha --compilers js:babel-register ./server/tests/ --timeout 10000 --exit",
+    "coveralls": "nyc npm test&& nyc report --reporter=text-lcov | coveralls",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shonubijerry/quick-credit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/shonubijerry/quick-credit/issues"
+  },
+  "homepage": "https://github.com/shonubijerry/quick-credit#readme",
+  "devDependencies": {
+    "coveralls": "^3.0.2",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "mocha": "^5.2.0",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nodemon": "^1.18.11"
+  },
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "body-parser": "^1.18.3",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "cross-env": "^5.2.0",
+    "dotenv": "^6.0.0",
+    "express": "^4.16.3",
+    "nyc": "^13.0.1"
+  }
+}
+  
