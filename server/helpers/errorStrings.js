@@ -8,6 +8,7 @@ const errorStrings = {
     nameLength: 'Your name cannot be less than 2 characters.',
     validName: 'Enter a valid name. Names can only contain letters.',
     validEmail: 'Enter a valid email address',
+    emailRequired: 'Email field is required',
     emailExists: 'Email address has already been registered',
     addressRequired: 'Address field cannot be empty',
     validAddress: 'Enter a valid Address',
