@@ -12,11 +12,11 @@ class Validator {
    * @param {Object} request
    * @return {boolean} false
    */
-  static checkValidationErrors(res, errors, next) {
-    if (Object.keys(errors).length > 0) {
+  static checkValidationErrors(res, error, next) {
+    if (Object.keys(error).length > 0) {
       return res.status(406).json({
         status: 406,
-        errors
+        error
       });
     }
     return next();
