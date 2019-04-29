@@ -1,4 +1,4 @@
-
+import UsersController from '../controllers/usersController'
 
 /**
  * @fileOverview index file for routes - it hosts all routes
@@ -16,11 +16,14 @@ const routes = (app) => {
       
     }));
 
-    // declare 404 route
+    app.post('/api/v1/auth/signup', UsersController.signup);
+
+    //declare 404 route
     app.all('*', (req, res) => res.status(404).json({
         status: 404,
         error: 'The URL you are trying to access does not exist. Please enter a valid url',
     }));
+
 };
 
 export default routes;
