@@ -21,7 +21,7 @@ class UsersModel {
         const { email, firstName, lastName, address } = req.body;
         let { password } = req.body;
         password = passwordHelper.passwordHash(password);
-        console.log(password);
+        // console.log(password);
         const user = {
             email,
             firstName,
@@ -34,6 +34,22 @@ class UsersModel {
         }
         users.push(user);
         return user;
+    }
+
+    /**
+    * check if user email already exists
+    * @param {String} email
+    * @return boolean
+    */
+
+    static checkRegistered(email) {
+        let isFound = false;
+        users.map((user, index) => {
+            if (user.email === email) {
+                isFound = true;
+            }
+        });
+        return isFound;
     }
 
 }
