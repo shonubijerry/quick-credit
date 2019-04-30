@@ -1,4 +1,3 @@
-
 /**
  *    @fileOverview Class to hold general validation methods
  *    @class Validator
@@ -21,5 +20,6 @@ class Validator {
     }
     return next();
   }
+  
 }
 export default Validator;
