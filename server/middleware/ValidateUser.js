@@ -23,7 +23,7 @@ class ValidateUser {
 
   static validateSignup(request, response, next) {
 
-    const signupErrors = this.checkSignupErrors(request.body);
+    const signupErrors = ValidateUser.checkSignupErrors(request.body);
 
     Validator.checkValidationErrors(response, signupErrors, next);
   }
