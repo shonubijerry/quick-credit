@@ -1,15 +1,25 @@
-// import modules
+/* eslint-disable no-console */
 import Express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import routes from './server/routes';
 
+/**
+* @fileOverview - application entry point
+* @requires - express
+* @requires - body-parser
+* @requires - dotenv
+* @requires - cors
+* @requires - ./server/routes
+* @exports - app.js
+**/
+
 dotenv.config();
 
 // declare constants
 const app = new Express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 console.log(port);
 
 // declare middleware
