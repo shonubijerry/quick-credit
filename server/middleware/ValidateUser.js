@@ -18,17 +18,23 @@ class ValidateUser {
    * @param {Object} request
    * @param {Object} response
    * @callback {Function} next 
-   * @return {String} errors
+   * @return {Object} error
    */
 
   static validateSignup(request, response, next) {
-    const {
-      firstName,
-      lastName,
-      email,
-      password,
-      address
-    } = request.body;
+
+    const signupErrors = this.checkSignupErrors(request.body);
+
+    Validator.checkValidationErrors(response, signupErrors, next);
+  }
+
+  /**
+   * collect all possible errors
+   * @param {Object} request 
+   * @return {String} errors
+   */
+
+  static checkSignupErrors ({firstName,lastName,email,password,address}) {
     const errors = {};
 
     if (!firstName || !rules.empty.test(firstName) || !lastName || !rules.empty.test(lastName))
@@ -46,10 +52,11 @@ class ValidateUser {
     if (!password || !rules.empty.test(password)) errors.passwordEmpty = errorStrings.passwordEmpty;
 
     if (!rules.passwordLength.test(password)) errors.passwordLength = errorStrings.passwordLength;
-
-    Validator.checkValidationErrors(response, errors, next);
-  }
   
+    return errors;
+  }
+
+
 }
 
 export default ValidateUser;
