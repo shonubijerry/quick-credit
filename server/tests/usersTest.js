@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import chaiHttp from 'chai-http';
 import chai from 'chai';
 import app from '../../app';
@@ -42,20 +43,6 @@ describe('User Controller', () => {
         });
     });
 
-    it('it should not register a user with firstname or lastname less than 2 characters', (done) => {
-        chai.request(app)
-          .post(signupUrl)
-          .send(testDb[1])
-          .end((error, res) => {
-              res.should.have.status(406);
-              res.body.should.be.a('object');
-              res.body.should.have.property('error');
-              res.body.error.should.have.property('nameLength');
-              res.body.error.nameLength.should.equal(errorStrings.nameLength);
-            done();
-        });
-    });
-
     it('it should not register a user with invalid firstname or lastname', (done) => {
         chai.request(app)
           .post(signupUrl)
@@ -84,24 +71,10 @@ describe('User Controller', () => {
         });
     });
 
-    it('it should not register a user with empty email', (done) => {
-        chai.request(app)
-          .post(signupUrl)
-          .send(testDb[3])
-          .end((error, res) => {
-              res.should.have.status(406);
-              res.body.should.be.a('object');
-              res.body.should.have.property('error');
-              res.body.error.should.have.property('emailRequired');
-              res.body.error.emailRequired.should.equal(errorStrings.emailRequired);
-            done();
-        });
-    });
-
     it('it should not register a user with same email twice', (done) => {
         chai.request(app)
           .post(signupUrl)
-          .send(testDb[4])
+          .send(testDb[3])
           .end((error, res) => {
               res.should.have.status(406);
               res.body.should.be.a('object');
@@ -114,7 +87,7 @@ describe('User Controller', () => {
     it('it should not register a user with invalid address', (done) => {
         chai.request(app)
           .post(signupUrl)
-          .send(testDb[5])
+          .send(testDb[4])
           .end((error, res) => {
               res.should.have.status(406);
               res.body.should.be.a('object');
@@ -125,16 +98,16 @@ describe('User Controller', () => {
         });
     });
 
-    it('it should not register a user with empty address', (done) => {
+    it('it should not register a user with password less than 6 characters', (done) => {
         chai.request(app)
           .post(signupUrl)
-          .send(testDb[6])
+          .send(testDb[4])
           .end((error, res) => {
               res.should.have.status(406);
               res.body.should.be.a('object');
               res.body.should.have.property('error');
-              res.body.error.should.have.property('addressRequired');
-              res.body.error.addressRequired.should.equal(errorStrings.addressRequired);
+              res.body.error.should.have.property('passwordLength');
+              res.body.error.passwordLength.should.equal(errorStrings.passwordLength);
             done();
         });
     });
@@ -142,27 +115,13 @@ describe('User Controller', () => {
     it('it should not register a user with empty password field', (done) => {
         chai.request(app)
           .post(signupUrl)
-          .send(testDb[6])
+          .send(testDb[5])
           .end((error, res) => {
               res.should.have.status(406);
               res.body.should.be.a('object');
               res.body.should.have.property('error');
               res.body.error.should.have.property('passwordEmpty');
               res.body.error.passwordEmpty.should.equal(errorStrings.passwordEmpty);
-            done();
-        });
-    });
-
-    it('it should not register a user with password less than 6 characters', (done) => {
-        chai.request(app)
-          .post(signupUrl)
-          .send(testDb[5])
-          .end((error, res) => {
-              res.should.have.status(406);
-              res.body.should.be.a('object');
-              res.body.should.have.property('error');
-              res.body.error.should.have.property('passwordLength');
-              res.body.error.passwordLength.should.equal(errorStrings.passwordLength);
             done();
         });
     });

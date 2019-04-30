@@ -34,30 +34,18 @@ class ValidateUser {
     if (!firstName || !rules.empty.test(firstName) || !lastName || !rules.empty.test(lastName))
       errors.nameRequired = errorStrings.nameRequired;
     
-    if (!rules.nameLength.test(firstName) || !rules.nameLength.test(lastName)) 
-        errors.nameLength = errorStrings.nameLength;
+    if (!rules.validName.test(firstName) || !rules.validName.test(lastName))
+       errors.validName = errorStrings.validName;        
 
-    if (!rules.validName.test(firstName) || !rules.validName.test(lastName)) 
-        errors.validName = errorStrings.validName;
+    if (!email || !rules.empty.test(email) || !rules.validEmail.test(email))
+       errors.validEmail = errorStrings.validEmail;
 
-    if ((!email || !rules.empty.test(email))) 
-      errors.emailRequired = errorStrings.emailRequired;
+    if (!address || !rules.empty.test(address) || !rules.validAddress.test(address))
+       errors.validAddress = errorStrings.validAddress;
 
-    if (!rules.validEmail.test(email))
-      errors.validEmail = errorStrings.validEmail;
+    if (!password || !rules.empty.test(password)) errors.passwordEmpty = errorStrings.passwordEmpty;
 
-    if (!rules.validAddress.test(address))
-      errors.validAddress = errorStrings.validAddress;
-
-    if (!address || !rules.empty.test(address))
-      errors.addressRequired = errorStrings.addressRequired;
-
-    if (!password || !rules.empty.test(password))
-      errors.passwordEmpty = errorStrings.passwordEmpty;
-
-    if (!rules.passwordLength.test(password))
-      errors.passwordLength = errorStrings.passwordLength;
-    
+    if (!rules.passwordLength.test(password)) errors.passwordLength = errorStrings.passwordLength;
 
     Validator.checkValidationErrors(response, errors, next);
   }

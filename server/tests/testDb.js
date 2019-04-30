@@ -26,13 +26,6 @@ const testUsers = [
         address : '6, Felix Street, Ikotun'
      },
      {
-        email : '',
-        firstName : 'Baba',
-        lastName : 'Quadri',
-        password : 'adenekan123',
-        address : '6, Felix Street, Ikotun'
-     },
-     {
         email : 'shonubijerry@gmail.com',
         firstName : 'Baba',
         lastName : 'Quadri',
