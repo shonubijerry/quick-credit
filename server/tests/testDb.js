@@ -5,7 +5,6 @@
 
 const testUsers = [
      {
-
       // sign up test data
         email : 'shonubijerry@gmail.cam', // valid registration details
         firstName : 'Shonubi',
@@ -72,4 +71,5 @@ const testUsers = [
      }
 ];
 
-export default testUsers;
+
+export default { testUsers };

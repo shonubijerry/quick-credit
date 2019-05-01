@@ -2,7 +2,7 @@
 import chaiHttp from 'chai-http';
 import chai from 'chai';
 import app from '../../app';
-import testUsers from './testDb'
+import testDb from './testDb'
 import errorStrings from '../helpers/errorStrings'
 
 chai.use(chaiHttp);
@@ -16,7 +16,7 @@ describe('User Controller', () => {
     it(`it should register a user with POST ${signupUrl}`, (done) => {
       chai.request(app)
         .post(signupUrl)
-        .send(testUsers[0])
+        .send(testDb.testUsers[0])
         .end((error, res) => {
             res.should.have.status(201);
             res.body.should.be.a('object');
@@ -34,7 +34,7 @@ describe('User Controller', () => {
     it('it should not register a user with empty firstname or lastname', (done) => {
         chai.request(app)
           .post(signupUrl)
-          .send(testUsers[1])
+          .send(testDb.testUsers[1])
           .end((error, res) => {
               res.should.have.status(406);
               res.body.should.be.a('object');
@@ -48,7 +48,7 @@ describe('User Controller', () => {
     it('it should not register a user with invalid firstname or lastname', (done) => {
         chai.request(app)
           .post(signupUrl)
-          .send(testUsers[1])
+          .send(testDb.testUsers[1])
           .end((error, res) => {
               res.should.have.status(406);
               res.body.should.be.a('object');
@@ -62,7 +62,7 @@ describe('User Controller', () => {
     it('it should not register a user with invalid email', (done) => {
         chai.request(app)
           .post(signupUrl)
-          .send(testUsers[2])
+          .send(testDb.testUsers[2])
           .end((error, res) => {
               res.should.have.status(406);
               res.body.should.be.a('object');
@@ -76,7 +76,7 @@ describe('User Controller', () => {
     it('it should not register a user with same email twice', (done) => {
         chai.request(app)
           .post(signupUrl)
-          .send(testUsers[3])
+          .send(testDb.testUsers[3])
           .end((error, res) => {
               res.should.have.status(406);
               res.body.should.be.a('object');
@@ -89,7 +89,7 @@ describe('User Controller', () => {
     it('it should not register a user with invalid address', (done) => {
         chai.request(app)
           .post(signupUrl)
-          .send(testUsers[4])
+          .send(testDb.testUsers[4])
           .end((error, res) => {
               res.should.have.status(406);
               res.body.should.be.a('object');
@@ -103,7 +103,7 @@ describe('User Controller', () => {
     it('it should not register a user with password less than 6 characters', (done) => {
         chai.request(app)
           .post(signupUrl)
-          .send(testUsers[4])
+          .send(testDb.testUsers[4])
           .end((error, res) => {
               res.should.have.status(406);
               res.body.should.be.a('object');
@@ -117,7 +117,7 @@ describe('User Controller', () => {
     it('it should not register a user with empty password field', (done) => {
         chai.request(app)
           .post(signupUrl)
-          .send(testUsers[5])
+          .send(testDb.testUsers[5])
           .end((error, res) => {
               res.should.have.status(406);
               res.body.should.be.a('object');
@@ -134,7 +134,7 @@ describe('User Controller', () => {
     it(`it should login a user with valid email and password`, (done) => {
       chai.request(app)
         .post(signinUrl)
-        .send(testUsers[6])
+        .send(testDb.testUsers[6])
         .end((error, res) => {
             res.should.have.status(200);
             res.body.should.be.a('object');
@@ -152,7 +152,7 @@ describe('User Controller', () => {
     it('it should not login a user with invalid email', (done) => {
       chai.request(app)
         .post(signinUrl)
-        .send(testUsers[7])
+        .send(testDb.testUsers[7])
         .end((error, res) => {
             res.should.have.status(406);
             res.body.should.be.a('object');
@@ -166,7 +166,7 @@ describe('User Controller', () => {
     it('it should not login a user with empty password', (done) => {
       chai.request(app)
         .post(signinUrl)
-        .send(testUsers[8])
+        .send(testDb.testUsers[8])
         .end((error, res) => {
             res.should.have.status(406);
             res.body.should.be.a('object');
@@ -180,7 +180,7 @@ describe('User Controller', () => {
     it('it should not login a user who doesn\'t exist', (done) => {
       chai.request(app)
         .post(signinUrl)
-        .send(testUsers[9])
+        .send(testDb.testUsers[9])
         .end((error, res) => {
             res.should.have.status(406);
             res.body.should.be.a('object');
@@ -193,7 +193,7 @@ describe('User Controller', () => {
     it('it should not login a user with wrong login email or password', (done) => {
       chai.request(app)
         .post(signinUrl)
-        .send(testUsers[10])
+        .send(testDb.testUsers[10])
         .end((error, res) => {
             res.should.have.status(406);
             res.body.should.be.a('object');
