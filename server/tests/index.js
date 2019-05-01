@@ -1,10 +1,9 @@
+/* eslint-disable no-undef */
 import chaiHttp from 'chai-http';
 import chai from 'chai';
 import app from '../../app';
 
-const { expect } = chai;
 chai.use(chaiHttp);
-const indexURL = '/';
 chai.should();
 
 describe('Home page', () => {

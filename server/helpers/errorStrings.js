@@ -13,6 +13,9 @@ const errorStrings = {
     passwordLength: 'Password must not be less than 6 characters',
     loginFailure: 'Could not login. Email and password do not match',
     emailNotExist: 'User does not exist',
+    notAuthenticated: 'You must login to have access to this feature',
+    validTenor: 'Tenor must range from 1 to 12 months',
+    validAmount: 'Amount must be digits',
     
 }
 

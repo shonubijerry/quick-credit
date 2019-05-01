@@ -5,7 +5,6 @@
 
 const testUsers = [
      {
-
       // sign up test data
         email : 'shonubijerry@gmail.cam', // valid registration details
         firstName : 'Shonubi',
@@ -72,4 +71,27 @@ const testUsers = [
      }
 ];
 
-export default testUsers;
+const testLoansApplication = [
+   {
+      amount: 60000,
+      tenor: 7
+   },
+   {
+      amount: '60000a',
+      tenor: 7
+   },
+   {
+      amount: 60000,
+      tenor: 14
+   },
+   {
+      amount: 60000,
+      tenor: 7
+   },
+   {
+      amount: 60000,
+      tenor: 7
+   },
+];
+
+export default { testUsers, testLoansApplication };

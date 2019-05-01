@@ -12,6 +12,8 @@ const rules = {
   nameLength: /^[a-zA-Z]{2,30}$/,
   passwordLength: /^.{6,}$/,
   validUrl: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
+  validTenor: /^([1-9]|[0-1][0-2])$/,
+  validAmount: /^[0-9]+(\.[0-9]{1,2})?$/,
 };
 
 export default rules;
