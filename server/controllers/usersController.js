@@ -1,6 +1,7 @@
 import usersModel from '../model/usersModel'
 import generateToken from '../helpers/token';
 import errorStrings from '../helpers/errorStrings';
+import ResponseHelper from '../helpers/responseHelper'
 
 /**
 * @fileOverview - class manages all users logic
@@ -45,6 +46,37 @@ class UsersController {
 
     }
 
+    /**
+     * Login a user
+     * @param {object} req 
+     * @param {object} res
+     */
+
+    static signin (req, res){
+        const singinResult = usersModel.signinQuery(req);
+        
+        if(!singinResult.error){
+            const currentToken = generateToken(singinResult);
+            process.env.CURRENT_TOKEN = currentToken;
+            return res.status(200).send({
+                status: 200,
+                data: {
+                    token: currentToken,
+                    id: singinResult.id,
+                    firstName: singinResult.firstName,
+                    lastName: singinResult.lastName,
+                    email: singinResult.email,
+                    isAdmin: singinResult.isAdmin
+                }
+            });
+        }
+        if(singinResult.error === 'wrong-password'){
+            ResponseHelper.errorResponse(res, errorStrings.loginFailure);
+        }
+        if(singinResult.error === 'user-not-exist'){
+            ResponseHelper.errorResponse(res, errorStrings.emailNotExist);
+        }
+    }
 
 
 }

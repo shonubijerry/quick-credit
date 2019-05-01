@@ -24,8 +24,11 @@ class ValidateUser {
   static validateSignup(request, response, next) {
 
     const signupErrors = ValidateUser.checkSignupErrors(request.body);
+    const signinErrors = ValidateUser.checkSigninErrors(request.body);
 
-    Validator.checkValidationErrors(response, signupErrors, next);
+    const errors = Object.assign(signupErrors, signinErrors);
+
+    Validator.checkValidationErrors(response, errors, next);
   }
 
   /**
@@ -34,24 +37,51 @@ class ValidateUser {
    * @return {String} errors
    */
 
-  static checkSignupErrors ({firstName,lastName,email,password,address}) {
+  static checkSignupErrors ({firstName,lastName,password,address}) {
     const errors = {};
 
     if (!firstName || !rules.empty.test(firstName) || !lastName || !rules.empty.test(lastName))
       errors.nameRequired = errorStrings.nameRequired;
     
     if (!rules.validName.test(firstName) || !rules.validName.test(lastName))
-       errors.validName = errorStrings.validName;        
-
-    if (!email || !rules.empty.test(email) || !rules.validEmail.test(email))
-       errors.validEmail = errorStrings.validEmail;
+       errors.validName = errorStrings.validName;
 
     if (!address || !rules.empty.test(address) || !rules.validAddress.test(address))
        errors.validAddress = errorStrings.validAddress;
 
-    if (!password || !rules.empty.test(password)) errors.passwordEmpty = errorStrings.passwordEmpty;
-
     if (!rules.passwordLength.test(password)) errors.passwordLength = errorStrings.passwordLength;
+  
+    return errors;
+  }
+
+  /**
+   * validate signin input
+   * @param {Object} request
+   * @param {Object} response
+   * @callback {Function} next 
+   * @return {Object} error
+   */
+
+  static validateSignin(request, response, next) {
+
+    const signinErrors = ValidateUser.checkSigninErrors(request.body);
+
+    Validator.checkValidationErrors(response, signinErrors, next);
+  }
+
+   /**
+   * collect possible singin errors
+   * @param {Object} request 
+   * @return {String} errors
+   */
+
+  static checkSigninErrors ({email,password}) {
+    const errors = {};
+    if (!email || !rules.empty.test(email) || !rules.validEmail.test(email))
+       errors.validEmail = errorStrings.validEmail;
+
+    if (!password || !rules.empty.test(password))
+       errors.passwordEmpty = errorStrings.passwordEmpty;
   
     return errors;
   }

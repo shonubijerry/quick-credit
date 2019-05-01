@@ -37,14 +37,33 @@ class UsersModel {
     }
 
     /**
+     * Find user in data structure
+     * @param {object} req
+     * @returns {object} 
+     */
+
+    static signinQuery (req) {
+        const { email, password } = req.body;
+        const findUser = users.find(user => user.email === email);
+        if(findUser){
+            if(passwordHelper.comparePasswords(password, findUser.password)){
+                return findUser;
+            }
+            return {error: 'wrong-password'};
+        }
+        return {error: 'user-not-exist' };           
+
+    }
+
+    /**
     * check if user email already exists
     * @param {String} email
     * @return boolean
     */
 
-    static checkRegistered(email) {
+    static checkRegistered (email) {
         let isFound = false;
-        users.map((user, index) => {
+        users.map((user) => {
             if (user.email === email) {
                 isFound = true;
             }

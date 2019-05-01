@@ -20,6 +20,7 @@ const routes = (app) => {
     }));
 
     app.post('/api/v1/auth/signup', ValidateUser.validateSignup, UsersController.signup);
+    app.post('/api/v1/auth/signin', ValidateUser.validateSignin, UsersController.signin);
 
     //declare 404 route
     app.all('*', (req, res) => res.status(404).json({

@@ -11,6 +11,8 @@ const errorStrings = {
     validAddress: 'Enter a valid Address',
     passwordEmpty: 'Your password is required',
     passwordLength: 'Password must not be less than 6 characters',
+    loginFailure: 'Could not login. Email and password do not match',
+    emailNotExist: 'User does not exist',
     
 }
 
