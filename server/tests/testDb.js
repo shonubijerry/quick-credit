@@ -4,8 +4,10 @@
  */
 
 const testUsers = [
-    {
-        email : 'shonubijerry@gmail.cam',
+     {
+
+      // sign up test data
+        email : 'shonubijerry@gmail.cam', // valid registration details
         firstName : 'Shonubi',
         lastName : 'Oluwakorede',
         password : 'olujac',
@@ -13,20 +15,20 @@ const testUsers = [
      },
      {
         email : 'adenekan@gmail.info',
-        firstName : '',
-        lastName : '#Quad%ri*',
+        firstName : '',  // no name
+        lastName : '#Quad%ri*', // invalid name
         password : 'adenekan123',
         address : '6, Felix Street, Ikotun'
      },
      {
-        email : 'adenekagmail.info',
+        email : 'adenekagmail.info', // invalid email
         firstName : 'Baba',
         lastName : 'Quadri',
         password : 'adenekan123',
         address : '6, Felix Street, Ikotun'
      },
      {
-        email : 'shonubijerry@gmail.com',
+        email : 'shonubijerry@gmail.com',  // email already exist
         firstName : 'Baba',
         lastName : 'Quadri',
         password : 'adenekan123',
@@ -37,14 +39,36 @@ const testUsers = [
         firstName : 'Baba',
         lastName : 'Quadri',
         password : 'adene',
-        address : '6'
+        address : '6'  // invalid address
      },
      {
         email : 'shonubi@ymail.com',
         firstName : 'Baba',
         lastName : 'Quadri',
-        password : '',
-        address : ''
+        password : '',  // empty password
+        address : ''  // empty address 
+     },
+
+     // sign in test data
+     {
+      email : 'shonubijerry@gmail.com',  // valid login details
+      password : 'olujac'
+     },
+     {
+      email : 'shonubijerrygmail.com',  // invalid login email
+      password : 'olujac'
+     },
+     {
+      email : 'shonubijerrygmail.com',
+      password : ''  // empty login password
+     },
+     {
+      email : 'korede.hot@yahoo.com', // user does not exist
+      password : 'olujac'
+     },
+     {
+      email : 'shonubijerry@gmail.com',
+      password : 'olujac1'  // incorrect login password
      }
 ];
 

@@ -56,6 +56,38 @@ class ValidateUser {
     return errors;
   }
 
+  /**
+   * validate signin input
+   * @param {Object} request
+   * @param {Object} response
+   * @callback {Function} next 
+   * @return {Object} error
+   */
+
+  static validateSignin(request, response, next) {
+
+    const signinErrors = ValidateUser.checkSigninErrors(request.body);
+
+    Validator.checkValidationErrors(response, signinErrors, next);
+  }
+
+   /**
+   * collect possible singin errors
+   * @param {Object} request 
+   * @return {String} errors
+   */
+
+  static checkSigninErrors ({email,password}) {
+    const errors = {};
+    if (!email || !rules.empty.test(email) || !rules.validEmail.test(email))
+       errors.validEmail = errorStrings.validEmail;
+
+    if (!password || !rules.empty.test(password))
+       errors.passwordEmpty = errorStrings.passwordEmpty;
+  
+    return errors;
+  }
+
 
 }
 

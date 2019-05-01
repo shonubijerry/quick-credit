@@ -54,7 +54,8 @@ class UsersController {
 
     static signin (req, res){
         const singinResult = usersModel.signinQuery(req);
-        if(typeof singinResult === "object"){
+        
+        if(!singinResult.error){
             const currentToken = generateToken(singinResult);
             process.env.CURRENT_TOKEN = currentToken;
             return res.status(200).send({
@@ -69,10 +70,10 @@ class UsersController {
                 }
             });
         }
-        if(singinResult === 'wrong-password'){
+        if(singinResult.error === 'wrong-password'){
             ResponseHelper.errorResponse(res, errorStrings.loginFailure);
         }
-        if(singinResult === 'user-not-exist'){
+        if(singinResult.error === 'user-not-exist'){
             ResponseHelper.errorResponse(res, errorStrings.emailNotExist);
         }
     }

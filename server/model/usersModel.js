@@ -39,7 +39,7 @@ class UsersModel {
     /**
      * Find user in data structure
      * @param {object} req
-     * @returns {string}
+     * @returns {object} 
      */
 
     static signinQuery (req) {
@@ -49,9 +49,9 @@ class UsersModel {
             if(passwordHelper.comparePasswords(password, findUser.password)){
                 return findUser;
             }
-            return 'wrong-password'
+            return {error: 'wrong-password'};
         }
-        return 'user-not-exist'            
+        return {error: 'user-not-exist' };           
 
     }
 
