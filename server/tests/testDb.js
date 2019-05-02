@@ -78,5 +78,27 @@ const testUsers = [
      }
 ];
 
+const testLoansApplication = [
+   {
+      amount: 60000,
+      tenor: 7
+   },
+   {
+      amount: '60000a',
+      tenor: 7
+   },
+   {
+      amount: 60000,
+      tenor: 14
+   },
+   {
+      amount: 60000,
+      tenor: 7
+   },
+   {
+      amount: 60000,
+      tenor: 7
+   },
+];
 
-export default { testUsers };
+export default { testUsers, testLoansApplication };

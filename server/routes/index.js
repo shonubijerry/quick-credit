@@ -1,9 +1,14 @@
 import UsersController from '../controllers/usersController'
+import LoansController from '../controllers/loansController'
 import ValidateUser from '../middleware/ValidateUser'
+import Auth from '../middleware/Auth'
+import ValidateLoans from '../middleware/ValidateLoans';
+import ResponseHelper from '../helpers/responseHelper';
 
 /**
  * @fileOverview index file for routes - it hosts all routes
  * @requires ../controllers/usersController
+ * @requires ../controllers/loansController
  * @requires ../middleware/ValidateUser
  * @param {object} app
  * @exports routes 
@@ -11,22 +16,16 @@ import ValidateUser from '../middleware/ValidateUser'
 
 const routes = (app) => {
     // homepage route
-    app.get('/', (request, response) => response.status(200).send({
-      status: 200,
-      data: {
-          message: 'Welcome To Quick Credit'
-      }
-      
-    }));
+    app.get('/', (req, res) => 
+        ResponseHelper.successOk(res, 'Welcome To Quick Credit'));
 
     app.post('/api/v1/auth/signup', ValidateUser.validateSignup, UsersController.signup);
     app.post('/api/v1/auth/signin', ValidateUser.validateSignin, UsersController.signin);
+    app.post('/api/v1/loans', Auth.authenticateUser, ValidateLoans.validateApplication, LoansController.createLoan);
 
     //declare 404 route
-    app.all('*', (req, res) => res.status(404).json({
-        status: 404,
-        error: 'The URL you are trying to access does not exist. Please enter a valid url',
-    }));
+    app.all('*', (req, res) => 
+        ResponseHelper.errorNotFound(res, 'The URL you are trying to access does not exist. Please enter a valid url'));
 
 };
 
