@@ -1,4 +1,5 @@
 import repayments from '../dummy/repayments'
+import Utils from '../helpers/utils';
 
 /**
 * @fileOverview - class manages all users data storage
@@ -12,20 +13,13 @@ class RepaymentsModel {
     
     /**
      * Get a single loan repayments
-     * @param {object} req 
-     * @returns {object} an object with all repayments
+     * @param {object} loanId 
+     * @returns {object} an object with loan repayments
      */
 
     static getLoanRepayments (loanId) {
 
-        const loanRepayments = [];
-        
-        for ( let singleRepayment of repayments ){
-            if (singleRepayment.loanId === loanId ){
-                loanRepayments.push(singleRepayment);
-            }
-        }
-        return loanRepayments;
+        return Utils.findInArray(loanId, repayments, 'loanId');
     }
 
 }

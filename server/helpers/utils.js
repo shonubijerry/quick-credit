@@ -16,6 +16,25 @@ class Utils {
         return `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`;
     }
 
+    /**
+     * find specific objects in array of objects
+     * @param {Object} filter search citerea
+     * @param {Object} key object key to match
+     * @param {Object} data array of objects
+     * @returns {array}  array of matched objects
+     */
+
+    static findInArray(filter, data, key) {
+        const arr = [];
+        
+        for ( let item of data ){
+            if (item[key] === filter ){
+                arr.push(item);
+            }
+        }
+        return arr;
+    }
+
 }
 
 export default Utils;
