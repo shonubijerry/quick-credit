@@ -23,6 +23,8 @@ const routes = (app) => {
     app.post('/api/v1/auth/signin', ValidateUser.validateSignin, UsersController.signin);
     app.post('/api/v1/loans', Auth.authenticateUser, ValidateLoans.validateApplication, LoansController.createLoan);
 
+    app.get('/api/v1/loans', Auth.authenticateUser, LoansController.getAllLoans);
+
     //declare 404 route
     app.all('*', (req, res) => 
         ResponseHelper.errorNotFound(res, 'The URL you are trying to access does not exist. Please enter a valid url'));

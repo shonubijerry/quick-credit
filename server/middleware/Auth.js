@@ -16,7 +16,6 @@ class Auth {
     * @param {Object} request
     * @param {Object} response
     * @param {callback} next
-    * @return {Object}
     */
 
   static authenticateUser(request, response, next) {

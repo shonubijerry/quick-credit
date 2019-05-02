@@ -21,7 +21,6 @@ class LoansController {
     static createLoan (req, res) {  
         
         const userEmail = req.token.user.email;
-
         const currentLoan = loansModel.checkCurrentLoan(userEmail)
 
         if(currentLoan.isFound === true ) {
@@ -48,6 +47,28 @@ class LoansController {
             });
         }
         
+    }
+
+    /**
+     * Get all loan applications
+     * @param {object} req 
+     * @param {object} res
+     * @returns {object} json response object
+     */
+
+    static getAllLoans (req, res) {
+
+        const userEmail = req.token.user.email;
+        const allLoans = loansModel.getUserLoans(userEmail);
+
+        if (allLoans.length > 0){
+            return res.status(200).send({
+                status: 200,
+                data: allLoans
+            });
+        } else {
+            ResponseHelper.errorResponse(res, "You currently do not have any loan to display");
+        }
     }
 
 

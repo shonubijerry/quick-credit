@@ -16,6 +16,7 @@ class LoansModel {
      * Add new user to data structure
      * @param {object} req 
      * @returns {object} user
+     * @returns {object} returns created loan as an object
      */
 
     static createLoan (req, user) {
@@ -40,6 +41,22 @@ class LoansModel {
         
         loans.push(newLoan);
         return newLoan;
+    }
+    
+    /**
+     * Get single user loans
+     * @param {object} req 
+     * @returns {object} an object with all loans
+     */
+
+    static getUserLoans (email) {
+        const loan = [];
+        for ( let singleLoan of loans ){
+            if (singleLoan.user === email ){
+                loan.push(singleLoan);
+            }
+        }
+        return loan;
     }
 
     /**
