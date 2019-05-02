@@ -56,7 +56,7 @@ class LoansController {
      * @returns {object} json response object
      */
 
-    static getAllLoans (req, res) {
+    static getUserLoans (req, res) {
 
         const userEmail = req.token.user.email;
         const allLoans = loansModel.getUserLoans(userEmail);

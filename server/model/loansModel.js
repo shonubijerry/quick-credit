@@ -50,13 +50,8 @@ class LoansModel {
      */
 
     static getUserLoans (email) {
-        const loan = [];
-        for ( let singleLoan of loans ){
-            if (singleLoan.user === email ){
-                loan.push(singleLoan);
-            }
-        }
-        return loan;
+        
+        return Utils.findInArray(email, loans, 'user');
     }
 
     /**

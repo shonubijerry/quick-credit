@@ -15,6 +15,7 @@ const errorStrings = {
     notAuthenticated: 'You must login to have access to this feature',
     validTenor: 'Tenor must range from 1 to 12 months',
     validAmount: 'Amount must be digits',
+    noRepayments: "There are currently no repayments for this loan",
     
 }
 
