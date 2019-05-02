@@ -37,15 +37,22 @@ const testUsers = [
         email : 'shonubijerry@ymail.com',
         firstName : 'Baba',
         lastName : 'Quadri',
-        password : 'adene',
+        password : 'adenee',
         address : '6'  // invalid address
      },
      {
         email : 'shonubi@ymail.com',
         firstName : 'Baba',
         lastName : 'Quadri',
+        password : 'adann',  // password length short
+        address : '6, Felix Street, Ikotun' 
+     },
+     {
+        email : 'shonubi@ymail.com',
+        firstName : 'Baba',
+        lastName : 'Quadri',
         password : '',  // empty password
-        address : ''  // empty address 
+        address : '6, Felix Street, Ikotun'
      },
 
      // sign in test data
