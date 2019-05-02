@@ -75,30 +75,31 @@ const testUsers = [
      {
       email : 'shonubijerry@gmail.com',
       password : 'olujac1'  // incorrect login password
+     },
+     {
+      email : 'badmanga@yahoo.com',  //test user with no loan application
+      password : 'gbenga123'  
+     },
+     {
+      email : 'adeade@gmail.com',  // user with current loan and status approved
+      password : 'ade123'  
      }
+     
 ];
 
 const testLoansApplication = [
    {
-      amount: 60000,
+      amount: 60000,  // correct loan application
       tenor: 7
    },
    {
-      amount: '60000a',
-      tenor: 7
-   },
-   {
-      amount: 60000,
-      tenor: 14
-   },
-   {
-      amount: 60000,
+      amount: '60000a',  // invalid loan amount
       tenor: 7
    },
    {
       amount: 60000,
-      tenor: 7
-   },
+      tenor: 14  //  invalid loan tenor
+   }
 ];
 
 export default { testUsers, testLoansApplication };

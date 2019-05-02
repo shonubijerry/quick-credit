@@ -20,7 +20,6 @@ dotenv.config();
 // declare constants
 const app = new Express();
 const port = process.env.PORT;
-console.log(port);
 
 // declare middleware
 app.use(cors());
