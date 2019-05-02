@@ -50,6 +50,18 @@ const loans = [
         paymentInstallment: '9000.00',
         balance: '0.00',
         interest: '3000.00' 
+    },
+    { 
+        id: 5,
+        user: 'adenekan2017@gmail.com',
+        createdOn: '02/05/2019 8:46:52 AM',
+        status: 'approved',
+        repaid: true,
+        tenor: 7,
+        amount: 89600,
+        paymentInstallment: '47040.00',
+        balance: '0.00',
+        interest: '4480.00' 
     }
  ];
 

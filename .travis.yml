@@ -1,3 +1,6 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=ad165e4a8c46703882439e668db63e13a7a9b12ecb2cdc4a884524fb9264a114
 language: node_js
 node_js:
  - "stable"
@@ -9,5 +12,13 @@ cache:
 addons:
   apt:
     update: true
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+script:
+  - bundle exec rspec
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 after_success: npm run coverage

@@ -20,29 +20,16 @@ class ValidateLoans {
    * @callback {Function} next 
    */
 
-  static validateApplication(request, response, next) {
+  static validateApplication(req, res, next) {
 
-    const errors = ValidateLoans.checkApplicationErrors(request.body);
+    let errors = {};
+    const {amount, tenor} = req.body;
+    
+    Object.assign(errors, Validator.validate(tenor, rules.empty, rules.validTenor, errorStrings.validTenor));
+    Object.assign(errors, Validator.validate(amount, rules.empty, rules.validAmount, errorStrings.validAmount));
 
-    Validator.checkValidationErrors(response, errors, next);
-  }
+    Validator.findErrors(res, errors, next);   
 
-  /**
-   * collect all possible errors
-   * @param {Object} request 
-   * @return {String} errors
-   */
-
-  static checkApplicationErrors ({amount, tenor}) {
-    const errors = {};
-
-    if (!amount || !rules.empty.test(amount) || !rules.validAmount.test(amount))
-       errors.validAmount = errorStrings.validAmount;
-       
-    if (!tenor || !rules.empty.test(tenor) || !rules.validTenor.test(tenor))
-       errors.validTenor = errorStrings.validTenor;
-  
-    return errors;
   }
 
 

@@ -31,7 +31,7 @@ describe('Loans Controller', () => {
     before((done) => {
       chai.request(app)
         .post(signinUrl)
-        .send(testDb.testUsers[6])
+        .send(testDb.testUsers[7])
         .end((error, res) => {
           currentToken = res.body.data.token;
           done();
@@ -71,8 +71,7 @@ describe('Loans Controller', () => {
           res.should.have.status(406);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
-          res.body.error.should.have.property('validAmount');
-          res.body.error.validAmount.should.equal(errorStrings.validAmount);
+          res.body.error.should.equal(errorStrings.validAmount);
           done();
       });
     });
@@ -86,8 +85,7 @@ describe('Loans Controller', () => {
           res.should.have.status(406);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
-          res.body.error.should.have.property('validTenor');
-          res.body.error.validTenor.should.equal(errorStrings.validTenor);
+          res.body.error.should.equal(errorStrings.validTenor);
           done();
       });
     });
