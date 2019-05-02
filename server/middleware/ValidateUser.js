@@ -28,7 +28,7 @@ class ValidateUser {
 
     const errors = Object.assign(signupErrors, signinErrors);
 
-    Validator.checkValidationErrors(response, errors, next);
+    Validator.findErrors(response, errors, next);
   }
 
   /**
@@ -40,16 +40,11 @@ class ValidateUser {
   static checkSignupErrors ({firstName,lastName,password,address}) {
     const errors = {};
 
-    if (!firstName || !rules.empty.test(firstName) || !lastName || !rules.empty.test(lastName))
-      errors.nameRequired = errorStrings.nameRequired;
-    
-    if (!rules.validName.test(firstName) || !rules.validName.test(lastName))
-       errors.validName = errorStrings.validName;
+    Object.assign(errors, Validator.validate(firstName, rules.empty, rules.validName, errorStrings.validName));
+    Object.assign(errors, Validator.validate(lastName, rules.empty, rules.validName, errorStrings.validName));
+    Object.assign(errors, Validator.validate(address, rules.empty, rules.validAddress, errorStrings.validAddress));
 
-    if (!address || !rules.empty.test(address) || !rules.validAddress.test(address))
-       errors.validAddress = errorStrings.validAddress;
-
-    if (!rules.passwordLength.test(password)) errors.passwordLength = errorStrings.passwordLength;
+    if (!rules.passwordLength.test(password)) errors.errorKey = errorStrings.passwordLength;
   
     return errors;
   }
@@ -66,7 +61,7 @@ class ValidateUser {
 
     const signinErrors = ValidateUser.checkSigninErrors(request.body);
 
-    Validator.checkValidationErrors(response, signinErrors, next);
+    Validator.findErrors(response, signinErrors, next);
   }
 
    /**
@@ -77,11 +72,11 @@ class ValidateUser {
 
   static checkSigninErrors ({email,password}) {
     const errors = {};
-    if (!email || !rules.empty.test(email) || !rules.validEmail.test(email))
-       errors.validEmail = errorStrings.validEmail;
 
+    Object.assign(errors, Validator.validate(email, rules.empty, rules.validEmail, errorStrings.validEmail));
+    
     if (!password || !rules.empty.test(password))
-       errors.passwordEmpty = errorStrings.passwordEmpty;
+       errors.errorKey = errorStrings.passwordEmpty;
   
     return errors;
   }
