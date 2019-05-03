@@ -12,7 +12,7 @@ let currentToken;
 const signinUrl = '/api/v1/auth/signin';
 const repaymentsUrl = '/api/v1/loans/3/repayments';
 
-describe('Loans Controller', () => {  
+describe('Repayment Controller', () => {  
 
   it('it should return authentication error', (done) => {
     chai.request(app)

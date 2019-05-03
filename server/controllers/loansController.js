@@ -56,10 +56,13 @@ class LoansController {
      * @returns {object} json response object
      */
 
-    static getUserLoans (req, res) {
+    static getLoans (req, res) {
+        let allLoans;
 
         const userEmail = req.token.user.email;
-        const allLoans = loansModel.getUserLoans(userEmail);
+        const isAdmin = req.token.user.isAdmin;
+        
+        allLoans = loansModel.getLoans(userEmail, isAdmin);  
 
         if (allLoans.length > 0){
             return res.status(200).send({
