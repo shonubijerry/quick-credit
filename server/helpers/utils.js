@@ -19,8 +19,8 @@ class Utils {
     /**
      * find specific objects in array of objects
      * @param {Object} filter search citerea
-     * @param {Object} data array of objects
      * @param {Object} key object key to match
+     * @param {Object} data array of objects
      * @returns {array}  array of matched objects
      */
 
@@ -33,19 +33,6 @@ class Utils {
             }
         }
         return arr;
-    }
-
-    /**
-     * return single object in array of objects
-     * @param {Object} filter search citerea
-     * @param {Object} data array of objects
-     * @param {Object} key object key to match
-     * @returns {array}  array of matched objects
-     */
-
-    static getSingleObject(filter, data, key) {
-                
-        return data.find(item => item[key] === filter );
     }
 
 }

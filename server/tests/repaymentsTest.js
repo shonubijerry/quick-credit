@@ -49,9 +49,9 @@ describe('Loans Controller', () => {
           res.body.data.should.be.a('array');
           res.body.data.should.not.be.empty;
           res.body.data[0].should.be.a('object');
-          res.body.data[0].should.have.property('loanId');
+          res.body.data[0].should.have.property('id');
           res.body.data[0].should.have.property('createdOn');
-          res.body.data[0].should.have.property('monthlyInstallment');
+          res.body.data[0].should.have.property('loanId');
           res.body.data[0].should.have.property('amount');
           done();
         });
