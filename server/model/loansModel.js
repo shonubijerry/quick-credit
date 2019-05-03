@@ -49,9 +49,13 @@ class LoansModel {
      * @returns {object} an object with all loans
      */
 
-    static getUserLoans (email) {
+    static getLoans (email, isAdmin) {
         
-        return Utils.findInArray(email, 'user', loans );
+        if (isAdmin === true){
+            return loans;
+        } else {
+            return Utils.findInArray(email, 'user', loans );
+        }
     }
     
     /**

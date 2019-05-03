@@ -134,10 +134,50 @@ describe('Loans Controller', () => {
 
   });
 
-  describe('GET /api/v1/loans', () => { 
+  describe('GET /api/v1/loans', () => {
+
+    describe(`User should get their loans`, () => {
     
-    it(`it should get user's loans`, (done) => {
-      chai.request(app)
+      it(`it should get user's loans`, (done) => {
+        chai.request(app)
+          .get(loansUrl)
+          .set('token', currentToken)
+          .end((error, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.should.have.property('data');
+            res.body.data.should.be.a('array');
+            res.body.data.should.not.be.empty;
+            res.body.data[0].should.be.a('object');
+            res.body.data[0].should.have.property('id');
+            res.body.data[0].should.have.property('user');
+            res.body.data[0].should.have.property('createdOn');
+            res.body.data[0].should.have.property('status');
+            res.body.data[0].should.have.property('repaid');
+            res.body.data[0].should.have.property('tenor');
+            res.body.data[0].should.have.property('amount');
+            res.body.data[0].should.have.property('paymentInstallment');
+            res.body.data[0].should.have.property('balance');
+            res.body.data[0].should.have.property('interest');
+            done();
+          });
+      });
+    });
+
+    describe(`Admin should get all loans`, () => {
+
+      before((done) => {
+        chai.request(app)
+          .post(signinUrl)
+          .send(testDb.testUsers[7])
+          .end((error, res) => {
+            currentToken = res.body.data.token;
+            done();
+          });
+      });
+
+      it(`It should get all loans for admin`, (done) => {
+        chai.request(app)
         .get(loansUrl)
         .set('token', currentToken)
         .end((error, res) => {
@@ -159,9 +199,10 @@ describe('Loans Controller', () => {
           res.body.data[0].should.have.property('interest');
           done();
         });
+      });
     });
 
-    describe('User has no loan to fetch', () => {
+    describe('There is no loan to fetch', () => {
 
       before((done) => {
         chai.request(app)
