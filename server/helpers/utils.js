@@ -24,7 +24,7 @@ class Utils {
      * @returns {array}  array of matched objects
      */
 
-    static findInArray(filter, data, key) {
+    static findInArray( filter, key, data ) {
         const arr = [];
         
         for ( let item of data ){
@@ -33,6 +33,19 @@ class Utils {
             }
         }
         return arr;
+    }
+
+    /**
+     * find single object in array of objects
+     * @param {Object} filter search citerea
+     * @param {Object} key object key to match
+     * @param {Object} data array of objects
+     * @returns {array}  matched single object
+     */
+
+    static findSingleItem( filter, key, data ) {
+
+        return data.find(item => item[key] === filter);
     }
 
 }

@@ -45,19 +45,30 @@ class LoansModel {
     
     /**
      * Get single user loans
-     * @param {object} req 
+     * @param {object} email 
      * @returns {object} an object with all loans
      */
 
     static getUserLoans (email) {
         
-        return Utils.findInArray(email, loans, 'user');
+        return Utils.findInArray(email, 'user', loans );
+    }
+    
+    /**
+     * Get single loans by loanId
+     * @param {object} loanId 
+     * @returns {object} an object with all loans
+     */
+
+    static getSingleLoan (loanId) {
+        
+        return Utils.findSingleItem(loanId, 'id', loans);
     }
 
     /**
      * Check if a user has an unpaid loan
-     * @param {object} req 
-     * @returns {object} user
+     * @param {object} email 
+     * @returns {object} loan object and boolean isFound
      */
 
     static checkCurrentLoan (email) {
