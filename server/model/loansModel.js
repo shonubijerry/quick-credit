@@ -53,6 +53,18 @@ class LoansModel {
         
         return Utils.findInArray(email, loans, 'user');
     }
+    
+    /**
+     * Get a single loan entry
+     * @param {object} loanId 
+     * @returns {object} return a single loan object
+     */
+
+    static getSingleLoan (loanId) {
+        
+        return Utils.getSingleObject(loanId, loans, 'id');
+        
+    }
 
     /**
      * Check if a user has an unpaid loan
@@ -69,6 +81,7 @@ class LoansModel {
         }
         return {isFound: false};
     }
+    
 
 }
 
