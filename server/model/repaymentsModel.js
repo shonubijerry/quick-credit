@@ -1,5 +1,6 @@
 import repayments from '../dummy/repayments'
 import Utils from '../helpers/utils';
+import LoansModel from '../model/loansModel'
 
 /**
 * @fileOverview - class manages all users data storage
@@ -19,7 +20,16 @@ class RepaymentsModel {
 
     static getLoanRepayments (loanId) {
 
-        return Utils.findInArray(loanId, repayments, 'loanId');
+        const loanRepayments = Utils.findInArray(loanId, 'loanId', repayments);
+
+        for (let repayment of loanRepayments){
+            const loan = LoansModel.getSingleLoan(repayment.loanId);
+            repayment.monthlyInstallment = loan.paymentInstallment;
+            delete repayment.id;
+        }
+
+        return loanRepayments;
+
     }
 
 }
