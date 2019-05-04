@@ -1,6 +1,6 @@
-import repayments from '../dummy/repayments'
+import repayments from '../dummy/repayments';
 import Utils from '../helpers/utils';
-import LoansModel from '../model/loansModel'
+import LoansModel from './loansModel';
 
 /**
 * @fileOverview - class manages all users data storage
@@ -8,30 +8,30 @@ import LoansModel from '../model/loansModel'
 * @exports - repaymentsModel.js
 * @requires - ../helpers/loanHelper
 * @requires - ../dummy/repayments
-**/
+* */
 
 class RepaymentsModel {
-    
-    /**
+  /**
      * Get a single loan repayments
-     * @param {object} loanId 
+     * @param {object} loanId
      * @returns {object} an object with loan repayments
      */
 
-    static getLoanRepayments (loanId) {
+  static getLoanRepayments(loanId) {
+    const repaymentsBuild = [];
+    const loanRepayments = Utils.findInArray(loanId, 'loanId', repayments);
+    const loan = LoansModel.getSingleLoan(loanId);
 
-        const loanRepayments = Utils.findInArray(loanId, 'loanId', repayments);
-
-        for (let repayment of loanRepayments){
-            const loan = LoansModel.getSingleLoan(repayment.loanId);
-            repayment.monthlyInstallment = loan.paymentInstallment;
-            delete repayment.id;
-        }
-
-        return loanRepayments;
-
-    }
-
+    loanRepayments.forEach((entry) => {
+      repaymentsBuild.push({
+        loanId: entry.loanId,
+        createdOn: entry.createdOn,
+        monthlyInstallment: loan.paymentInstallment,
+        amount: entry.amount,
+      });
+    });
+    return repaymentsBuild;
+  }
 }
 
 export default RepaymentsModel;

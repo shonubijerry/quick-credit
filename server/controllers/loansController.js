@@ -1,80 +1,70 @@
-import loansModel from '../model/loansModel'
-import ResponseHelper from '../helpers/responseHelper'
+import loansModel from '../model/loansModel';
+import ResponseHelper from '../helpers/responseHelper';
+import Utils from '../helpers/utils';
 
 /**
 * @fileOverview - class manages all users logic
 * @class - LoansController
 * @requires - ../model/loansModel
 * @requires - ../helpers/token
-* @requires - ../helpers/errorStrings
+* @requires - ../helpers/utils
 * @exports - loansController.js
-**/
+* */
 
 class LoansController {
-
-    /**
+  /**
      * Create a loan application
-     * @param {object} req 
+     * @param {object} req
      * @param {object} res
      */
 
-    static createLoan (req, res) {  
-        
-        const userEmail = req.token.user.email;
-        const currentLoan = loansModel.checkCurrentLoan(userEmail)
+  static createLoan(req, res) {
+    const userEmail = req.token.user.email;
+    const currentLoan = loansModel.checkCurrentLoan(userEmail);
 
-        if(currentLoan.isFound === true ) {
+    if (currentLoan.isFound === true) {
+      ResponseHelper.errorResponse(res, `You have an unpaid loan of ${currentLoan.foundLoan.amount} which is under review or yet to be fully repaid`);
+    } else {
+      const newLoan = loansModel.createLoan(req, userEmail);
 
-            ResponseHelper.errorResponse(res, `You have an unpaid loan of ${currentLoan.loan.amount} which is under review or yet to be fully repaid`);
-
-        } else {
-            const newLoan = loansModel.createLoan(req, userEmail);
-
-            return res.status(201).send({
-                status: 201,
-                data: {
-                    loanId: newLoan.id,
-                    user: newLoan.user,
-                    createdOn: newLoan.createdOn,
-                    status: newLoan.status,
-                    repaid: newLoan.repaid,
-                    tenor: newLoan.tenor,
-                    amount: newLoan.amount,
-                    paymentInstallment: newLoan.paymentInstallment,
-                    balance: newLoan.balance,
-                    interest: newLoan.interest
-                }
-            });
-        }
-        
+      return res.status(201).send({
+        status: 201,
+        data: {
+          loanId: newLoan.id,
+          user: newLoan.user,
+          createdOn: newLoan.createdOn,
+          status: newLoan.status,
+          repaid: newLoan.repaid,
+          tenor: newLoan.tenor,
+          amount: newLoan.amount,
+          paymentInstallment: newLoan.paymentInstallment,
+          balance: newLoan.balance,
+          interest: newLoan.interest,
+        },
+      });
     }
+    return null;
+  }
 
-    /**
+  /**
      * Get all loan applications
-     * @param {object} req 
+     * @param {object} req
      * @param {object} res
      * @returns {object} json response object
      */
 
-    static getLoans (req, res) {
-        let allLoans;
+  static getLoans(req, res) {
+    let allLoans = {};
+    const userEmail = req.token.user.email;
+    const { isAdmin } = req.token.user;
 
-        const userEmail = req.token.user.email;
-        const isAdmin = req.token.user.isAdmin;
-        
-        allLoans = loansModel.getLoans(userEmail, isAdmin);  
+    allLoans = loansModel.getLoans(userEmail, isAdmin);
 
-        if (allLoans.length > 0){
-            return res.status(200).send({
-                status: 200,
-                data: allLoans
-            });
-        } else {
-            ResponseHelper.errorResponse(res, "You currently do not have any loan to display");
-        }
+    if (Utils.checkLength(allLoans) > 0) {
+      return ResponseHelper.successOk(res, allLoans);
     }
-
-
+    return ResponseHelper.errorResponse(res, 'You currently do not have any loan to display');
+  }
 }
 
 export default LoansController;

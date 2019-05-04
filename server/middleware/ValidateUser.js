@@ -17,12 +17,11 @@ class ValidateUser {
    * validate signup input
    * @param {Object} request
    * @param {Object} response
-   * @callback {Function} next 
+   * @callback {Function} next
    * @return {Object} error
    */
 
   static validateSignup(request, response, next) {
-
     const signupErrors = ValidateUser.checkSignupErrors(request.body);
     const signinErrors = ValidateUser.checkSigninErrors(request.body);
 
@@ -33,19 +32,27 @@ class ValidateUser {
 
   /**
    * collect all possible errors
-   * @param {Object} request 
+   * @param {Object} request
    * @return {String} errors
    */
 
-  static checkSignupErrors ({firstName,lastName,password,address}) {
+  static checkSignupErrors({
+    firstName, lastName, password, address,
+  }) {
     const errors = {};
 
-    Object.assign(errors, Validator.validate(firstName, rules.empty, rules.validName, errorStrings.validName));
-    Object.assign(errors, Validator.validate(lastName, rules.empty, rules.validName, errorStrings.validName));
-    Object.assign(errors, Validator.validate(address, rules.empty, rules.validAddress, errorStrings.validAddress));
+    Object.assign(errors, Validator.validate(
+      firstName, rules.empty, rules.validName, errorStrings.validName,
+    ));
+    Object.assign(errors, Validator.validate(
+      lastName, rules.empty, rules.validName, errorStrings.validName,
+    ));
+    Object.assign(errors, Validator.validate(
+      address, rules.empty, rules.validAddress, errorStrings.validAddress,
+    ));
 
     if (!rules.passwordLength.test(password)) errors.errorKey = errorStrings.passwordLength;
-  
+
     return errors;
   }
 
@@ -53,35 +60,33 @@ class ValidateUser {
    * validate signin input
    * @param {Object} request
    * @param {Object} response
-   * @callback {Function} next 
+   * @callback {Function} next
    * @return {Object} error
    */
 
   static validateSignin(request, response, next) {
-
     const signinErrors = ValidateUser.checkSigninErrors(request.body);
 
     Validator.findErrors(response, signinErrors, next);
   }
 
-   /**
+  /**
    * collect possible singin errors
-   * @param {Object} request 
+   * @param {Object} request
    * @return {String} errors
    */
 
-  static checkSigninErrors ({email,password}) {
+  static checkSigninErrors({ email, password }) {
     const errors = {};
 
-    Object.assign(errors, Validator.validate(email, rules.empty, rules.validEmail, errorStrings.validEmail));
-    
-    if (!password || !rules.empty.test(password))
-       errors.errorKey = errorStrings.passwordEmpty;
-  
+    Object.assign(errors, Validator.validate(
+      email, rules.empty, rules.validEmail, errorStrings.validEmail,
+    ));
+
+    if (!password || !rules.empty.test(password)) { errors.errorKey = errorStrings.passwordEmpty; }
+
     return errors;
   }
-
-
 }
 
 export default ValidateUser;

@@ -10,8 +10,7 @@ const secretKey = process.env.SECRET_KEY;
  * @requires '../helpers/errorStrings'
  */
 class Auth {
-
-    /**
+  /**
     * Authenticate users
     * @param {Object} request
     * @param {Object} response
@@ -25,12 +24,9 @@ class Auth {
       request.token = verifiedToken;
       return next();
     } catch (error) {
-      ResponseHelper.errorUnauthorized(response, errorStrings.notAuthenticated);
+      return ResponseHelper.errorUnauthorized(response, errorStrings.notAuthenticated);
     }
-    
   }
-
-
 }
 
 export default Auth;
