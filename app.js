@@ -2,7 +2,6 @@
 import Express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import cors from 'cors';
 import routes from './server/routes';
 
 /**
@@ -13,7 +12,7 @@ import routes from './server/routes';
 * @requires - cors
 * @requires - ./server/routes
 * @exports - app.js
-**/
+* */
 
 dotenv.config();
 
@@ -22,7 +21,6 @@ const app = new Express();
 const port = process.env.PORT;
 
 // declare middleware
-app.use(cors());
 app.use(bodyParser.urlencoded({
   extended: false,
 }));

@@ -2,8 +2,8 @@
 import chaiHttp from 'chai-http';
 import chai from 'chai';
 import app from '../../app';
-import testDb from './testDb'
-import errorStrings from '../helpers/errorStrings'
+import testDb from './testDb';
+import errorStrings from '../helpers/errorStrings';
 
 chai.use(chaiHttp);
 chai.should();
@@ -12,8 +12,7 @@ let currentToken;
 const signinUrl = '/api/v1/auth/signin';
 const loansUrl = '/api/v1/loans';
 
-describe('Loans Controller', () => {  
-
+describe('Loans Controller', () => {
   it('it should return authentication error', (done) => {
     chai.request(app)
       .post(loansUrl)
@@ -24,7 +23,7 @@ describe('Loans Controller', () => {
         res.body.should.have.property('error');
         res.body.error.should.equal(errorStrings.notAuthenticated);
         done();
-    });
+      });
   });
 
   before((done) => {
@@ -37,9 +36,8 @@ describe('Loans Controller', () => {
       });
   });
 
-  describe('POST /api/v1/loans', () => { 
-    
-    it(`it should create loan application with valid amount and tenor`, (done) => {
+  describe('POST /api/v1/loans', () => {
+    it('it should create loan application with valid amount and tenor', (done) => {
       chai.request(app)
         .post(loansUrl)
         .send(testDb.testLoansApplication[0])
@@ -74,7 +72,7 @@ describe('Loans Controller', () => {
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.validAmount);
           done();
-      });
+        });
     });
 
     it('it should not create loan application with invalid tenor', (done) => {
@@ -88,11 +86,10 @@ describe('Loans Controller', () => {
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.validTenor);
           done();
-      });
+        });
     });
 
     describe('User has current loan', () => {
-
       before((done) => {
         chai.request(app)
           .post(signinUrl)
@@ -112,9 +109,9 @@ describe('Loans Controller', () => {
             res.should.have.status(406);
             res.body.should.be.a('object');
             res.body.should.have.property('error');
-            res.body.error.should.equal(`You have an unpaid loan of 80000 which is under review or yet to be fully repaid`);
+            res.body.error.should.equal('You have an unpaid loan of 80000 which is under review or yet to be fully repaid');
             done();
-        });
+          });
       });
     });
 
@@ -127,18 +124,15 @@ describe('Loans Controller', () => {
           res.should.have.status(406);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
-          res.body.error.should.equal(`You have an unpaid loan of 60000 which is under review or yet to be fully repaid`);
+          res.body.error.should.equal('You have an unpaid loan of 60000 which is under review or yet to be fully repaid');
           done();
-      });
+        });
     });
-
   });
 
   describe('GET /api/v1/loans', () => {
-
-    describe(`User should get their loans`, () => {
-    
-      it(`it should get user's loans`, (done) => {
+    describe('User should get their loans', () => {
+      it('it should get user\'s loans', (done) => {
         chai.request(app)
           .get(loansUrl)
           .set('token', currentToken)
@@ -147,7 +141,6 @@ describe('Loans Controller', () => {
             res.body.should.be.a('object');
             res.body.should.have.property('data');
             res.body.data.should.be.a('array');
-            res.body.data.should.not.be.empty;
             res.body.data[0].should.be.a('object');
             res.body.data[0].should.have.property('id');
             res.body.data[0].should.have.property('user');
@@ -164,8 +157,7 @@ describe('Loans Controller', () => {
       });
     });
 
-    describe(`Admin should get all loans`, () => {
-
+    describe('Admin should get all loans', () => {
       before((done) => {
         chai.request(app)
           .post(signinUrl)
@@ -176,34 +168,32 @@ describe('Loans Controller', () => {
           });
       });
 
-      it(`It should get all loans for admin`, (done) => {
+      it('It should get all loans for admin', (done) => {
         chai.request(app)
-        .get(loansUrl)
-        .set('token', currentToken)
-        .end((error, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.should.have.property('data');
-          res.body.data.should.be.a('array');
-          res.body.data.should.not.be.empty;
-          res.body.data[0].should.be.a('object');
-          res.body.data[0].should.have.property('id');
-          res.body.data[0].should.have.property('user');
-          res.body.data[0].should.have.property('createdOn');
-          res.body.data[0].should.have.property('status');
-          res.body.data[0].should.have.property('repaid');
-          res.body.data[0].should.have.property('tenor');
-          res.body.data[0].should.have.property('amount');
-          res.body.data[0].should.have.property('paymentInstallment');
-          res.body.data[0].should.have.property('balance');
-          res.body.data[0].should.have.property('interest');
-          done();
-        });
+          .get(loansUrl)
+          .set('token', currentToken)
+          .end((error, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.should.have.property('data');
+            res.body.data.should.be.a('array');
+            res.body.data[0].should.be.a('object');
+            res.body.data[0].should.have.property('id');
+            res.body.data[0].should.have.property('user');
+            res.body.data[0].should.have.property('createdOn');
+            res.body.data[0].should.have.property('status');
+            res.body.data[0].should.have.property('repaid');
+            res.body.data[0].should.have.property('tenor');
+            res.body.data[0].should.have.property('amount');
+            res.body.data[0].should.have.property('paymentInstallment');
+            res.body.data[0].should.have.property('balance');
+            res.body.data[0].should.have.property('interest');
+            done();
+          });
       });
     });
 
     describe('There is no loan to fetch', () => {
-
       before((done) => {
         chai.request(app)
           .post(signinUrl)
@@ -214,7 +204,7 @@ describe('Loans Controller', () => {
           });
       });
 
-      it(`it should return empty data if no loan is found`, (done) => {
+      it('it should return empty data if no loan is found', (done) => {
         chai.request(app)
           .get(loansUrl)
           .set('token', currentToken)
@@ -227,9 +217,5 @@ describe('Loans Controller', () => {
           });
       });
     });
-
   });
-
-
-
 });

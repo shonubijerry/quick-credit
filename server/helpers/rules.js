@@ -1,7 +1,8 @@
+/* eslint-disable no-useless-escape */
 /**
 *   @fileOverview - regular expressions for available fields
 *   @exports rules
-**/
+* */
 
 const rules = {
   validName: /^[a-zA-Z]+$/,

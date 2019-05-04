@@ -17,22 +17,22 @@ class ValidateLoans {
    * validate signup input
    * @param {Object} request
    * @param {Object} response
-   * @callback {Function} next 
+   * @callback {Function} next
    */
 
   static validateApplication(req, res, next) {
+    const errors = {};
+    const { amount, tenor } = req.body;
 
-    let errors = {};
-    const {amount, tenor} = req.body;
-    
-    Object.assign(errors, Validator.validate(tenor, rules.empty, rules.validTenor, errorStrings.validTenor));
-    Object.assign(errors, Validator.validate(amount, rules.empty, rules.validAmount, errorStrings.validAmount));
+    Object.assign(errors, Validator.validate(
+      tenor, rules.empty, rules.validTenor, errorStrings.validTenor,
+    ));
+    Object.assign(errors, Validator.validate(
+      amount, rules.empty, rules.validAmount, errorStrings.validAmount,
+    ));
 
-    Validator.findErrors(res, errors, next);   
-
+    Validator.findErrors(res, errors, next);
   }
-
-
 }
 
 export default ValidateLoans;
