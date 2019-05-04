@@ -14,9 +14,7 @@ class ResponseHelper {
   static successOk(res, message) {
     return res.status(200).json({
       status: 200,
-      data: {
-        message,
-      },
+      data: message,
     });
   }
 

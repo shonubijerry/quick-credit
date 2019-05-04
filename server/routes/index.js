@@ -19,7 +19,7 @@ import ResponseHelper from '../helpers/responseHelper';
 const routes = (app) => {
   const api = '/api/v1';
   // homepage route
-  app.get('/', (req, res) => ResponseHelper.successOk(res, 'Welcome To Quick Credit'));
+  app.get('/', (req, res) => ResponseHelper.successOk(res, { message: 'Welcome To Quick Credit' }));
 
   app.post(`${api}/auth/signup`, ValidateUser.validateSignup, UsersController.signup);
   app.post(`${api}/auth/signin`, ValidateUser.validateSignin, UsersController.signin);

@@ -45,6 +45,18 @@ class Utils {
   static findSingleItem(filter, key, data) {
     return data.find(item => item[key] === filter);
   }
+
+  /**
+     * find single object in array of objects
+     * @param {Object} filter search citerea
+     * @param {Object} key object key to match
+     * @param {Object} data array of objects
+     * @returns {array}  matched single object
+     */
+
+  static checkLength(data) {
+    return data.length;
+  }
 }
 
 export default Utils;

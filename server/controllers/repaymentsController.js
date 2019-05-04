@@ -1,6 +1,7 @@
 import RepaymentsModel from '../model/repaymentsModel';
 import ResponseHelper from '../helpers/responseHelper';
 import errorStrings from '../helpers/errorStrings';
+import Utils from '../helpers/utils';
 
 /**
 * @fileOverview - class manages all loan repayments
@@ -22,12 +23,8 @@ class RepaymentsController {
   static getLoanRepayments(req, res) {
     const loanId = parseInt(req.params.loanId, 10);
     const loanRepayments = RepaymentsModel.getLoanRepayments(loanId);
-
-    if (loanRepayments.length > 0) {
-      return res.status(200).send({
-        status: 200,
-        data: loanRepayments,
-      });
+    if (Utils.checkLength(loanRepayments) > 0) {
+      return ResponseHelper.successOk(res, loanRepayments);
     }
     return ResponseHelper.errorResponse(res, errorStrings.noRepayments);
   }

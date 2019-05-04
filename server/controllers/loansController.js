@@ -1,12 +1,13 @@
 import loansModel from '../model/loansModel';
 import ResponseHelper from '../helpers/responseHelper';
+import Utils from '../helpers/utils';
 
 /**
 * @fileOverview - class manages all users logic
 * @class - LoansController
 * @requires - ../model/loansModel
 * @requires - ../helpers/token
-* @requires - ../helpers/errorStrings
+* @requires - ../helpers/utils
 * @exports - loansController.js
 * */
 
@@ -59,11 +60,8 @@ class LoansController {
 
     allLoans = loansModel.getLoans(userEmail, isAdmin);
 
-    if (allLoans.length > 0) {
-      return res.status(200).send({
-        status: 200,
-        data: allLoans,
-      });
+    if (Utils.checkLength(allLoans) > 0) {
+      return ResponseHelper.successOk(res, allLoans);
     }
     return ResponseHelper.errorResponse(res, 'You currently do not have any loan to display');
   }
