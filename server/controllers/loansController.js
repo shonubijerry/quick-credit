@@ -9,6 +9,7 @@ import errorStrings from '../helpers/errorStrings';
 * @requires - ../model/loansModel
 * @requires - ../helpers/token
 * @requires - ../helpers/utils
+* @requires - ../helpers/errorStrings'
 * @exports - loansController.js
 * */
 
@@ -64,7 +65,24 @@ class LoansController {
     if (Utils.checkLength(allLoans) > 0) {
       return ResponseHelper.success(res, 200, allLoans);
     }
-    return ResponseHelper.error(res, 406, errorStrings.noLoans);
+    return ResponseHelper.error(res, 404, errorStrings.noLoans);
+  }
+
+  /**
+     * Get a specific loan (admin privilege)
+     * @param {object} req
+     * @param {object} res
+     * @returns {object} json response object
+     */
+
+  static getLoan(req, res) {
+    const userId = Number.parseInt(req.params.loanId, 10);
+
+    const loan = loansModel.getSingleLoan(userId);
+    if (loan === undefined) {
+      return ResponseHelper.error(res, 404, errorStrings.noLoan);
+    }
+    return ResponseHelper.success(res, 200, loan);
   }
 }
 
