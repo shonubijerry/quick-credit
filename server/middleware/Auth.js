@@ -24,7 +24,7 @@ class Auth {
       request.token = verifiedToken;
       return next();
     } catch (error) {
-      return ResponseHelper.errorUnauthorized(response, errorStrings.notAuthenticated);
+      return ResponseHelper.error(response, 401, errorStrings.notAuthenticated);
     }
   }
 
@@ -41,10 +41,10 @@ class Auth {
       const verifiedToken = jwt.verify(token, secretKey);
       request.token = verifiedToken;
       if (verifiedToken.user.isAdmin === false) {
-        return ResponseHelper.forbiddenError(response, errorStrings.notAllowed);
+        return ResponseHelper.error(response, 403, errorStrings.notAllowed);
       } return next();
     } catch (error) {
-      return ResponseHelper.errorUnauthorized(response, errorStrings.notAuthenticated);
+      return ResponseHelper.error(response, 401, errorStrings.notAuthenticated);
     }
   }
 }

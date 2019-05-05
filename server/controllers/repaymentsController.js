@@ -24,9 +24,9 @@ class RepaymentsController {
     const loanId = parseInt(req.params.loanId, 10);
     const loanRepayments = RepaymentsModel.getLoanRepayments(loanId);
     if (Utils.checkLength(loanRepayments) > 0) {
-      return ResponseHelper.successOk(res, loanRepayments);
+      return ResponseHelper.success(res, 200, loanRepayments);
     }
-    return ResponseHelper.errorResponse(res, errorStrings.noRepayments);
+    return ResponseHelper.error(res, 406, errorStrings.noRepayments);
   }
 }
 
