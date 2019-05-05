@@ -18,6 +18,8 @@ const errorStrings = {
   noRepayments: 'There are currently no repayments for this loan',
   noUsers: 'There are currently no registered users',
   noUser: 'User does not exist',
+  notAllowed: 'You are forbidden from accessing this section of the app',
+  alreadyVerified: 'User has already been verified',
 
 };
 

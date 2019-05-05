@@ -70,6 +70,30 @@ class UsersModel {
     }
     return false;
   }
+
+  /**
+  * verify a specific user by email
+  * @param {string} email email of the user to verify
+  * @returns verified user
+  */
+
+  static verifyUser(email) {
+    let info;
+    const foundItem = Utils.updateItems(users, email);
+    if (foundItem === false) {
+      info = 'no-user';
+    } else if (foundItem.item.status === 'verified') {
+      info = 'already-verified';
+    } else {
+      foundItem.item.status = 'verified';
+      users.splice(foundItem.index, 1, foundItem.item);
+      delete foundItem.item.isAdmin;
+      delete foundItem.item.id;
+      info = foundItem.item;
+    }
+
+    return info;
+  }
 }
 
 export default UsersModel;

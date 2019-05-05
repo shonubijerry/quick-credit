@@ -21,11 +21,8 @@ class UsersController {
  */
 
   static signup(req, res) {
-    if (usersModel.checkRegistered(req.body.email)) {
-      return res.status(406).send({
-        status: 406,
-        error: errorStrings.emailExists,
-      });
+    if (usersModel.checkRegistered(req.body.email) === true) {
+      return ResponseHelper.errorResponse(res, errorStrings.emailExists);
     }
 
     const newUser = usersModel.signupQuery(req);
@@ -72,6 +69,25 @@ class UsersController {
       return ResponseHelper.errorResponse(res, errorStrings.loginFailure);
     }
     return ResponseHelper.errorResponse(res, errorStrings.emailNotExist);
+  }
+
+  /**
+    * Verify a user (administrator privilege is required)
+    * @param {object} req
+    * @param {object} res
+    * @returns json object
+    */
+
+  static verifyUser(req, res) {
+    const userEmail = req.params.email;
+    const foundUser = usersModel.verifyUser(userEmail);
+    if (foundUser === 'no-user') {
+      return ResponseHelper.errorNotFound(res, errorStrings.noUser);
+    }
+    if (foundUser === 'already-verified') {
+      return ResponseHelper.errorResponse(res, errorStrings.alreadyVerified);
+    }
+    return ResponseHelper.successOk(res, foundUser);
   }
 }
 

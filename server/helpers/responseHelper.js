@@ -8,7 +8,7 @@ class ResponseHelper {
   /**
      * success ok response 200
      * @param {object} res
-     * @param {object} error
+     * @param {object} message
     * */
 
   static successOk(res, message) {
@@ -32,18 +32,18 @@ class ResponseHelper {
     });
   }
 
-  // /**
-  //  * return forbidden error response 403
-  //  * @param {object} res
-  //  * @param {object} error
-  // **/
+  /**
+   * return forbidden error response 403
+   * @param {object} res
+   * @param {object} error
+  * */
 
-  // static forbiddenError(res, error){
-  //   return res.status(403).json({
-  //     status: 403,
-  //     error
-  //   });
-  // }
+  static forbiddenError(res, error) {
+    return res.status(403).json({
+      status: 403,
+      error,
+    });
+  }
 
   /**
      * return unacceptable error response 404

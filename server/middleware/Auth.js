@@ -27,6 +27,26 @@ class Auth {
       return ResponseHelper.errorUnauthorized(response, errorStrings.notAuthenticated);
     }
   }
+
+  /**
+     * check Admin role
+     * @param {Object} request
+     * @param {Object} response
+     * @param {Function} next
+     * @return {Object}
+     */
+  static authenticateAdmin(request, response, next) {
+    try {
+      const token = request.headers['x-access'] || request.headers.token;
+      const verifiedToken = jwt.verify(token, secretKey);
+      request.token = verifiedToken;
+      if (verifiedToken.user.isAdmin === false) {
+        return ResponseHelper.forbiddenError(response, errorStrings.notAllowed);
+      } return next();
+    } catch (error) {
+      return ResponseHelper.errorUnauthorized(response, errorStrings.notAuthenticated);
+    }
+  }
 }
 
 export default Auth;

@@ -87,6 +87,24 @@ class ValidateUser {
 
     return errors;
   }
+
+  /**
+   * validate email parameter from request.params.email
+   * @param {Object} request
+   * @param {Object} response
+   * @callback {Function} next
+   * @return {Object} error
+   */
+
+  static validateParamEmail(req, res, next) {
+    const error = {};
+
+    Object.assign(error, Validator.validate(
+      req.params.email, rules.empty, rules.validEmail, errorStrings.validEmail,
+    ));
+
+    Validator.findErrors(res, error, next);
+  }
 }
 
 export default ValidateUser;
