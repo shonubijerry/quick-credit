@@ -28,6 +28,7 @@ const routes = (app) => {
   // app.get(`${api}/users`, Auth.authenticateUser, UsersController.getUsers);
 
   app.get(`${api}/loans`, Auth.authenticateUser, LoansController.getLoans);
+  app.get(`${api}/loans/:loanId`, Auth.authenticateAdmin, LoansController.getLoan);
   app.get(`${api}/loans/:loanId/repayments`, Auth.authenticateUser, RepaymentsController.getLoanRepayments);
 
   app.patch(`${api}/users/:email/verify`, Auth.authenticateAdmin, ValidateUser.validateParamEmail, UsersController.verifyUser);

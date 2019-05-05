@@ -7,9 +7,10 @@
 class ResponseHelper {
   /**
      * success: prepare json response for API endpoint
-     * @param {object} res
-     * @param {Number} status
-     * @param {object} data
+     * @param {object} res response object
+     * @param {Number} status success status code of response
+     * @param {object} data data message corresponding with status code
+     * @returns {object} json response object
     * */
 
   static success(res, status, message) {
@@ -21,10 +22,10 @@ class ResponseHelper {
 
   /**
      * error: prepare json response for API endpoint
-     * @param {object} res
-     * @param {Number} status
-     * @param {object} error
-     * @returns {object} response json
+     * @param {object} res response object
+     * @param {Number} status error status code of response
+     * @param {object} error error message corresponding with status code
+     * @returns {object} json response object
     * */
 
   static error(res, status, error) {

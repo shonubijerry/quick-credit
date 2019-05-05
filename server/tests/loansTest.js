@@ -209,12 +209,96 @@ describe('Loans Controller', () => {
           .get(loansUrl)
           .set('token', currentToken)
           .end((error, res) => {
-            res.should.have.status(406);
+            res.should.have.status(404);
             res.body.should.be.a('object');
             res.body.should.have.property('error');
-            res.body.error.should.equal('You currently do not have any loan to display');
+            res.body.error.should.equal(errorStrings.noLoans);
             done();
           });
+      });
+    });
+  });
+
+  describe('GET /api/v1/loans/:loanId', () => {
+    it('it should return authentication error if user is not logged in', (done) => {
+      chai.request(app)
+        .get(`${loansUrl}/3`)
+        .end((error, res) => {
+          res.should.have.status(401);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal(errorStrings.notAuthenticated);
+          done();
+        });
+    });
+    describe('403 Page forbidden', () => {
+      before((done) => {
+        chai.request(app)
+          .post(signinUrl)
+          .send(testDb.testUsers[13]) // this user is not an admin
+          .end((error, res) => {
+            currentToken = res.body.data.token;
+            done();
+          });
+      });
+      it('it should not get the loan if user is not admin', (done) => {
+        chai.request(app)
+          .get(`${loansUrl}/4`)
+          .set('token', currentToken)
+          .end((error, res) => {
+            res.should.have.status(403);
+            res.body.should.be.a('object');
+            res.body.should.have.property('error');
+            res.body.error.should.equal(errorStrings.notAllowed);
+            done();
+          });
+      });
+
+      describe('Admin should get a specific loan', () => {
+        before((done) => {
+          chai.request(app)
+            .post(signinUrl)
+            .send(testDb.testUsers[7])
+            .end((error, res) => {
+              currentToken = res.body.data.token;
+              done();
+            });
+        });
+
+        it('It should get a specific loan application for admin', (done) => {
+          chai.request(app)
+            .get(`${loansUrl}/4`)
+            .set('token', currentToken)
+            .end((error, res) => {
+              res.should.have.status(200);
+              res.body.should.be.a('object');
+              res.body.should.have.property('data');
+              res.body.data.should.be.a('object');
+              res.body.data.should.have.property('id');
+              res.body.data.should.have.property('user');
+              res.body.data.should.have.property('createdOn');
+              res.body.data.should.have.property('status');
+              res.body.data.should.have.property('repaid');
+              res.body.data.should.have.property('tenor');
+              res.body.data.should.have.property('amount');
+              res.body.data.should.have.property('paymentInstallment');
+              res.body.data.should.have.property('balance');
+              res.body.data.should.have.property('interest');
+              done();
+            });
+        });
+        it('it should return error if no loan is found', (done) => {
+          chai.request(app)
+            .get(`${loansUrl}/43`)
+            .set('token', currentToken)
+            .end((error, res) => {
+              res.should.have.status(404);
+              res.body.should.be.a('object');
+              res.body.should.have.property('error');
+              res.body.error.should.equal(errorStrings.noLoan);
+              done();
+            });
+        });
       });
     });
   });

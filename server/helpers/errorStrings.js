@@ -21,6 +21,7 @@ const errorStrings = {
   notAllowed: 'You are forbidden from accessing this section of the app',
   alreadyVerified: 'User has already been verified',
   noLoans: 'You currently do not have any loan to display',
+  noLoan: 'There is no such loan',
 
 };
 
