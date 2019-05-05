@@ -19,7 +19,7 @@ import ResponseHelper from '../helpers/responseHelper';
 const routes = (app) => {
   const api = '/api/v1';
   // homepage route
-  app.get('/', (req, res) => ResponseHelper.successOk(res, { message: 'Welcome To Quick Credit' }));
+  app.get('/', (req, res) => ResponseHelper.success(res, 200, { message: 'Welcome To Quick Credit' }));
 
   app.post(`${api}/auth/signup`, ValidateUser.validateSignup, UsersController.signup);
   app.post(`${api}/auth/signin`, ValidateUser.validateSignin, UsersController.signin);
@@ -30,8 +30,10 @@ const routes = (app) => {
   app.get(`${api}/loans`, Auth.authenticateUser, LoansController.getLoans);
   app.get(`${api}/loans/:loanId/repayments`, Auth.authenticateUser, RepaymentsController.getLoanRepayments);
 
+  app.patch(`${api}/users/:email/verify`, Auth.authenticateAdmin, ValidateUser.validateParamEmail, UsersController.verifyUser);
+
   // declare 404 route
-  app.all('*', (req, res) => ResponseHelper.errorNotFound(res, 'The URL you are trying to access does not exist. Please enter a valid url'));
+  app.all('*', (req, res) => ResponseHelper.error(res, 404, 'The URL you are trying to access does not exist. Please enter a valid url'));
 };
 
 export default routes;

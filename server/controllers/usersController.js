@@ -21,11 +21,8 @@ class UsersController {
  */
 
   static signup(req, res) {
-    if (usersModel.checkRegistered(req.body.email)) {
-      return res.status(406).send({
-        status: 406,
-        error: errorStrings.emailExists,
-      });
+    if (usersModel.checkRegistered(req.body.email) === true) {
+      return ResponseHelper.error(res, 406, errorStrings.emailExists);
     }
 
     const newUser = usersModel.signupQuery(req);
@@ -69,9 +66,28 @@ class UsersController {
       });
     }
     if (singinResult.error === 'wrong-password') {
-      return ResponseHelper.errorResponse(res, errorStrings.loginFailure);
+      return ResponseHelper.error(res, 406, errorStrings.loginFailure);
     }
-    return ResponseHelper.errorResponse(res, errorStrings.emailNotExist);
+    return ResponseHelper.error(res, 406, errorStrings.emailNotExist);
+  }
+
+  /**
+    * Verify a user (administrator privilege is required)
+    * @param {object} req
+    * @param {object} res
+    * @returns json object
+    */
+
+  static verifyUser(req, res) {
+    const userEmail = req.params.email;
+    const foundUser = usersModel.verifyUser(userEmail);
+    if (foundUser === 'no-user') {
+      return ResponseHelper.error(res, 404, errorStrings.noUser);
+    }
+    if (foundUser === 'already-verified') {
+      return ResponseHelper.error(res, 406, errorStrings.alreadyVerified);
+    }
+    return ResponseHelper.success(res, 200, foundUser);
   }
 }
 

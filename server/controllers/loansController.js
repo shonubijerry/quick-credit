@@ -1,6 +1,7 @@
 import loansModel from '../model/loansModel';
 import ResponseHelper from '../helpers/responseHelper';
 import Utils from '../helpers/utils';
+import errorStrings from '../helpers/errorStrings';
 
 /**
 * @fileOverview - class manages all users logic
@@ -23,7 +24,7 @@ class LoansController {
     const currentLoan = loansModel.checkCurrentLoan(userEmail);
 
     if (currentLoan.isFound === true) {
-      ResponseHelper.errorResponse(res, `You have an unpaid loan of ${currentLoan.foundLoan.amount} which is under review or yet to be fully repaid`);
+      ResponseHelper.error(res, 406, `You have an unpaid loan of ${currentLoan.foundLoan.amount} which is under review or yet to be fully repaid`);
     } else {
       const newLoan = loansModel.createLoan(req, userEmail);
 
@@ -61,9 +62,9 @@ class LoansController {
     allLoans = loansModel.getLoans(userEmail, isAdmin);
 
     if (Utils.checkLength(allLoans) > 0) {
-      return ResponseHelper.successOk(res, allLoans);
+      return ResponseHelper.success(res, 200, allLoans);
     }
-    return ResponseHelper.errorResponse(res, 'You currently do not have any loan to display');
+    return ResponseHelper.error(res, 406, errorStrings.noLoans);
   }
 }
 

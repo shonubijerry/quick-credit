@@ -24,7 +24,27 @@ class Auth {
       request.token = verifiedToken;
       return next();
     } catch (error) {
-      return ResponseHelper.errorUnauthorized(response, errorStrings.notAuthenticated);
+      return ResponseHelper.error(response, 401, errorStrings.notAuthenticated);
+    }
+  }
+
+  /**
+     * check Admin role
+     * @param {Object} request
+     * @param {Object} response
+     * @param {Function} next
+     * @return {Object}
+     */
+  static authenticateAdmin(request, response, next) {
+    try {
+      const token = request.headers['x-access'] || request.headers.token;
+      const verifiedToken = jwt.verify(token, secretKey);
+      request.token = verifiedToken;
+      if (verifiedToken.user.isAdmin === false) {
+        return ResponseHelper.error(response, 403, errorStrings.notAllowed);
+      } return next();
+    } catch (error) {
+      return ResponseHelper.error(response, 401, errorStrings.notAuthenticated);
     }
   }
 }

@@ -47,15 +47,31 @@ class Utils {
   }
 
   /**
-     * find single object in array of objects
-     * @param {Object} filter search citerea
-     * @param {Object} key object key to match
+     * check the lenght of an array of objects
      * @param {Object} data array of objects
-     * @returns {array}  matched single object
+     * @returns {Number}  return length of array
      */
 
   static checkLength(data) {
     return data.length;
+  }
+
+  /**
+   * Update single object in array of objects
+   * @param {object} obj array of objects
+   * @param {array} args properties to update
+   * @returns {string} return update info
+   */
+
+  static updateItems(obj, email) {
+    let toUpdate = false;
+    obj.map((item, index) => {
+      if (item.email === email) {
+        toUpdate = { item, index };
+      }
+      return toUpdate;
+    });
+    return toUpdate;
   }
 }
 
