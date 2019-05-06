@@ -71,8 +71,18 @@ class LoansModel {
      * @returns {object} an object with array of current loans
      */
 
-  static getCurrentLoans(status, repaid) {
-    return Utils.findDoubleKeysInArray(loans, 'status', status, 'repaid', JSON.parse(repaid));
+  static getCurrentLoans() {
+    return Utils.findDoubleKeysInArray(loans, 'status', 'approved', 'repaid', false);
+  }
+
+  /**
+     * Get repaid loans
+     * @param {object} query
+     * @returns {object} an object with array of repaid loans
+     */
+
+  static getRepaidLoans() {
+    return Utils.findDoubleKeysInArray(loans, 'status', 'approved', 'repaid', true);
   }
 
   /**

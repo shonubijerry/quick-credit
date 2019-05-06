@@ -60,7 +60,10 @@ class LoansController {
     if (Utils.hasQuery(req)) {
       const { status, repaid } = req.query;
       if (status === 'approved' && repaid === 'false') {
-        return LoansController.getCurrentLoans(req, res);
+        return LoansController.getCurrentLoans(res);
+      }
+      if (status === 'approved' && repaid === 'true') {
+        return LoansController.getRepaidLoans(res);
       }
       return ResponseHelper.error(res, 404, errorStrings.pageNotFound);
     }
@@ -99,15 +102,31 @@ class LoansController {
      * @returns {object} Loans that have status = approved and repaid = false
      */
 
-  static getCurrentLoans(req, res) {
+  static getCurrentLoans(res) {
     let currentLoans = {};
-    const { status, repaid } = req.query;
-    currentLoans = loansModel.getCurrentLoans(status, repaid);
+    currentLoans = loansModel.getCurrentLoans();
 
     if (currentLoans.error === false) {
       return ResponseHelper.error(res, 404, errorStrings.noLoans);
     }
     return ResponseHelper.success(res, 200, currentLoans);
+  }
+
+  /**
+     * Get all repaid loans (admin privilege)
+     * @param {object} req
+     * @param {object} res
+     * @returns {object} Loans that have status = approved and repaid = false
+     */
+
+  static getRepaidLoans(res) {
+    let repaidLoans = {};
+    repaidLoans = loansModel.getRepaidLoans();
+
+    if (repaidLoans.error === false) {
+      return ResponseHelper.error(res, 404, errorStrings.noLoans);
+    }
+    return ResponseHelper.success(res, 200, repaidLoans);
   }
 }
 
