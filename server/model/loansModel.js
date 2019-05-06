@@ -66,6 +66,16 @@ class LoansModel {
   }
 
   /**
+     * Get current loans
+     * @param {object} query
+     * @returns {object} an object with array of current loans
+     */
+
+  static getCurrentLoans(status, repaid) {
+    return Utils.findDoubleKeysInArray(loans, 'status', status, 'repaid', JSON.parse(repaid));
+  }
+
+  /**
      * Check if a user has an unpaid loan
      * @param {object} email
      * @returns {object} loan object and boolean isFound

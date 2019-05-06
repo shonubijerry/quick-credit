@@ -79,7 +79,7 @@ class UsersModel {
 
   static verifyUser(email) {
     let info;
-    const foundItem = Utils.updateItems(users, email);
+    const foundItem = Utils.updateItems(users, 'email', email);
     if (foundItem === false) {
       info = 'no-user';
     } else if (foundItem.item.status === 'verified') {
