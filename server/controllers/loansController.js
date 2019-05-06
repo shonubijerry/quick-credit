@@ -49,14 +49,21 @@ class LoansController {
   }
 
   /**
-     * Get all loan applications
+     * Get all loan applications (for users and admin)
      * @param {object} req
      * @param {object} res
-     * @returns {object} json response object
+     * @returns {object} return all user's loan applications or all loans if admin
      */
 
   static getLoans(req, res) {
     let allLoans = {};
+    if (Utils.hasQuery(req)) {
+      const { status, repaid } = req.query;
+      if (status === 'approved' && repaid === 'false') {
+        return LoansController.getCurrentLoans(req, res);
+      }
+      return ResponseHelper.error(res, 404, errorStrings.pageNotFound);
+    }
     const userEmail = req.token.user.email;
     const { isAdmin } = req.token.user;
 
@@ -83,6 +90,24 @@ class LoansController {
       return ResponseHelper.error(res, 404, errorStrings.noLoan);
     }
     return ResponseHelper.success(res, 200, loan);
+  }
+
+  /**
+     * Get all current loans (admin privilege)
+     * @param {object} req
+     * @param {object} res
+     * @returns {object} Loans that have status = approved and repaid = false
+     */
+
+  static getCurrentLoans(req, res) {
+    let currentLoans = {};
+    const { status, repaid } = req.query;
+    currentLoans = loansModel.getCurrentLoans(status, repaid);
+
+    if (currentLoans.error === false) {
+      return ResponseHelper.error(res, 404, errorStrings.noLoans);
+    }
+    return ResponseHelper.success(res, 200, currentLoans);
   }
 }
 

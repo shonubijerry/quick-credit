@@ -1,7 +1,7 @@
-/* eslint-disable no-undef */
 import chaiHttp from 'chai-http';
 import chai from 'chai';
 import app from '../../app';
+import errorStrings from '../helpers/errorStrings';
 
 chai.use(chaiHttp);
 chai.should();
@@ -30,7 +30,7 @@ describe('Page Not Found', () => {
         res.should.have.status(404);
         res.body.should.be.a('object');
         res.body.should.have.property('error');
-        res.body.error.should.equal('The URL you are trying to access does not exist. Please enter a valid url');
+        res.body.error.should.equal(errorStrings.pageNotFound);
         done();
       });
   });

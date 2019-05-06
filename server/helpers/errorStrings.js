@@ -4,6 +4,7 @@
 * */
 
 const errorStrings = {
+  pageNotFound: 'Page not found. Please enter a valid url',
   validName: 'Enter a valid name that is not less than 2 letters.',
   validEmail: 'Enter a valid email address',
   emailExists: 'Email address has already been registered',
@@ -22,6 +23,8 @@ const errorStrings = {
   alreadyVerified: 'User has already been verified',
   noLoans: 'You currently do not have any loan to display',
   noLoan: 'There is no such loan',
+  deleteSuccess: 'Item deleted successfully',
+  deleteError: 'Item not deleted',
 
 };
 
