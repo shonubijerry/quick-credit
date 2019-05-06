@@ -58,14 +58,7 @@ class LoansController {
   static getLoans(req, res) {
     let allLoans = {};
     if (Utils.hasQuery(req)) {
-      const { status, repaid } = req.query;
-      if (status === 'approved' && repaid === 'false') {
-        return LoansController.getCurrentLoans(res);
-      }
-      if (status === 'approved' && repaid === 'true') {
-        return LoansController.getRepaidLoans(res);
-      }
-      return ResponseHelper.error(res, 404, errorStrings.pageNotFound);
+      return LoansController.perpareLoansQuery(req, res);
     }
     const userEmail = req.token.user.email;
     const { isAdmin } = req.token.user;
@@ -76,6 +69,42 @@ class LoansController {
       return ResponseHelper.success(res, 200, allLoans);
     }
     return ResponseHelper.error(res, 404, errorStrings.noLoans);
+  }
+
+  /**
+     * Get query results for API endpoint /loans?...
+     * @param {object} req
+     * @param {object} res
+     * @returns {object} return current loan or repaid loan or 404 error if query is wrong
+     */
+
+  static perpareLoansQuery(req, res) {
+    const { status, repaid } = req.query;
+    if (status === 'approved' && (repaid === 'false' || repaid === 'true')) {
+      return LoansController.processLoansQuery(repaid, res);
+    }
+    return ResponseHelper.error(res, 404, errorStrings.pageNotFound);
+  }
+
+  /**
+     * Get query results for API endpoint /loans?...
+     * @param {object} req
+     * @param {object} res
+     * @returns {object} json objects current loans or repaid loans or 404 error no loans found
+     */
+
+  static processLoansQuery(repaid, res) {
+    let queryResult = {};
+    if (repaid === 'true') {
+      queryResult = loansModel.getRepaidLoans();
+    }
+    if (repaid === 'false') {
+      queryResult = loansModel.getCurrentLoans();
+    }
+    if (queryResult.error === false) {
+      return ResponseHelper.error(res, 404, errorStrings.noLoans);
+    }
+    return ResponseHelper.success(res, 200, queryResult);
   }
 
   /**
@@ -101,33 +130,6 @@ class LoansController {
      * @param {object} res
      * @returns {object} Loans that have status = approved and repaid = false
      */
-
-  static getCurrentLoans(res) {
-    let currentLoans = {};
-    currentLoans = loansModel.getCurrentLoans();
-
-    if (currentLoans.error === false) {
-      return ResponseHelper.error(res, 404, errorStrings.noLoans);
-    }
-    return ResponseHelper.success(res, 200, currentLoans);
-  }
-
-  /**
-     * Get all repaid loans (admin privilege)
-     * @param {object} req
-     * @param {object} res
-     * @returns {object} Loans that have status = approved and repaid = false
-     */
-
-  static getRepaidLoans(res) {
-    let repaidLoans = {};
-    repaidLoans = loansModel.getRepaidLoans();
-
-    if (repaidLoans.error === false) {
-      return ResponseHelper.error(res, 404, errorStrings.noLoans);
-    }
-    return ResponseHelper.success(res, 200, repaidLoans);
-  }
 }
 
 export default LoansController;
