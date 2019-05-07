@@ -28,6 +28,29 @@ class RepaymentsController {
     }
     return ResponseHelper.error(res, 406, errorStrings.noRepayments);
   }
+
+  /**
+     * Create a loan repayment
+     * @param {object} req
+     * @param {object} res
+     * @returns {object} json response object created loan repayment
+     */
+
+  static createRepayment(req, res) {
+    const loanId = parseInt(req.params.loanId, 10);
+    const { amount } = req.body;
+    const newRepayment = RepaymentsModel.createRepayment(loanId, amount);
+    if (newRepayment === 'not-approved') {
+      return ResponseHelper.error(res, 406, errorStrings.notApproved);
+    }
+    if (newRepayment === 'not-amount') {
+      return ResponseHelper.error(res, 406, errorStrings.notAmount);
+    }
+    if (newRepayment === 'loan-repaid') {
+      return ResponseHelper.error(res, 406, errorStrings.loanRepaid);
+    }
+    return ResponseHelper.success(res, 201, newRepayment);
+  }
 }
 
 export default RepaymentsController;

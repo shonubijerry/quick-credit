@@ -15,7 +15,7 @@ describe('Loans Controller', () => {
   it('it should return authentication error', (done) => {
     chai.request(app)
       .post(loansUrl)
-      .send(testDb.testLoansApplication[1])
+      .send(testDb.loanApplication[1])
       .end((error, res) => {
         res.should.have.status(401);
         res.body.should.be.a('object');
@@ -28,7 +28,7 @@ describe('Loans Controller', () => {
   before((done) => {
     chai.request(app)
       .post(signinUrl)
-      .send(testDb.testUsers[7])
+      .send(testDb.users[7])
       .end((error, res) => {
         currentToken = res.body.data.token;
         done();
@@ -39,7 +39,7 @@ describe('Loans Controller', () => {
     it('it should create loan application with valid amount and tenor', (done) => {
       chai.request(app)
         .post(loansUrl)
-        .send(testDb.testLoansApplication[0])
+        .send(testDb.loanApplication[0])
         .set('token', currentToken)
         .end((error, res) => {
           res.should.have.status(201);
@@ -63,7 +63,7 @@ describe('Loans Controller', () => {
     it('it should not create loan application with invalid amount', (done) => {
       chai.request(app)
         .post(loansUrl)
-        .send(testDb.testLoansApplication[1])
+        .send(testDb.loanApplication[1])
         .set('token', currentToken)
         .end((error, res) => {
           res.should.have.status(406);
@@ -77,7 +77,7 @@ describe('Loans Controller', () => {
     it('it should not create loan application with invalid tenor', (done) => {
       chai.request(app)
         .post(loansUrl)
-        .send(testDb.testLoansApplication[2])
+        .send(testDb.loanApplication[2])
         .set('token', currentToken)
         .end((error, res) => {
           res.should.have.status(406);
@@ -92,7 +92,7 @@ describe('Loans Controller', () => {
       before((done) => {
         chai.request(app)
           .post(signinUrl)
-          .send(testDb.testUsers[13])
+          .send(testDb.users[13])
           .end((error, res) => {
             currentToken = res.body.data.token;
             done();
@@ -102,7 +102,7 @@ describe('Loans Controller', () => {
       it('Client cannot apply for another loan when there is a current loan', (done) => {
         chai.request(app)
           .post(loansUrl)
-          .send(testDb.testLoansApplication[0])
+          .send(testDb.loanApplication[0])
           .set('token', currentToken)
           .end((error, res) => {
             res.should.have.status(406);
@@ -117,7 +117,7 @@ describe('Loans Controller', () => {
     it('Client cannot apply for another loan when there is a pending loan', (done) => {
       chai.request(app)
         .post(loansUrl)
-        .send(testDb.testLoansApplication[0])
+        .send(testDb.loanApplication[0])
         .set('token', currentToken)
         .end((error, res) => {
           res.should.have.status(406);
@@ -160,7 +160,7 @@ describe('Loans Controller', () => {
       before((done) => {
         chai.request(app)
           .post(signinUrl)
-          .send(testDb.testUsers[7])
+          .send(testDb.users[7])
           .end((error, res) => {
             currentToken = res.body.data.token;
             done();
@@ -196,7 +196,7 @@ describe('Loans Controller', () => {
       before((done) => {
         chai.request(app)
           .post(signinUrl)
-          .send(testDb.testUsers[12])
+          .send(testDb.users[12])
           .end((error, res) => {
             currentToken = res.body.data.token;
             done();
@@ -234,7 +234,7 @@ describe('Loans Controller', () => {
       before((done) => {
         chai.request(app)
           .post(signinUrl)
-          .send(testDb.testUsers[13]) // this user is not an admin
+          .send(testDb.users[13]) // this user is not an admin
           .end((error, res) => {
             currentToken = res.body.data.token;
             done();
@@ -257,7 +257,7 @@ describe('Loans Controller', () => {
         before((done) => {
           chai.request(app)
             .post(signinUrl)
-            .send(testDb.testUsers[7])
+            .send(testDb.users[7])
             .end((error, res) => {
               currentToken = res.body.data.token;
               done();
@@ -319,7 +319,7 @@ describe('Loans Controller', () => {
       before((done) => {
         chai.request(app)
           .post(signinUrl)
-          .send(testDb.testUsers[13]) // this user is not an admin
+          .send(testDb.users[13]) // this user is not an admin
           .end((error, res) => {
             currentToken = res.body.data.token;
             done();
@@ -342,7 +342,7 @@ describe('Loans Controller', () => {
         before((done) => {
           chai.request(app)
             .post(signinUrl)
-            .send(testDb.testUsers[7])
+            .send(testDb.users[7])
             .end((error, res) => {
               currentToken = res.body.data.token;
               done();
@@ -391,7 +391,7 @@ describe('Loans Controller', () => {
         it('Alter loans so next test will not find a current loan', (done) => {
           chai.request(app)
             .patch(`${loansUrl}/2`)
-            .send(testDb.testApplyLoan[3])
+            .send(testDb.approveRejectLoan[3])
             .set('token', currentToken)
             .end((error, res) => {
               res.should.have.status(200);
@@ -401,7 +401,7 @@ describe('Loans Controller', () => {
         it('Alter loans so next test will not find a current loan', (done) => {
           chai.request(app)
             .patch(`${loansUrl}/5`)
-            .send(testDb.testApplyLoan[3])
+            .send(testDb.approveRejectLoan[3])
             .set('token', currentToken)
             .end((error, res) => {
               res.should.have.status(200);
@@ -442,7 +442,7 @@ describe('Loans Controller', () => {
       before((done) => {
         chai.request(app)
           .post(signinUrl)
-          .send(testDb.testUsers[13]) // this user is not an admin
+          .send(testDb.users[13]) // this user is not an admin
           .end((error, res) => {
             currentToken = res.body.data.token;
             done();
@@ -465,7 +465,7 @@ describe('Loans Controller', () => {
         before((done) => {
           chai.request(app)
             .post(signinUrl)
-            .send(testDb.testUsers[7])
+            .send(testDb.users[7])
             .end((error, res) => {
               currentToken = res.body.data.token;
               done();
@@ -517,7 +517,7 @@ describe('Loans Controller', () => {
     it('it should return authentication error if user is not logged in', (done) => {
       chai.request(app)
         .patch(`${loansUrl}/3`)
-        .send(testDb.testApplyLoan[0])
+        .send(testDb.approveRejectLoan[0])
         .end((error, res) => {
           res.should.have.status(401);
           res.body.should.be.a('object');
@@ -530,7 +530,7 @@ describe('Loans Controller', () => {
       before((done) => {
         chai.request(app)
           .post(signinUrl)
-          .send(testDb.testUsers[13]) // this user is not an admin
+          .send(testDb.users[13]) // this user is not an admin
           .end((error, res) => {
             currentToken = res.body.data.token;
             done();
@@ -539,7 +539,7 @@ describe('Loans Controller', () => {
       it('it should not approve/reject loan if user is not admin', (done) => {
         chai.request(app)
           .patch(`${loansUrl}/4`)
-          .send(testDb.testApplyLoan[0])
+          .send(testDb.approveRejectLoan[0])
           .set('token', currentToken)
           .end((error, res) => {
             res.should.have.status(403);
@@ -554,7 +554,7 @@ describe('Loans Controller', () => {
         before((done) => {
           chai.request(app)
             .post(signinUrl)
-            .send(testDb.testUsers[7])
+            .send(testDb.users[7])
             .end((error, res) => {
               currentToken = res.body.data.token;
               done();
@@ -564,7 +564,7 @@ describe('Loans Controller', () => {
         it('it should not approve or reject a loan if citerea not correct', (done) => {
           chai.request(app)
             .patch(`${loansUrl}/5`)
-            .send(testDb.testApplyLoan[2])
+            .send(testDb.approveRejectLoan[2])
             .set('token', currentToken)
             .end((error, res) => {
               res.should.have.status(406);
@@ -578,7 +578,7 @@ describe('Loans Controller', () => {
         it('it should not approve or reject a loan if parameter is not a number', (done) => {
           chai.request(app)
             .patch(`${loansUrl}/e5`)
-            .send(testDb.testApplyLoan[0])
+            .send(testDb.approveRejectLoan[0])
             .set('token', currentToken)
             .end((error, res) => {
               res.should.have.status(406);
@@ -592,7 +592,7 @@ describe('Loans Controller', () => {
         it('it should not approve or reject a loan if loan not found by its id', (done) => {
           chai.request(app)
             .patch(`${loansUrl}/98`)
-            .send(testDb.testApplyLoan[0])
+            .send(testDb.approveRejectLoan[0])
             .set('token', currentToken)
             .end((error, res) => {
               res.should.have.status(404);
@@ -606,7 +606,7 @@ describe('Loans Controller', () => {
         it('It should approve or reject loan', (done) => {
           chai.request(app)
             .patch(`${loansUrl}/4`)
-            .send(testDb.testApplyLoan[0])
+            .send(testDb.approveRejectLoan[0])
             .set('token', currentToken)
             .end((error, res) => {
               res.should.have.status(200);
@@ -626,7 +626,7 @@ describe('Loans Controller', () => {
         it('it should not approve/reject loan if loan is already approved/rejected as the case may be', (done) => {
           chai.request(app)
             .patch(`${loansUrl}/1`)
-            .send(testDb.testApplyLoan[0])
+            .send(testDb.approveRejectLoan[0])
             .set('token', currentToken)
             .end((error, res) => {
               res.should.have.status(406);

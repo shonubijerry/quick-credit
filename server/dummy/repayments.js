@@ -7,19 +7,19 @@ const repayments = [
     id: 1,
     loanId: 5,
     createdOn: '01/05/2018 2:16:17 PM',
-    amount: 5000.00,
+    amount: 11760.00,
   },
   {
     id: 2,
     loanId: 5,
     createdOn: '01/06/2018 2:16:17 PM',
-    amount: 7400.00,
+    amount: 11760.00,
   },
   {
     id: 3,
     loanId: 5,
     createdOn: '01/07/2018 2:16:17 PM',
-    amount: 8400.00,
+    amount: 11760.00,
   },
   {
     id: 4,
@@ -56,6 +56,30 @@ const repayments = [
     loanId: 3,
     createdOn: '11/07/2017 11:45:14 AM',
     amount: 76600.00,
+  },
+  {
+    loanId: 5,
+    createdOn: '07/05/2019 1:24:58 PM',
+    monthlyInstallment: 11760,
+    amount: 11760.00,
+  },
+  {
+    loanId: 5,
+    createdOn: '07/05/2019 1:24:59 PM',
+    monthlyInstallment: 11760,
+    amount: 11760.00,
+  },
+  {
+    loanId: 5,
+    createdOn: '07/05/2019 1:25:00 PM',
+    monthlyInstallment: 11760,
+    amount: 11760.00,
+  },
+  {
+    loanId: 5,
+    createdOn: '07/05/2019 1:25:00 PM',
+    monthlyInstallment: 11760,
+    amount: 11760.00,
   },
 ];
 

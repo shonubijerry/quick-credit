@@ -97,6 +97,22 @@ class Utils {
   }
 
   /**
+     * find the sum of specific property of an object that is inside an array of objects
+     * @param {Object} key object property to find it's sum
+     * @param {Object} data array of objects to search
+     * @returns {Float}  sum of selected property
+     */
+
+  static sumProperty(key, data) {
+    let sum = 0;
+
+    data.forEach((item) => {
+      sum += Number.parseFloat(item[key]);
+    });
+    return sum;
+  }
+
+  /**
    * Update single object in array of objects
    * @param {object} obj array of objects
    * @param {array} args properties to update

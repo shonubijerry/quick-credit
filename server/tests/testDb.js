@@ -3,7 +3,7 @@
  * @exports - object
  */
 
-const testUsers = [
+const users = [
   {
     // sign up test data
     email: 'shonubijerry@gmail.cam', // valid registration details
@@ -87,7 +87,7 @@ const testUsers = [
 
 ];
 
-const testLoansApplication = [
+const loanApplication = [
   {
     amount: 60000, // correct loan application
     tenor: 7,
@@ -102,7 +102,7 @@ const testLoansApplication = [
   },
 ];
 
-const testApplyLoan = [
+const approveRejectLoan = [
   {
     status: 'approved', // approve the loan application
   },
@@ -117,4 +117,27 @@ const testApplyLoan = [
   },
 ];
 
-export default { testUsers, testLoansApplication, testApplyLoan };
+const repaymentAmount = [
+  {
+    amount: '11760.00', // valid amount for post repayment
+  },
+  {
+    amount: '12000.00', // amount posted is not what is expected to pay
+  },
+  {
+    amount: '17,000.00', // invalid amount because of comma
+  },
+  {
+    amount: '81600.00', // loan is rejected or pending approval
+  },
+  {
+    amount: '8400.00', // loan is repaid
+  },
+  {
+    money: '12000.00', // invalid post parameter - money
+  },
+];
+
+export default {
+  users, loanApplication, approveRejectLoan, repaymentAmount,
+};

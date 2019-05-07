@@ -9,7 +9,7 @@ class ResponseHelper {
      * success: prepare json response for API endpoint
      * @param {object} res response object
      * @param {Number} status success status code of response
-     * @param {object} data data message corresponding with status code
+     * @param {object} data Object data corresponding with success status code
      * @returns {object} json response object
     * */
 
