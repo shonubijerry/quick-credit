@@ -110,6 +110,25 @@ class LoansModel {
   }
 
   /**
+  * Update loan application after each repayment by subtracting paid amount from balance
+  * and check if there is no balance. If there is no more balance, then loan is repaid.
+  * @param {object} loanId id of loan to update
+  * @param {float} amount amount repaid for user's loan
+  * @returns {object} return json object with updated loan data
+  */
+
+  static updateLoanAfterRepayment(loanId, amount) {
+    const foundItem = Utils.updateItems(loans, 'id', loanId);
+
+    foundItem.item.balance -= Number.parseFloat(amount);
+    if (foundItem.item.balance < 1) { // check if this is the last repayment
+      foundItem.item.repaid = true;
+    }
+    const updatedLoan = loans.splice(foundItem.index, 1, foundItem.item);
+    return updatedLoan[0]; // loans.splice returned an array with updated object as only element
+  }
+
+  /**
   * Check if a user has an unpaid loan
   * @param {object} email
   * @returns {object} loan object and boolean isFound

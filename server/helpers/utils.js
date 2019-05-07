@@ -36,17 +36,18 @@ class Utils {
 
   /**
      * find specific object by matching more than one property in array of objects.
-     * The filters parameter must be ordered such that each parameter is followed by its
+     * The filter/key parameter must be ordered such that each parameter is followed by its
      * respective search citerion
      * @param {Object} data array of objects
      * @param {Object} filters search criterea ( spread array of properties and expected values)
      * @returns {array}  array of matched objects
      */
 
-  static findDoubleKeysInArray(data, ...filters) {
+  static findDoubleKeysInArray(data, key1, filter1, key2, filter2) {
     const arr = [];
     data.forEach((item) => {
-      if (Utils.addQuery(item, filters, filters.length - 1) === true) {
+      // if (Utils.addQuery(item, filters, filters.length - 1) === true) {
+      if (item[key1] === filter1 && item[key2] === filter2) {
         arr.push(item);
       }
     });
@@ -56,23 +57,23 @@ class Utils {
     return { error: false };
   }
 
-  /**
-     * Recursive function to query a specific object by matching more than one properties in it.
-     * @param {Object} data object to query
-     * @param {Object} filters search criterea (properties and expected values to match)
-     * @returns {boolean}  returns true if all conditions is met or false otherwise
-     */
+  // /**
+  //    * Recursive function to query a specific object by matching more than one properties in it.
+  //    * @param {Object} data object to query
+  //    * @param {Object} filters search criterea (properties and expected values to match)
+  //    * @returns {boolean}  returns true if all conditions is met or false otherwise
+  //    */
 
-  static addQuery(item, key, n) {
-    if (n <= 0) {
-      return false;
-    }
-    if (n <= 1) {
-      return item[key[n - 1]] === key[n];
-    }
-    return item[key[n - 1]] === key[n] && Utils.addQuery(item, key, n - 2);
-    // return true;
-  }
+  // static addQuery(item, key, n) {
+  //   if (n <= 0) {
+  //     return false;
+  //   }
+  //   if (n <= 1) {
+  //     return item[key[n - 1]] === key[n];
+  //   }
+  //   return item[key[n - 1]] === key[n] && Utils.addQuery(item, key, n - 2);
+  //   // return true;
+  // }
 
   /**
      * find single object in array of objects
@@ -97,16 +98,33 @@ class Utils {
   }
 
   /**
-   * Update single object in array of objects
+     * find the sum of specific property of an object that is inside an array of objects
+     * @param {Object} key object property to find it's sum
+     * @param {Object} data array of objects to search
+     * @returns {Float}  sum of selected property
+     */
+
+  static sumProperty(key, data) {
+    let sum = 0;
+
+    data.forEach((item) => {
+      sum += Number.parseFloat(item[key]);
+    });
+    return sum;
+  }
+
+  /**
+   * Find an object in array with its and return it along with it's index position
    * @param {object} obj array of objects
-   * @param {array} args properties to update
-   * @returns {string} return update info
+   * @param {array} key property to search
+   * @param {array} value value to match
+   * @returns {boolean} return object with its index in array or false object not found
    */
 
-  static updateItems(obj, ...filter) {
+  static updateItems(obj, key, value) {
     let toUpdate = false;
     obj.map((item, index) => {
-      if (item[filter[0]] === filter[1]) {
+      if (item[key] === value) {
         toUpdate = { item, index };
       }
       return toUpdate;

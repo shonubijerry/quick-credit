@@ -54,6 +54,25 @@ class ValidateLoans {
 
     Validator.findErrors(res, error, next);
   }
+
+  /**
+   * validate amount from request.body.amount
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @callback {Function} next
+   * @return {Object} error json object
+   */
+
+  static validateRepayment(req, res, next) {
+    const error = {};
+    const { amount } = req.body;
+    const getError = Validator.validate(
+      amount, rules.empty, rules.validAmount, errorStrings.validAmount,
+    );
+    Object.assign(error, getError);
+
+    Validator.findErrors(res, error, next);
+  }
 }
 
 export default ValidateLoans;

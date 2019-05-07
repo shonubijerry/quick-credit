@@ -29,6 +29,9 @@ const errorStrings = {
   validNumber: 'Enter a valid loan id',
   noApproveLoan: 'Loan not approved',
   validApproveLoan: 'Loan parameter should be either approved or rejected',
+  notAmount: 'The amount you entered is not what you are expected to pay',
+  loanRepaid: 'This loan has been repaid',
+  notApproved: 'You cannot post repayment for a pending or rejected loan',
 };
 
 export default errorStrings;

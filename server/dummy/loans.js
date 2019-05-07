@@ -29,14 +29,14 @@ const loans = [
   },
   {
     id: 3,
-    user: 'shonubijerry@gmail.com',
+    user: 'chiboy155@gmail.com',
     createdOn: '01/05/2019 2:17:34 PM',
     status: 'pending',
-    repaid: true,
+    repaid: false,
     tenor: '4',
     amount: 310080.00,
     paymentInstallment: 81600.00,
-    balance: 0.00,
+    balance: 326400.00,
     interest: 16320.00,
   },
   {
@@ -60,7 +60,7 @@ const loans = [
     tenor: '8',
     amount: 89600.00,
     paymentInstallment: 11760.00,
-    balance: 70560.00,
+    balance: 11760.00,
     interest: 4480.00,
   },
 ];
