@@ -43,20 +43,12 @@ class RepaymentsModel {
 
   static createRepayment(loanId, amount) {
     const loan = LoansModel.getSingleLoan(loanId);
-    if (loan.status !== 'approved') {
-      return 'not-approved';
-    }
-    if (loan.paymentInstallment !== Number.parseFloat(amount)) {
-      return 'not-amount';
-    }
-    if (loan.balance <= 0) {
-      return 'loan-repaid';
+    const checkRepayment = RepaymentsModel.checkCreateRepayment(loan, amount);
+    if (checkRepayment !== '') {
+      return checkRepayment;
     }
     const newRepayment = {
-      id: repayments.length + 1,
-      loanId: loan.id,
-      createdOn: Utils.getNow(),
-      amount,
+      id: repayments.length + 1, loanId: loan.id, createdOn: Utils.getNow(), amount,
     };
     repayments.push(newRepayment);
     const repaymentHistory = RepaymentsModel.getLoanRepayments(loanId);
@@ -72,6 +64,20 @@ class RepaymentsModel {
       balance: updatedLoan.balance,
     };
     return returnedLoan;
+  }
+
+  static checkCreateRepayment(loan, amount) {
+    const result = '';
+    if (loan.status !== 'approved') {
+      return 'not-approved';
+    }
+    if (loan.paymentInstallment !== Number.parseFloat(amount)) {
+      return 'not-amount';
+    }
+    if (loan.balance <= 0) {
+      return 'loan-repaid';
+    }
+    return result;
   }
 }
 

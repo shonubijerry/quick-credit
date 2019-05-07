@@ -65,10 +65,11 @@ class ValidateLoans {
 
   static validateRepayment(req, res, next) {
     const error = {};
-
-    Object.assign(error, Validator.validate(
-      req.body.amount, rules.empty, rules.validAmount, errorStrings.validAmount,
-    ));
+    const { amount } = req.body;
+    const getError = Validator.validate(
+      amount, rules.empty, rules.validAmount, errorStrings.validAmount,
+    );
+    Object.assign(error, getError);
 
     Validator.findErrors(res, error, next);
   }
