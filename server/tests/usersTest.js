@@ -13,7 +13,7 @@ const signinUrl = '/api/v1/auth/signin';
 const usersUrl = '/api/v1/users';
 
 describe('User Controller', () => {
-  describe('POST /api/v1/auth/signup', () => {
+  describe('POST SIGN UP', () => {
     it(`it should register a user with POST ${signupUrl}`, (done) => {
       chai.request(app)
         .post(signupUrl)
@@ -125,7 +125,7 @@ describe('User Controller', () => {
   });
 
 
-  describe('POST /api/v1/auth/signin', () => {
+  describe('POST SIGN IN', () => {
     it('it should login a user with valid email and password', (done) => {
       chai.request(app)
         .post(signinUrl)
@@ -197,7 +197,79 @@ describe('User Controller', () => {
     });
   });
 
-  describe('POST /api/v1/users', () => {
+
+  describe('GET ALL USERS', () => {
+    it('it should return authentication error if user is not logged in', (done) => {
+      chai.request(app)
+        .get(usersUrl)
+        .end((error, res) => {
+          res.should.have.status(401);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal(errorStrings.notAuthenticated);
+          done();
+        });
+    });
+
+    describe('403 Page forbidden', () => {
+      before((done) => {
+        chai.request(app)
+          .post(signinUrl)
+          .send(testDb.users[13])
+          .end((error, res) => {
+            currentToken = res.body.data.token;
+            done();
+          });
+      });
+      it('it should not get all users if subject is not admin', (done) => {
+        chai.request(app)
+          .get(usersUrl)
+          .set('token', currentToken)
+          .end((error, res) => {
+            res.should.have.status(403);
+            res.body.should.be.a('object');
+            res.body.should.have.property('error');
+            res.body.error.should.equal(errorStrings.notAllowed);
+            done();
+          });
+      });
+    });
+
+    describe('Admin should get all users', () => {
+      before((done) => {
+        chai.request(app)
+          .post(signinUrl)
+          .send(testDb.users[7])
+          .end((error, res) => {
+            currentToken = res.body.data.token;
+            done();
+          });
+      });
+
+      it('It should get all users for admin', (done) => {
+        chai.request(app)
+          .get(usersUrl)
+          .set('token', currentToken)
+          .end((error, res) => {
+            res.should.have.status(200);
+            res.body.should.be.a('object');
+            res.body.should.have.property('data');
+            res.body.data.should.be.a('array');
+            res.body.data[0].should.be.a('object');
+            res.body.data[0].should.have.property('id');
+            res.body.data[0].should.have.property('email');
+            res.body.data[0].should.have.property('firstName');
+            res.body.data[0].should.have.property('lastName');
+            res.body.data[0].should.have.property('address');
+            res.body.data[0].should.have.property('status');
+            res.body.data[0].should.have.property('isAdmin');
+            done();
+          });
+      });
+    });
+  });
+
+  describe('POST VERIFY A USER', () => {
     it('it should return authentication error if user is not logged in', (done) => {
       const email = 'badmanga@yahoo.com'; // unverified user
       chai.request(app)

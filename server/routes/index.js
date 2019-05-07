@@ -34,6 +34,7 @@ const routes = (app) => {
   app.get(`${api}/loans/:loanId`, Auth.authenticateAdmin, LoansController.getLoan);
   app.get(`${api}/loans`, Auth.authenticateUser, LoansController.getLoans);
   app.get(`${api}/loans/:loanId/repayments`, Auth.authenticateUser, RepaymentsController.getLoanRepayments);
+  app.get(`${api}/users`, Auth.authenticateAdmin, UsersController.getUsers);
 
   app.patch(`${api}/users/:email/verify`, Auth.authenticateAdmin, ValidateUser.validateParamEmail, UsersController.verifyUser);
   app.patch(`${api}/loans/:loanId`, Auth.authenticateAdmin, ValidateLoans.validateApproveLoan, LoansController.approveLoan);

@@ -94,6 +94,28 @@ class UsersModel {
 
     return info;
   }
+
+  /**
+  * Get all users
+  * @returns verified user
+  */
+
+  static getUsers() {
+    const usersArray = [];
+    users.forEach((user) => {
+      const addUser = {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        address: user.address,
+        status: user.status,
+        isAdmin: user.isAdmin,
+      };
+      usersArray.push(addUser);
+    });
+    return usersArray;
+  }
 }
 
 export default UsersModel;
