@@ -89,6 +89,18 @@ class UsersController {
     }
     return ResponseHelper.success(res, 200, foundUser);
   }
+
+  /**
+  * Get users (administrator privilege is required)
+  * @param {object} req
+  * @param {object} res
+  * @returns json object
+  */
+
+  static getUsers(req, res) {
+    const foundUsers = usersModel.getUsers();
+    return ResponseHelper.success(res, 200, foundUsers);
+  }
 }
 
 export default UsersController;
