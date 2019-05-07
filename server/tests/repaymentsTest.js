@@ -119,6 +119,27 @@ describe('Repayment Controller', () => {
 
     it('it should post a loan repayment', (done) => {
       chai.request(app)
+        .post(`${loansUrl}/2/repayment`)
+        .send(testDb.repaymentAmount[1])
+        .set('token', currentToken)
+        .end((error, res) => {
+          res.should.have.status(201);
+          res.body.should.be.a('object');
+          res.body.should.have.property('data');
+          res.body.data.should.be.a('object');
+          res.body.data.should.have.property('id');
+          res.body.data.should.have.property('loanId');
+          res.body.data.should.have.property('createdOn');
+          res.body.data.should.have.property('amount');
+          res.body.data.should.have.property('monthlyInstallment');
+          res.body.data.should.have.property('paidAmount');
+          res.body.data.should.have.property('balance');
+          done();
+        });
+    });
+
+    it('it should post a loan repayment to test last repayment', (done) => {
+      chai.request(app)
         .post(`${loansUrl}/5/repayment`)
         .send(testDb.repaymentAmount[0])
         .set('token', currentToken)

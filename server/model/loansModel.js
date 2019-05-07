@@ -121,7 +121,7 @@ class LoansModel {
     const foundItem = Utils.updateItems(loans, 'id', loanId);
 
     foundItem.item.balance -= Number.parseFloat(amount);
-    if (foundItem.item.balance <= 0) { // check if this is the last repayment
+    if (foundItem.item.balance < 1) { // check if this is the last repayment
       foundItem.item.repaid = true;
     }
     const updatedLoan = loans.splice(foundItem.index, 1, foundItem.item);
