@@ -102,4 +102,19 @@ const testLoansApplication = [
   },
 ];
 
-export default { testUsers, testLoansApplication };
+const testApplyLoan = [
+  {
+    status: 'approved', // approve the loan application
+  },
+  {
+    status: 'pending', // reject the loan application
+  },
+  {
+    status: 'iAmInvalid', // incorrect query citerea
+  },
+  {
+    status: 'rejected', // reject the loan application
+  },
+];
+
+export default { testUsers, testLoansApplication, testApplyLoan };

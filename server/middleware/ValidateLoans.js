@@ -33,6 +33,27 @@ class ValidateLoans {
 
     Validator.findErrors(res, errors, next);
   }
+
+  /**
+   * validate id parameter to be a number from request.params.loanId
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @callback {Function} next
+   * @return {Object} error json object
+   */
+
+  static validateApproveLoan(req, res, next) {
+    const error = {};
+
+    Object.assign(error, Validator.validate(
+      req.params.loanId, rules.empty, rules.validNumber, errorStrings.validNumber,
+    ));
+    Object.assign(error, Validator.validate(
+      req.body.status, rules.empty, rules.validApproveLoan, errorStrings.validApproveLoan,
+    ));
+
+    Validator.findErrors(res, error, next);
+  }
 }
 
 export default ValidateLoans;

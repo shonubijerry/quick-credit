@@ -90,10 +90,10 @@ class ValidateUser {
 
   /**
    * validate email parameter from request.params.email
-   * @param {Object} request
-   * @param {Object} response
+   * @param {Object} req request object
+   * @param {Object} res response object
    * @callback {Function} next
-   * @return {Object} error
+   * @return {Object} error json object
    */
 
   static validateParamEmail(req, res, next) {

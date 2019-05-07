@@ -86,10 +86,34 @@ class LoansModel {
   }
 
   /**
-     * Check if a user has an unpaid loan
-     * @param {object} email
-     * @returns {object} loan object and boolean isFound
-     */
+  * Approve a loan application
+  * @param {object} loanId id of loan to update
+  * @param {object} status status to update to (approved or rejected)
+  * @returns {object} return json response object with approved loan data or error if
+  * loan is approved or does't exist
+  */
+
+  static approveLoan(loanId, status) {
+    let info;
+    const foundItem = Utils.updateItems(loans, 'id', loanId);
+    if (foundItem === false) {
+      info = 'no-loan';
+    } else if (foundItem.item.status === status) {
+      info = 'no-action';
+    } else {
+      foundItem.item.status = status;
+      loans.splice(foundItem.index, 1, foundItem.item);
+      info = foundItem.item;
+    }
+
+    return info;
+  }
+
+  /**
+  * Check if a user has an unpaid loan
+  * @param {object} email
+  * @returns {object} loan object and boolean isFound
+  */
 
   static checkCurrentLoan(email) {
     const foundLoan = loans.find(loan => (loan.user === email && loan.repaid === false && (loan.status === 'pending' || loan.status === 'approved')));

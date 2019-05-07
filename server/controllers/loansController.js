@@ -125,11 +125,34 @@ class LoansController {
   }
 
   /**
-     * Get all current loans (admin privilege)
-     * @param {object} req
-     * @param {object} res
-     * @returns {object} Loans that have status = approved and repaid = false
-     */
+  * Approve a loan application (admin privilege)
+  * @param {object} req
+  * @param {object} res
+  * @returns {object} on success json response object with approved loan data or error
+  * if loan is already approved or loan does not exist
+  */
+
+  static approveLoan(req, res) {
+    const loanId = Number.parseInt(req.params.loanId, 10);
+    const { status } = req.body;
+
+    const foundLoan = loansModel.approveLoan(loanId, status);
+    if (foundLoan === 'no-loan') {
+      return ResponseHelper.error(res, 404, errorStrings.noLoan);
+    }
+    if (foundLoan === 'no-action') {
+      return ResponseHelper.error(res, 406, errorStrings.alreadyApproved);
+    }
+    const approvedLoan = {
+      loanId: foundLoan.id,
+      loanAmount: foundLoan.amount,
+      tenor: foundLoan.tenor,
+      status: foundLoan.status,
+      monthlyInstallment: foundLoan.paymentInstallment,
+      interest: foundLoan.interest,
+    };
+    return ResponseHelper.success(res, 200, approvedLoan);
+  }
 }
 
 export default LoansController;
