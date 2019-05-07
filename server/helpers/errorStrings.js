@@ -21,11 +21,14 @@ const errorStrings = {
   noUser: 'User does not exist',
   notAllowed: 'You are forbidden from accessing this section of the app',
   alreadyVerified: 'User has already been verified',
+  alreadyApproved: 'No update: Action already performed ',
   noLoans: 'You currently do not have any loan to display',
   noLoan: 'There is no such loan',
   deleteSuccess: 'Item deleted successfully',
   deleteError: 'Item not deleted',
-
+  validNumber: 'Enter a valid loan id',
+  noApproveLoan: 'Loan not approved',
+  validApproveLoan: 'Loan parameter should be either approved or rejected',
 };
 
 export default errorStrings;

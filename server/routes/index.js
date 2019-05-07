@@ -31,6 +31,7 @@ const routes = (app) => {
   app.get(`${api}/loans/:loanId/repayments`, Auth.authenticateUser, RepaymentsController.getLoanRepayments);
 
   app.patch(`${api}/users/:email/verify`, Auth.authenticateAdmin, ValidateUser.validateParamEmail, UsersController.verifyUser);
+  app.patch(`${api}/loans/:loanId`, Auth.authenticateAdmin, ValidateLoans.validateApproveLoan, LoansController.approveLoan);
 
   // declare 404 route
   app.all('*', (req, res) => ResponseHelper.error(res, 404, errorStrings.pageNotFound));

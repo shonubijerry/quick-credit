@@ -15,6 +15,8 @@ const rules = {
   validUrl: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/,
   validTenor: /^([1-9]|[0-1][0-2])$/,
   validAmount: /^[0-9]+(\.[0-9]{1,2})?$/,
+  validNumber: /^[0-9]*$/,
+  validApproveLoan: /(approved|rejected)/,
 };
 
 export default rules;
