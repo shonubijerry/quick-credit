@@ -62,7 +62,11 @@ class LoansModel {
      */
 
   static getSingleLoan(loanId) {
-    return Utils.findSingleItem(loanId, 'id', loans);
+    const loan = Utils.findSingleItem(loanId, 'id', loans);
+    if (loan === undefined) {
+      return 'no-loan';
+    }
+    return loan;
   }
 
   /**

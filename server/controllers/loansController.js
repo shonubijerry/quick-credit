@@ -118,7 +118,7 @@ class LoansController {
     const userId = Number.parseInt(req.params.loanId, 10);
 
     const loan = loansModel.getSingleLoan(userId);
-    if (loan === undefined) {
+    if (loan === 'no-loan') {
       return ResponseHelper.error(res, 404, errorStrings.noLoan);
     }
     return ResponseHelper.success(res, 200, loan);
