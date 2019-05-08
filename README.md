@@ -11,7 +11,7 @@ Quick Credit is an online lending platform that provides short term soft loans t
 https://shonubijerry.github.io/quick-cash/UI/index.html
 
 ## Server side hosted on Heroku
-N/A
+https://quick-credit-shonubi.herokuapp.com/
 
 ## API Documentation
 N/A
@@ -56,9 +56,9 @@ e.g git clone https://github.com/shonubijerry/quick-credit
 e.g npm install.
 ```
 3. Start the application by running the start script.
-
+```
 e.g npm start
-
+```
 4. Install postman to test all endpoints on port 3000.
 
 ### Test
