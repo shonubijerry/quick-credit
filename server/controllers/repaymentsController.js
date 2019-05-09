@@ -40,6 +40,9 @@ class RepaymentsController {
     const loanId = parseInt(req.params.loanId, 10);
     const { amount } = req.body;
     const newRepayment = RepaymentsModel.createRepayment(loanId, amount);
+    if (newRepayment === 'no-loan') {
+      return ResponseHelper.error(res, 404, errorStrings.noLoan);
+    }
     if (newRepayment === 'not-approved') {
       return ResponseHelper.error(res, 406, errorStrings.notApproved);
     }

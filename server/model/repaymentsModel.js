@@ -68,6 +68,9 @@ class RepaymentsModel {
 
   static checkCreateRepayment(loan, amount) {
     const result = '';
+    if (loan === 'no-loan') {
+      return 'no-loan';
+    }
     if (loan.status !== 'approved') {
       return 'not-approved';
     }
