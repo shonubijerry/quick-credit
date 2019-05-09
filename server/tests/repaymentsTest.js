@@ -159,6 +159,20 @@ describe('Repayment Controller', () => {
         });
     });
 
+    it('it should return error loan id does not exist', (done) => {
+      chai.request(app)
+        .post(`${loansUrl}/99/repayment`)
+        .send(testDb.repaymentAmount[3])
+        .set('token', currentToken)
+        .end((error, res) => {
+          res.should.have.status(404);
+          res.body.should.be.a('object');
+          res.body.should.have.property('error');
+          res.body.error.should.equal(errorStrings.noLoan);
+          done();
+        });
+    });
+
     it('it should return error if loan is not approved', (done) => {
       chai.request(app)
         .post(`${loansUrl}/3/repayment`)

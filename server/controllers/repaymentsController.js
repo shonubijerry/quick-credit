@@ -22,7 +22,7 @@ class RepaymentsController {
 
   static getLoanRepayments(req, res) {
     const loanId = parseInt(req.params.loanId, 10);
-    const loanRepayments = RepaymentsController.getLoanRepayments(loanId);
+    const loanRepayments = RepaymentsModel.getLoanRepayments(loanId);
     if (Utils.checkLength(loanRepayments) > 0) {
       return ResponseHelper.success(res, 200, loanRepayments);
     }
