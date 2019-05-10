@@ -24,6 +24,10 @@ const port = process.env.PORT;
 app.use(bodyParser.urlencoded({
   extended: false,
 }));
+
+// At the moment GET request on '/' should show documentation inside ./index.html
+app.use('/', Express.static('./'));
+
 app.use(bodyParser.json());
 app.use('/api/v1/docs', Express.static('./docs.html'));
 
