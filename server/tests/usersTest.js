@@ -37,7 +37,7 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[1])
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.validName);
@@ -50,7 +50,7 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[1])
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.validName);
@@ -63,7 +63,7 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[2])
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.validEmail);
@@ -76,7 +76,7 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[3])
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.emailExists);
@@ -89,7 +89,7 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[4])
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.validAddress);
@@ -102,7 +102,7 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[5])
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.passwordLength);
@@ -115,7 +115,7 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[6])
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.passwordEmpty);
@@ -149,7 +149,7 @@ describe('User Controller', () => {
         .post(signinUrl)
         .send(testDb.users[8])
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.validEmail);
@@ -162,7 +162,7 @@ describe('User Controller', () => {
         .post(signinUrl)
         .send(testDb.users[9])
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.passwordEmpty);
@@ -175,7 +175,7 @@ describe('User Controller', () => {
         .post(signinUrl)
         .send(testDb.users[10])
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.emailNotExist);
@@ -188,7 +188,7 @@ describe('User Controller', () => {
         .post(signinUrl)
         .send(testDb.users[11])
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.loginFailure);
@@ -341,7 +341,7 @@ describe('User Controller', () => {
             .patch(`${usersUrl}/${email}/verify`)
             .set('token', currentToken)
             .end((error, res) => {
-              res.should.have.status(406);
+              res.should.have.status(400);
               res.body.should.be.a('object');
               res.body.should.have.property('error');
               res.body.error.should.equal(errorStrings.alreadyVerified);

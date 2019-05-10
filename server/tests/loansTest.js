@@ -66,7 +66,7 @@ describe('Loans Controller', () => {
         .send(testDb.loanApplication[1])
         .set('token', currentToken)
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.validAmount);
@@ -80,7 +80,7 @@ describe('Loans Controller', () => {
         .send(testDb.loanApplication[2])
         .set('token', currentToken)
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.validTenor);
@@ -105,7 +105,7 @@ describe('Loans Controller', () => {
           .send(testDb.loanApplication[0])
           .set('token', currentToken)
           .end((error, res) => {
-            res.should.have.status(406);
+            res.should.have.status(400);
             res.body.should.be.a('object');
             res.body.should.have.property('error');
             res.body.error.should.equal('You have an unpaid loan of 80000 which is under review or yet to be fully repaid');
@@ -120,7 +120,7 @@ describe('Loans Controller', () => {
         .send(testDb.loanApplication[0])
         .set('token', currentToken)
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal('You have an unpaid loan of 60000 which is under review or yet to be fully repaid');
@@ -567,7 +567,7 @@ describe('Loans Controller', () => {
             .send(testDb.approveRejectLoan[2])
             .set('token', currentToken)
             .end((error, res) => {
-              res.should.have.status(406);
+              res.should.have.status(400);
               res.body.should.be.a('object');
               res.body.should.have.property('error');
               res.body.error.should.equal(errorStrings.validApproveLoan);
@@ -581,7 +581,7 @@ describe('Loans Controller', () => {
             .send(testDb.approveRejectLoan[0])
             .set('token', currentToken)
             .end((error, res) => {
-              res.should.have.status(406);
+              res.should.have.status(400);
               res.body.should.be.a('object');
               res.body.should.have.property('error');
               res.body.error.should.equal(errorStrings.validNumber);
@@ -629,7 +629,7 @@ describe('Loans Controller', () => {
             .send(testDb.approveRejectLoan[0])
             .set('token', currentToken)
             .end((error, res) => {
-              res.should.have.status(406);
+              res.should.have.status(400);
               res.body.should.be.a('object');
               res.body.should.have.property('error');
               res.body.error.should.equal(errorStrings.alreadyApproved);

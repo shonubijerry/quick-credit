@@ -26,7 +26,7 @@ class RepaymentsController {
     if (Utils.checkLength(loanRepayments) > 0) {
       return ResponseHelper.success(res, 200, loanRepayments);
     }
-    return ResponseHelper.error(res, 406, errorStrings.noRepayments);
+    return ResponseHelper.error(res, 400, errorStrings.noRepayments);
   }
 
   /**
@@ -44,13 +44,13 @@ class RepaymentsController {
       return ResponseHelper.error(res, 404, errorStrings.noLoan);
     }
     if (newRepayment === 'not-approved') {
-      return ResponseHelper.error(res, 406, errorStrings.notApproved);
+      return ResponseHelper.error(res, 400, errorStrings.notApproved);
     }
     if (newRepayment === 'not-amount') {
-      return ResponseHelper.error(res, 406, errorStrings.notAmount);
+      return ResponseHelper.error(res, 400, errorStrings.notAmount);
     }
     if (newRepayment === 'loan-repaid') {
-      return ResponseHelper.error(res, 406, errorStrings.loanRepaid);
+      return ResponseHelper.error(res, 400, errorStrings.loanRepaid);
     }
     return ResponseHelper.success(res, 201, newRepayment);
   }
