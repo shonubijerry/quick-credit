@@ -25,7 +25,7 @@ class LoansController {
     const currentLoan = loansModel.checkCurrentLoan(userEmail);
 
     if (currentLoan.isFound === true) {
-      ResponseHelper.error(res, 406, `You have an unpaid loan of ${currentLoan.foundLoan.amount} which is under review or yet to be fully repaid`);
+      ResponseHelper.error(res, 400, `You have an unpaid loan of ${currentLoan.foundLoan.amount} which is under review or yet to be fully repaid`);
     } else {
       const newLoan = loansModel.createLoan(req, userEmail);
 
@@ -141,7 +141,7 @@ class LoansController {
       return ResponseHelper.error(res, 404, errorStrings.noLoan);
     }
     if (foundLoan === 'no-action') {
-      return ResponseHelper.error(res, 406, errorStrings.alreadyApproved);
+      return ResponseHelper.error(res, 400, errorStrings.alreadyApproved);
     }
     const approvedLoan = {
       loanId: foundLoan.id,

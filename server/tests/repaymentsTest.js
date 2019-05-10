@@ -58,7 +58,7 @@ describe('Repayment Controller', () => {
         .get(`${loansUrl}/6/repayments`)
         .set('token', currentToken)
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.noRepayments);
@@ -179,7 +179,7 @@ describe('Repayment Controller', () => {
         .send(testDb.repaymentAmount[3])
         .set('token', currentToken)
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.notApproved);
@@ -193,7 +193,7 @@ describe('Repayment Controller', () => {
         .send(testDb.repaymentAmount[4])
         .set('token', currentToken)
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.notAmount);
@@ -207,7 +207,7 @@ describe('Repayment Controller', () => {
         .send(testDb.repaymentAmount[2])
         .set('token', currentToken)
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.validAmount);
@@ -221,7 +221,7 @@ describe('Repayment Controller', () => {
         .send(testDb.repaymentAmount[4])
         .set('token', currentToken)
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.loanRepaid);
@@ -235,7 +235,7 @@ describe('Repayment Controller', () => {
         .send(testDb.repaymentAmount[5])
         .set('token', currentToken)
         .end((error, res) => {
-          res.should.have.status(406);
+          res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.validAmount);

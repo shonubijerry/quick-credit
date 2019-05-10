@@ -22,7 +22,7 @@ class UsersController {
 
   static signup(req, res) {
     if (usersModel.checkRegistered(req.body.email) === true) {
-      return ResponseHelper.error(res, 406, errorStrings.emailExists);
+      return ResponseHelper.error(res, 400, errorStrings.emailExists);
     }
 
     const newUser = usersModel.signupQuery(req);
@@ -66,9 +66,9 @@ class UsersController {
       });
     }
     if (singinResult.error === 'wrong-password') {
-      return ResponseHelper.error(res, 406, errorStrings.loginFailure);
+      return ResponseHelper.error(res, 400, errorStrings.loginFailure);
     }
-    return ResponseHelper.error(res, 406, errorStrings.emailNotExist);
+    return ResponseHelper.error(res, 400, errorStrings.emailNotExist);
   }
 
   /**
@@ -85,7 +85,7 @@ class UsersController {
       return ResponseHelper.error(res, 404, errorStrings.noUser);
     }
     if (foundUser === 'already-verified') {
-      return ResponseHelper.error(res, 406, errorStrings.alreadyVerified);
+      return ResponseHelper.error(res, 400, errorStrings.alreadyVerified);
     }
     return ResponseHelper.success(res, 200, foundUser);
   }

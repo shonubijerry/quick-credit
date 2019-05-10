@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({
   extended: false,
 }));
 app.use(bodyParser.json());
-app.use('/api/v1/api-docs', Express.static('docs.api.md'));
+app.use('/api/v1/docs', Express.static('./docs.html'));
 
 routes(app);
 

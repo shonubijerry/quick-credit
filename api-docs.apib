@@ -49,6 +49,13 @@ You may signup to the platform using this endpoint, it takes a JSON object conta
             }
         }
 
++ Response 400 (application/json)
+
+        {
+            "status": 400,
+            "error": "Email address has already been registered"
+        }
+        
 
 ### Signin [POST /auth/signin]
 
@@ -61,15 +68,17 @@ You may signin to the platform using this endpoint, it takes a JSON object conta
 
 + Request (application/json)
 
+        ```
         {
             "email" : "shonubijerry@gmail.com",
             "password" : "olujac"
         }
+        ```
 
-+ Response 201 (application/json)
++ Response 200 (application/json)
 
         {
-            "status": 201,
+            "status": 200,
             "data": {
                 "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2hvbnViaWplcnJ5QGdtYWlsLmNhIiwiZmlyc3ROYW1lIjoiS29yZWRlIiwibGFzdE5hbWUiOiJTaG8iLCJhZGRyZXNzIjoiNiAgZmVsaXgiLCJwYXNzd29yZCI6IiQyYiQxMCRWUkVOTEd5cGFueHFHMkhZRU5pY1ZPTjRkM3FxRmZCbTFYMW9PbEJ3ZzNLSmd6V3Yxb2ltbSIsImlkIjoxMSwic3RhdHVzIjoidW52ZXJpZmllZCIsImlzQWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU3NDQwMjQ2LCJleHAiOjE1NTc1MjY2NDZ9.dr5U72FZonBYelmVFVycZlb-UhykWkXmy2F5e5IFdKw",
                 "id": 11,
@@ -77,6 +86,20 @@ You may signin to the platform using this endpoint, it takes a JSON object conta
                 "lastName": "Sho",
                 "email": "shonubijerry@gmail.ca"
             }
+        }
+
++ Response 404 (application/json)
+        
+        {
+            "status": 404,
+            "error": "User does not exist"
+        }        
+
++ Response 400 (application/json)
+
+        {
+            "status": 400,
+            "error": "Enter a valid email address"
         }
 
 
@@ -147,6 +170,14 @@ A loan object has the following attributes
         {
             "status": 401,
             "error": "You must login to have access to this feature"
+        }
+
++ Response 404 (application/json)
+    
+        
+        {
+            "status": 404,
+            "error": "You currently do not have any loan to display"
         }
 
 
@@ -220,6 +251,15 @@ A loan object has the following attributes
             "error": "You are forbidden from accessing this section of the app"
         }
 
++ Response 404 (application/json)
+    
+        
+        {
+            "status": 404,
+            "error": "You currently do not have any loan to display"
+        }
+
+
 
 ### Get Repaid Loans [GET /loans?status=approved&repaid=true]
 
@@ -291,6 +331,15 @@ A loan object has the following attributes
             "error": "You are forbidden from accessing this section of the app"
         }
 
++ Response 404 (application/json)
+    
+        
+        {
+            "status": 404,
+            "error": "You currently do not have any loan to display"
+        }
+
+
 
 ### Get a specific loan [GET /loans/{loanId}]
 
@@ -352,6 +401,16 @@ A loan object has the following attributes
             "error": "You are forbidden from accessing this section of the app"
         }
 
++ Response 404 (application/json)
+    
+
+        
+        {
+            "status": 404,
+            "error": "There is no such loan"
+        }
+
+
 
 
 ### Get a loan repayments [GET /loans/{loanId}/repayments]
@@ -401,6 +460,14 @@ Users and Admin may see repayments for a specific loan through this endpoint. A 
             "error": "You must login to have access to this feature"
         }
 
++ Response 404 (application/json)
+    
+
+        
+        {
+            "status": 404,
+            "error": "There are currently no repayments for this loan"
+        }
 
 ### Apply for loan [POST /loans]
 
@@ -449,7 +516,14 @@ Users may apply for loan using this endpoint, it takes a JSON object containing 
             "status": 401,
             "error": "You must login to have access to this feature"
         }
-        
+
++ Response 400 (application/json)
+
+        {
+            "status": 400,
+            "error": "Tenor must range from 1 to 12 months"
+        }
+
 
 ### Post a loan repayment [POST /loans/{loanId}/repayment]
 
@@ -504,7 +578,20 @@ Admin can post a loan repayment using this endpoint, it takes a JSON object cont
             "error": "You are forbidden from accessing this section of the app"
         }
 
++ Response 404 (application/json)
+        
+        {
+            "status": 404,
+            "error": "There is no such loan"
+        }
 
++ Response 400 (application/json)
+
+        {
+            "status": 400,
+            "error": "The amount you entered is not what you are expected to pay"
+        }
+        
 
 ### Approve or Reject a loan [PATCH /loans/{loanId}]
 
@@ -558,6 +645,21 @@ Admin can approve or reject a loan using this endpoint, it takes a JSON object c
             "error": "You are forbidden from accessing this section of the app"
         }
 
++ Response 404 (application/json)
+        
+        {
+            "status": 404,
+            "error": "There is no such loan"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "status": 400,
+            "error": "Loan parameter should be either approved or rejected"
+        }
+        
+
 
 ## Group Users [/users]
 
@@ -610,6 +712,21 @@ Admin can verify a user using this endpoint, it takes a JSON object containing s
             "status": 403,
             "error": "You are forbidden from accessing this section of the app"
         }
+
++ Response 404 (application/json)
+        
+        {
+            "status": 404,
+            "error": "User does not exist"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "status": 400,
+            "error": "User has already been verified"
+        }
+        
 
 
 ### Get all users [GET /users]

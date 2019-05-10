@@ -12,8 +12,8 @@ class Validator {
    */
   static findErrors(res, errors, next) {
     if (Object.keys(errors).length > 0) {
-      return res.status(406).json({
-        status: 406,
+      return res.status(400).json({
+        status: 400,
         error: errors.errorKey,
       });
     }
