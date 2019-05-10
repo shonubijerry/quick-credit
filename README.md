@@ -14,7 +14,10 @@ https://shonubijerry.github.io/quick-cash/UI/index.html
 https://quick-credit-shonubi.herokuapp.com/
 
 ## API Documentation
-N/A
+
+https://quick-credit-shonubi.herokuapp.com/api/v1/api-docs
+
+https://quickcredit6.docs.apiary.io/
 
 ## Table of Content
  * [Getting Started](#getting-started)
@@ -65,7 +68,35 @@ e.g npm start
 run test using 'npm test'.
 
 ### API End Points Test Using Postman
-N/A
+
+<table>
+<tr><th>HTTP VERB</th><th>ENDPOINT</th><th>FUNCTIONALITY</th></tr>
+
+<tr><td>POST</td> <td>/api/v1/auth/signup</td>  <td>User signup</td></tr>
+
+<tr><td>POST</td> <td>/api/v1/auth/login</td>  <td>User signin</td></tr>
+
+<tr><td>POST</td> <td>/api/v1/loans</td>  <td>Post a loan</td></tr>
+
+<tr><td>POST</td> <td>/api/v1/loans/:loanId/repayment</td>  <td>Posts a loan repayment</td></tr>
+
+<tr><td>PATCH</td> <td>/api/v1/users/:email/verify</td>  <td>Verify a user</td></tr>
+
+<tr><td>PATCH</td> <td>/api/v1/loans/:loanId</td>  <td>Approve/Reject a loan repayment</td></tr>
+
+<tr><td>GET</td> <td>/api/v1/loans</td>  <td>Get loans</td></tr>
+
+<tr><td>GET</td> <td>/api/v1/loans/:loanId</td>  <td>Get a loan by loanId</td></tr>
+
+<tr><td>GET</td> <td>/api/v1/loans?status=approved&repaid=false</td>  <td>Get all current loans</td></tr>
+
+<tr><td>GET</td> <td>/api/v1/loans?status=approved&repaid=true</td>  <td>Get all repaid loans</td></tr>
+
+<tr><td>GET</td> <td>/api/v1/loans/:loanId/repayments</td>  <td>Gets repayments for a loan</td></tr>
+
+<tr><td>GET</td> <td>/api/v1/users</td>  <td>Gets all users</td></tr>
+ 
+</table>
 
 
 ### Coding Style
@@ -87,6 +118,7 @@ N/A
 * Admin can view all loan applications
 * Admin can view all current loans (not fully repaid)
 * Admin can view all repaid loans
+* Admin can view all users
  
 
 ## Built With
