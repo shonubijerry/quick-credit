@@ -9,8 +9,8 @@
     "lint": "eslint ./server",
     "startDev": "nodemon --exec babel-node app.js",
     "build": "babel server -d build",
-    "start": "babel-node app.js",
-    "test": "nyc --reporter=html --reporter=text mocha --require @babel/core --require @babel/register ./server/tests/ --timeout 10000 --exit",
+    "start": "node app.js",
+    "test": "nyc mocha --timeout 20000 -r @babel/register ./server/tests/ --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "coveralls": "nyc --reporter=lcov --reporter=text-lcov npm test",
     "heroku-postbuild": "npm run build"
@@ -24,11 +24,6 @@
   },
   "homepage": "https://github.com/shonubijerry/quick-credit#readme",
   "devDependencies": {
-    "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.4",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.4.4",
-    "@babel/register": "^7.4.4",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "coveralls": "^3.0.3",
@@ -41,6 +36,11 @@
     "nyc": "^14.1.0"
   },
   "dependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/register": "^7.4.4",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
