@@ -18,7 +18,7 @@ https://quick-credit-shonubi.herokuapp.com/
 
 ## API Documentation
 
-https://quick-credit-shonubi.herokuapp.com/api/v1/api-docs
+https://quick-credit-shonubi.herokuapp.com/api-docs
 
 https://quickcredit6.docs.apiary.io/
 
