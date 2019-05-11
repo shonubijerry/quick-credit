@@ -2,6 +2,7 @@
 import Express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import path from 'path';
 import dotenv from 'dotenv';
 import routes from './server/routes';
 
@@ -30,10 +31,10 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 
 // At the moment GET request on '/' should show documentation inside ./index.html
-app.use('/', Express.static('./server/public/api-docs'));
+app.use('/', Express.static(path.join(__dirname, './server/public/api-docs')));
 
 app.use(bodyParser.json());
-app.use('/api-docs', Express.static(__dirname, './server/public/api-docs'));
+app.use('/api-docs', Express.static(path.join(__dirname, './server/public/api-docs')));
 
 routes(app);
 
