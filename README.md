@@ -1,7 +1,7 @@
 # Quick-Credit
 
-[![Coverage Status](https://coveralls.io/repos/github/shonubijerry/quick-credit/badge.svg?branch=develop)](https://coveralls.io/github/shonubijerry/quick-credit?branch=develop)
 [![Build Status](https://travis-ci.com/shonubijerry/quick-credit.svg?branch=develop)](https://travis-ci.com/shonubijerry/quick-credit)
+[![Coverage Status](https://coveralls.io/repos/github/shonubijerry/quick-credit/badge.svg?branch=develop)](https://coveralls.io/github/shonubijerry/quick-credit?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/40263d408451dc9d9b99/maintainability)](https://codeclimate.com/github/shonubijerry/quick-credit/maintainability)
 
 
@@ -10,12 +10,15 @@ Quick Credit is an online lending platform that provides short term soft loans t
 ## UI hosted on gh pages
 https://shonubijerry.github.io/quick-cash/UI/index.html
 
+## Pivotal Tracker Project
+https://www.pivotaltracker.com/n/projects/2326551
+
 ## Server side hosted on Heroku
 https://quick-credit-shonubi.herokuapp.com/
 
 ## API Documentation
 
-https://quick-credit-shonubi.herokuapp.com/api/v1/docs
+https://quick-credit-shonubi.herokuapp.com/api/v1/api-docs
 
 https://quickcredit6.docs.apiary.io/
 
@@ -64,8 +67,10 @@ e.g npm start
 ```
 4. Install postman to test all endpoints on port 3000.
 
-### Test
-run test using 'npm test'.
+### Run Test
+```
+e.g npm test
+```
 
 ### API End Points Test Using Postman
 
