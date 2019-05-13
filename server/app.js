@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 import Express from 'express';
+import cors from 'cors';
 import bodyParser from 'body-parser';
+import path from 'path';
 import dotenv from 'dotenv';
-import routes from './server/routes';
+import routes from './routes';
 
 /**
 * @fileOverview - application entry point
@@ -10,7 +12,7 @@ import routes from './server/routes';
 * @requires - body-parser
 * @requires - dotenv
 * @requires - cors
-* @requires - ./server/routes
+* @requires - ./routes
 * @exports - app.js
 * */
 
@@ -18,14 +20,21 @@ dotenv.config();
 
 // declare constants
 const app = new Express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 
 // declare middleware
 app.use(bodyParser.urlencoded({
   extended: false,
 }));
+
+// 3rd party middleware
+app.use(cors());
+
+// At the moment GET request on '/' should show documentation inside ./index.html
+app.use('/', Express.static(path.join(__dirname, './public/api-docs')));
+
 app.use(bodyParser.json());
-// app.use('/', Express.static('UI'));
+app.use('/api-docs', Express.static(path.join(__dirname, './public/api-docs')));
 
 routes(app);
 
