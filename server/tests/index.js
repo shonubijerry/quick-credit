@@ -1,6 +1,6 @@
 import chaiHttp from 'chai-http';
 import chai from 'chai';
-import app from '../../app';
+import app from '../app';
 import errorStrings from '../helpers/errorStrings';
 
 chai.use(chaiHttp);
