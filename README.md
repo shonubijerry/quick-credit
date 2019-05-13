@@ -1,8 +1,10 @@
 # Quick-Credit
 
 [![Build Status](https://travis-ci.com/shonubijerry/quick-credit.svg?branch=develop)](https://travis-ci.com/shonubijerry/quick-credit)
-[![Coverage Status](https://coveralls.io/repos/github/shonubijerry/quick-credit/badge.svg?branch=develop)](https://coveralls.io/github/shonubijerry/quick-credit?branch=develop)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/40263d408451dc9d9b99/test_coverage)](https://codeclimate.com/github/shonubijerry/quick-credit/test_coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/40263d408451dc9d9b99/maintainability)](https://codeclimate.com/github/shonubijerry/quick-credit/maintainability)
+[![Coverage Status](https://coveralls.io/repos/github/shonubijerry/quick-credit/badge.svg?branch=develop)](https://coveralls.io/github/shonubijerry/quick-credit?branch=develop)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
 Quick Credit is an online lending platform that provides short term soft loans to individuals. This helps solve problems of financial inclusion as a way to alleviate poverty and empower low income earners.
