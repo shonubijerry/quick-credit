@@ -4,7 +4,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import path from 'path';
 import dotenv from 'dotenv';
-import routes from './routes';
+import routes from './routes/index';
 
 /**
 * @fileOverview - application entry point
