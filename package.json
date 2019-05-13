@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint ./server",
     "startDev": "nodemon --exec babel-node ./server/app.js",
-    "build": "babel ./server/* -d build --copy-files --ignore ./node_modules,./coverage,./.babelrc,.nyc_output,./package.json,./npm-debug.log,./.travis.yml,./.eslintrc.js,./UI,./README.md",
+    "build": "babel ./server --out-dir build --copy-files --ignore ./node_modules,./coverage,./.babelrc,.nyc_output,./package.json,./npm-debug.log,./.travis.yml,./.eslintrc.js,./UI,./README.md",
     "start": "node build/app.js",
     "test": "nyc mocha --timeout 20000 -r @babel/register ./server/tests/ --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
