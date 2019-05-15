@@ -19,9 +19,7 @@ class Auth {
 
   static authenticateUser(request, response, next) {
     try {
-      const userToken = request.headers['x-access'] || request.headers.token;
-      const verifiedToken = jwt.verify(userToken, secretKey);
-      request.token = verifiedToken;
+      request.token = Auth.verifyToken(request.headers.token);
       return next();
     } catch (error) {
       return ResponseHelper.error(response, 401, errorStrings.notAuthenticated);
@@ -29,23 +27,32 @@ class Auth {
   }
 
   /**
-     * check Admin role
-     * @param {Object} request
-     * @param {Object} response
-     * @param {Function} next
-     * @return {Object}
-     */
+ * check Admin role
+ * @param {Object} request
+ * @param {Object} response
+ * @param {Function} next
+ * @return {Object}
+ */
   static authenticateAdmin(request, response, next) {
     try {
-      const token = request.headers['x-access'] || request.headers.token;
-      const verifiedToken = jwt.verify(token, secretKey);
-      request.token = verifiedToken;
-      if (verifiedToken.user.isAdmin === false) {
+      request.token = Auth.verifyToken(request.headers.token);
+      if (request.token.user.isAdmin === false) {
         return ResponseHelper.error(response, 403, errorStrings.notAllowed);
       } return next();
     } catch (error) {
       return ResponseHelper.error(response, 401, errorStrings.notAuthenticated);
     }
+  }
+
+
+  /**
+ * Verify a token by using a secret key and a public key.
+ * @param {Object} token
+ * @return {Object} return verified token
+ */
+
+  static verifyToken(token) {
+    return jwt.verify(token, secretKey);
   }
 }
 

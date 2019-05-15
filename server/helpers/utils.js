@@ -57,24 +57,6 @@ class Utils {
     return { error: false };
   }
 
-  // /**
-  //    * Recursive function to query a specific object by matching more than one properties in it.
-  //    * @param {Object} data object to query
-  //    * @param {Object} filters search criterea (properties and expected values to match)
-  //    * @returns {boolean}  returns true if all conditions is met or false otherwise
-  //    */
-
-  // static addQuery(item, key, n) {
-  //   if (n <= 0) {
-  //     return false;
-  //   }
-  //   if (n <= 1) {
-  //     return item[key[n - 1]] === key[n];
-  //   }
-  //   return item[key[n - 1]] === key[n] && Utils.addQuery(item, key, n - 2);
-  //   // return true;
-  // }
-
   /**
      * find single object in array of objects
      * @param {Object} filter search citerea
@@ -105,11 +87,7 @@ class Utils {
      */
 
   static sumProperty(key, data) {
-    let sum = 0;
-
-    data.forEach((item) => {
-      sum += Number.parseFloat(item[key]);
-    });
+    const sum = data.reduce((total, item) => Number(total) + Number(item[key]), 0);
     return sum;
   }
 

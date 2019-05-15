@@ -2,6 +2,7 @@ import RepaymentsModel from '../model/repaymentsModel';
 import ResponseHelper from '../helpers/responseHelper';
 import errorStrings from '../helpers/errorStrings';
 import Utils from '../helpers/utils';
+import LoansModel from '../model/loansModel';
 
 /**
 * @fileOverview - class manages all loan repayments
@@ -9,6 +10,7 @@ import Utils from '../helpers/utils';
 * @requires - ../model/RepaymentsModel
 * @requires - ../helpers/ResponseHelper
 * @requires - ../helpers/errorStrings
+* @requires - ../model/loansModel
 * @exports - repaymentsController.js
 * */
 
@@ -26,7 +28,7 @@ class RepaymentsController {
     if (Utils.checkLength(loanRepayments) > 0) {
       return ResponseHelper.success(res, 200, loanRepayments);
     }
-    return ResponseHelper.error(res, 400, errorStrings.noRepayments);
+    return ResponseHelper.success(res, 200, {});
   }
 
   /**
@@ -40,17 +42,23 @@ class RepaymentsController {
     const loanId = parseInt(req.params.loanId, 10);
     const { amount } = req.body;
     const newRepayment = RepaymentsModel.createRepayment(loanId, amount);
-    if (newRepayment === 'no-loan') {
-      return ResponseHelper.error(res, 404, errorStrings.noLoan);
-    }
-    if (newRepayment === 'not-approved') {
-      return ResponseHelper.error(res, 400, errorStrings.notApproved);
-    }
-    if (newRepayment === 'not-amount') {
-      return ResponseHelper.error(res, 400, errorStrings.notAmount);
-    }
-    if (newRepayment === 'loan-repaid') {
-      return ResponseHelper.error(res, 400, errorStrings.loanRepaid);
+    switch (newRepayment) {
+      case 'no-loan': {
+        return ResponseHelper.error(res, 404, errorStrings.noLoan);
+      }
+      case 'not-approved': {
+        return ResponseHelper.error(res, 400, errorStrings.notApproved);
+      }
+      case 'not-amount': {
+        const { paymentInstallment } = LoansModel.getSingleLoan(loanId);
+        return ResponseHelper.error(res, 400, `${errorStrings.notAmount} ${paymentInstallment.toFixed(2)}`);
+      }
+      case 'loan-repaid': {
+        return ResponseHelper.error(res, 409, errorStrings.loanRepaid);
+      }
+      default: {
+        break;
+      }
     }
     return ResponseHelper.success(res, 201, newRepayment);
   }

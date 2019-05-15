@@ -53,15 +53,16 @@ describe('Repayment Controller', () => {
         });
     });
 
-    it('it should return error if no repayment is found', (done) => {
+    it('it should return empty data set if no repayment is found', (done) => {
       chai.request(app)
         .get(`${loansUrl}/6/repayments`)
         .set('token', currentToken)
         .end((error, res) => {
-          res.should.have.status(400);
+          res.should.have.status(200);
           res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.noRepayments);
+          res.body.should.have.property('data');
+          res.body.data.should.be.a('object');
+          res.body.data.should.eql({});
           done();
         });
     });
@@ -196,7 +197,7 @@ describe('Repayment Controller', () => {
           res.should.have.status(400);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.notAmount);
+          res.body.error.should.equal(`${errorStrings.notAmount} 11760.00`);
           done();
         });
     });
@@ -221,7 +222,7 @@ describe('Repayment Controller', () => {
         .send(testDb.repaymentAmount[4])
         .set('token', currentToken)
         .end((error, res) => {
-          res.should.have.status(400);
+          res.should.have.status(409);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.loanRepaid);

@@ -21,15 +21,14 @@ class UsersController {
  */
 
   static signup(req, res) {
-    if (usersModel.checkRegistered(req.body.email) === true) {
-      return ResponseHelper.error(res, 400, errorStrings.emailExists);
+    if (usersModel.checkRegistered(req.body.email)) {
+      return ResponseHelper.error(res, 409, errorStrings.emailExists);
     }
 
     const newUser = usersModel.signupQuery(req);
     const currentToken = generateToken(newUser);
-    process.env.CURRENT_TOKEN = currentToken;
 
-    return res.status(201).send({
+    return res.status(201).json({
       status: 201,
       data: {
         token: currentToken,
@@ -50,25 +49,24 @@ class UsersController {
   static signin(req, res) {
     const singinResult = usersModel.signinQuery(req);
 
-    if (!singinResult.error) {
-      const currentToken = generateToken(singinResult);
-      process.env.CURRENT_TOKEN = currentToken;
-      return res.status(200).send({
-        status: 200,
-        data: {
-          token: currentToken,
-          id: singinResult.id,
-          firstName: singinResult.firstName,
-          lastName: singinResult.lastName,
-          email: singinResult.email,
-          isAdmin: singinResult.isAdmin,
-        },
-      });
-    }
     if (singinResult.error === 'wrong-password') {
-      return ResponseHelper.error(res, 400, errorStrings.loginFailure);
+      return ResponseHelper.error(res, 403, errorStrings.loginFailure);
     }
-    return ResponseHelper.error(res, 400, errorStrings.emailNotExist);
+    const currentToken = generateToken(singinResult);
+
+    return res.status(200).json({
+      status: 200,
+      data: {
+        token: currentToken,
+        id: singinResult.id,
+        firstName: singinResult.firstName,
+        lastName: singinResult.lastName,
+        address: singinResult.address,
+        email: singinResult.email,
+        status: singinResult.status,
+        isAdmin: singinResult.isAdmin,
+      },
+    });
   }
 
   /**
@@ -85,7 +83,7 @@ class UsersController {
       return ResponseHelper.error(res, 404, errorStrings.noUser);
     }
     if (foundUser === 'already-verified') {
-      return ResponseHelper.error(res, 400, errorStrings.alreadyVerified);
+      return ResponseHelper.error(res, 409, errorStrings.alreadyVerified);
     }
     return ResponseHelper.success(res, 200, foundUser);
   }
@@ -98,8 +96,7 @@ class UsersController {
   */
 
   static getUsers(req, res) {
-    const foundUsers = usersModel.getUsers();
-    return ResponseHelper.success(res, 200, foundUsers);
+    return ResponseHelper.success(res, 200, usersModel.getUsers());
   }
 }
 
