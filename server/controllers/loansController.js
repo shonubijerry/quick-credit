@@ -23,13 +23,13 @@ class LoansController {
   static createLoan(req, res) {
     const userEmail = req.token.user.email;
     const currentLoan = loansModel.checkCurrentLoan(userEmail);
-
-    if (currentLoan.isFound === true) {
-      ResponseHelper.error(res, 400, `You have an unpaid loan of ${currentLoan.foundLoan.amount} which is under review or yet to be fully repaid`);
-    } else {
+    try {
+      if (currentLoan) {
+        throw new Error(`You have an unpaid loan of ${currentLoan.amount} which is under review or yet to be fully repaid`);
+      }
       const newLoan = loansModel.createLoan(req, userEmail);
 
-      return res.status(201).send({
+      return res.status(201).json({
         status: 201,
         data: {
           loanId: newLoan.id,
@@ -44,8 +44,9 @@ class LoansController {
           interest: newLoan.interest,
         },
       });
+    } catch (error) {
+      return ResponseHelper.error(res, 409, error.message);
     }
-    return null;
   }
 
   /**
@@ -87,11 +88,11 @@ class LoansController {
   }
 
   /**
-     * Get query results for API endpoint /loans?...
-     * @param {object} req
-     * @param {object} res
-     * @returns {object} json objects current loans or repaid loans or 404 error no loans found
-     */
+  * Get query results for API endpoint /loans?...
+  * @param {object} req
+  * @param {object} res
+  * @returns {object} return json object for current or repaid loans or 404 error if no loans found
+  */
 
   static processLoansQuery(repaid, res) {
     let queryResult = {};
@@ -141,7 +142,7 @@ class LoansController {
       return ResponseHelper.error(res, 404, errorStrings.noLoan);
     }
     if (foundLoan === 'no-action') {
-      return ResponseHelper.error(res, 400, errorStrings.alreadyApproved);
+      return ResponseHelper.error(res, 409, errorStrings.alreadyApproved);
     }
     const approvedLoan = {
       loanId: foundLoan.id,

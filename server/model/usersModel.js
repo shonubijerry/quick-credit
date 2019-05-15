@@ -48,13 +48,10 @@ class UsersModel {
   static signinQuery(req) {
     const { email, password } = req.body;
     const foundUser = users.find(user => user.email === email);
-    if (foundUser) {
-      if (passwordHelper.comparePasswords(password, foundUser.password)) {
-        return foundUser;
-      }
-      return { error: 'wrong-password' };
+    if (foundUser && passwordHelper.comparePasswords(password, foundUser.password)) {
+      return foundUser;
     }
-    return { error: 'user-not-exist' };
+    return { error: 'wrong-password' };
   }
 
   /**
@@ -64,11 +61,7 @@ class UsersModel {
     */
 
   static checkRegistered(email) {
-    const isFound = users.find(user => user.email === email);
-    if (isFound) {
-      return true;
-    }
-    return false;
+    return users.find(user => user.email === email);
   }
 
   /**
@@ -80,15 +73,13 @@ class UsersModel {
   static verifyUser(email) {
     let info;
     const foundItem = Utils.updateItems(users, 'email', email);
-    if (foundItem === false) {
+    if (!foundItem) {
       info = 'no-user';
     } else if (foundItem.item.status === 'verified') {
       info = 'already-verified';
     } else {
       foundItem.item.status = 'verified';
       users.splice(foundItem.index, 1, foundItem.item);
-      delete foundItem.item.isAdmin;
-      delete foundItem.item.id;
       info = foundItem.item;
     }
 
@@ -101,20 +92,7 @@ class UsersModel {
   */
 
   static getUsers() {
-    const usersArray = [];
-    users.forEach((user) => {
-      const addUser = {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        address: user.address,
-        status: user.status,
-        isAdmin: user.isAdmin,
-      };
-      usersArray.push(addUser);
-    });
-    return usersArray;
+    return users;
   }
 }
 

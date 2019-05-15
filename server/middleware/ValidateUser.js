@@ -1,6 +1,7 @@
 import errorStrings from '../helpers/errorStrings';
 import Validator from '../helpers/Validator';
 import rules from '../helpers/rules';
+import responseHelper from '../helpers/responseHelper';
 
 
 /**
@@ -9,6 +10,7 @@ import rules from '../helpers/rules';
  *    @requires ../helpers/errorStrings
  *    @requires ../helpers/Validator
  *    @requires ../helpers/rules
+ *    @requires ../helpers/responseHelper
  *    @exports ValidateUser
  */
 
@@ -27,7 +29,10 @@ class ValidateUser {
 
     const errors = Object.assign(signupErrors, signinErrors);
 
-    Validator.findErrors(response, errors, next);
+    if (Validator.findErrors(errors)) {
+      return responseHelper.error(response, 400, errors.errorKey);
+    }
+    return next();
   }
 
   /**
@@ -67,7 +72,10 @@ class ValidateUser {
   static validateSignin(request, response, next) {
     const signinErrors = ValidateUser.checkSigninErrors(request.body);
 
-    Validator.findErrors(response, signinErrors, next);
+    if (Validator.findErrors(signinErrors)) {
+      return responseHelper.error(response, 400, signinErrors.errorKey);
+    }
+    return next();
   }
 
   /**
@@ -96,14 +104,17 @@ class ValidateUser {
    * @return {Object} error json object
    */
 
-  static validateParamEmail(req, res, next) {
+  static validateParamEmail(request, response, next) {
     const error = {};
 
     Object.assign(error, Validator.validate(
-      req.params.email, rules.empty, rules.validEmail, errorStrings.validEmail,
+      request.params.email, rules.empty, rules.validEmail, errorStrings.validEmail,
     ));
 
-    Validator.findErrors(res, error, next);
+    if (Validator.findErrors(error)) {
+      return responseHelper.error(response, 400, error.errorKey);
+    }
+    return next();
   }
 }
 

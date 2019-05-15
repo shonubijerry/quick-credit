@@ -9,35 +9,35 @@ const users = [
     email: 'shonubijerry@gmail.cam', // valid registration details
     firstName: 'Shonubi',
     lastName: 'Oluwakorede',
-    password: 'olujac',
+    password: 'olujac1$',
     address: '33, Ahmed Oghere Street, Idimu',
   },
   {
     email: 'adenekan@gmail.info',
     firstName: '', // no name
     lastName: '#Quad%ri*', // invalid name
-    password: 'adenekan123',
+    password: 'olujac1$',
     address: '6, Felix Street, Ikotun',
   },
   {
     email: 'adenekagmail.info', // invalid email
     firstName: 'Baba',
     lastName: 'Quadri',
-    password: 'adenekan123',
+    password: 'olujac1$',
     address: '6, Felix Street, Ikotun',
   },
   {
     email: 'shonubijerry@gmail.com', // email already exist
     firstName: 'Baba',
     lastName: 'Quadri',
-    password: 'adenekan123',
+    password: 'olujac1$',
     address: '6, Felix Street, Ikotun',
   },
   {
     email: 'shonubijerry@ymail.com',
     firstName: 'Baba',
     lastName: 'Quadri',
-    password: 'adenee',
+    password: 'olujac1$',
     address: '6', // invalid address
   },
   {
@@ -58,11 +58,11 @@ const users = [
   // sign in test data
   {
     email: 'shonubijerry@gmail.com', // valid login details
-    password: 'olujac',
+    password: 'olujac1$',
   },
   {
     email: 'shonubijerrygmail.com', // invalid login email
-    password: 'olujac',
+    password: 'olujac1$',
   },
   {
     email: 'shonubijerrygmail.com',
@@ -78,11 +78,11 @@ const users = [
   },
   {
     email: 'badmanga@yahoo.com', // test user with no loan application
-    password: 'gbenga123',
+    password: 'olujac1$',
   },
   {
     email: 'adeade@gmail.com', // user with current loan and status approved
-    password: 'ade123',
+    password: 'olujac1$',
   },
 
 ];

@@ -76,7 +76,7 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[3])
         .end((error, res) => {
-          res.should.have.status(400);
+          res.should.have.status(409);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.emailExists);
@@ -97,7 +97,7 @@ describe('User Controller', () => {
         });
     });
 
-    it('it should not register a user with password less than 6 characters', (done) => {
+    it('it should not register a user with password less than 8 characters', (done) => {
       chai.request(app)
         .post(signupUrl)
         .send(testDb.users[5])
@@ -170,25 +170,12 @@ describe('User Controller', () => {
         });
     });
 
-    it('it should not login a user who doesn\'t exist', (done) => {
-      chai.request(app)
-        .post(signinUrl)
-        .send(testDb.users[10])
-        .end((error, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.emailNotExist);
-          done();
-        });
-    });
-
     it('it should not login a user with wrong login email or password', (done) => {
       chai.request(app)
         .post(signinUrl)
         .send(testDb.users[11])
         .end((error, res) => {
-          res.should.have.status(400);
+          res.should.have.status(403);
           res.body.should.be.a('object');
           res.body.should.have.property('error');
           res.body.error.should.equal(errorStrings.loginFailure);
@@ -341,7 +328,7 @@ describe('User Controller', () => {
             .patch(`${usersUrl}/${email}/verify`)
             .set('token', currentToken)
             .end((error, res) => {
-              res.should.have.status(400);
+              res.should.have.status(409);
               res.body.should.be.a('object');
               res.body.should.have.property('error');
               res.body.error.should.equal(errorStrings.alreadyVerified);
@@ -359,6 +346,20 @@ describe('User Controller', () => {
               res.body.should.be.a('object');
               res.body.should.have.property('error');
               res.body.error.should.equal(errorStrings.noUser);
+              done();
+            });
+        });
+
+        it('it should not verify a user if email is invalid', (done) => {
+          const email = 'johnokoroyahoo.com'; // invalid emal
+          chai.request(app)
+            .patch(`${usersUrl}/${email}/verify`)
+            .set('token', currentToken)
+            .end((error, res) => {
+              res.should.have.status(400);
+              res.body.should.be.a('object');
+              res.body.should.have.property('error');
+              res.body.error.should.equal(errorStrings.validEmail);
               done();
             });
         });

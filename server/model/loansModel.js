@@ -49,7 +49,7 @@ class LoansModel {
      */
 
   static getLoans(email, isAdmin) {
-    if (isAdmin === true) {
+    if (isAdmin) {
       return loans;
     }
     return Utils.findInArray(email, 'user', loans);
@@ -63,7 +63,7 @@ class LoansModel {
 
   static getSingleLoan(loanId) {
     const loan = Utils.findSingleItem(loanId, 'id', loans);
-    if (loan === undefined) {
+    if (!loan) {
       return 'no-loan';
     }
     return loan;
@@ -71,7 +71,6 @@ class LoansModel {
 
   /**
      * Get current loans
-     * @param {object} query
      * @returns {object} an object with array of current loans
      */
 
@@ -139,11 +138,18 @@ class LoansModel {
   */
 
   static checkCurrentLoan(email) {
-    const foundLoan = loans.find(loan => (loan.user === email && loan.repaid === false && (loan.status === 'pending' || loan.status === 'approved')));
-    if (foundLoan) {
-      return { isFound: true, foundLoan };
+    try {
+      const foundLoan = loans.find(loan => (loan.user === email
+        && !loan.repaid
+        && (loan.status === 'pending'
+        || loan.status === 'approved')));
+      if (foundLoan) {
+        return foundLoan;
+      }
+      throw new Error('');
+    } catch (error) {
+      return false;
     }
-    return { isFound: false };
   }
 }
 
