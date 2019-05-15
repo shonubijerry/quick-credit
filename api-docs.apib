@@ -1,0 +1,792 @@
+FORMAT: 1A
+HOST: https://quick-credit-shonubi.herokuapp.com/api/v1
+
+
+# Quick Credit
+
+
+Welcome to Quick Credit API documentation. Quick Credit is an online lending platform that provides short term soft loans to individuals. This helps solve problems of financial inclusion as a way to alleviate poverty and empower low
+income earners. This API provides access to the Quick Credit app service.
+
+
+## Group Authentication [/auth]
+
+Resource handles Authentication of users
+
+### Signup [POST /auth/signup]
+
+You may signup to the platform using this endpoint, it takes a JSON object containing users details.
+
+
++ Body
+    + firstName (string)
+    + lastName (string)
+    + address (string)
+    + email (string)
+    + password (string)
+
+
++ Request (application/json)
+
+        {
+            "firstName" : "Korede"
+            "lastName" : "Sho"
+            "address" : "6  felix"
+            "email" : "shonubijerry@gmail.ca"
+            "password" : "olujac"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "status": 201,
+            "data": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2hvbnViaWplcnJ5QGdtYWlsLmNhIiwiZmlyc3ROYW1lIjoiS29yZWRlIiwibGFzdE5hbWUiOiJTaG8iLCJhZGRyZXNzIjoiNiAgZmVsaXgiLCJwYXNzd29yZCI6IiQyYiQxMCRWUkVOTEd5cGFueHFHMkhZRU5pY1ZPTjRkM3FxRmZCbTFYMW9PbEJ3ZzNLSmd6V3Yxb2ltbSIsImlkIjoxMSwic3RhdHVzIjoidW52ZXJpZmllZCIsImlzQWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU3NDQwMjQ2LCJleHAiOjE1NTc1MjY2NDZ9.dr5U72FZonBYelmVFVycZlb-UhykWkXmy2F5e5IFdKw",
+                "id": 11,
+                "firstName": "Korede",
+                "lastName": "Sho",
+                "email": "shonubijerry@gmail.ca"
+            }
+        }
+
++ Response 400 (application/json)
+
+        {
+            "status": 400,
+            "error": "Email address has already been registered"
+        }
+        
+
+### Signin [POST /auth/signin]
+
+You may signin to the platform using this endpoint, it takes a JSON object containing users login email and password details.
+
++ Body
+    + email (string)
+    + password (string)
+
+
++ Request (application/json)
+
+        ```
+        {
+            "email" : "shonubijerry@gmail.com",
+            "password" : "olujac"
+        }
+        ```
+
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": {
+                "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2hvbnViaWplcnJ5QGdtYWlsLmNhIiwiZmlyc3ROYW1lIjoiS29yZWRlIiwibGFzdE5hbWUiOiJTaG8iLCJhZGRyZXNzIjoiNiAgZmVsaXgiLCJwYXNzd29yZCI6IiQyYiQxMCRWUkVOTEd5cGFueHFHMkhZRU5pY1ZPTjRkM3FxRmZCbTFYMW9PbEJ3ZzNLSmd6V3Yxb2ltbSIsImlkIjoxMSwic3RhdHVzIjoidW52ZXJpZmllZCIsImlzQWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU3NDQwMjQ2LCJleHAiOjE1NTc1MjY2NDZ9.dr5U72FZonBYelmVFVycZlb-UhykWkXmy2F5e5IFdKw",
+                "id": 11,
+                "firstName": "Korede",
+                "lastName": "Sho",
+                "email": "shonubijerry@gmail.ca"
+            }
+        }
+
++ Response 404 (application/json)
+        
+        {
+            "status": 404,
+            "error": "User does not exist"
+        }        
+
++ Response 400 (application/json)
+
+        {
+            "status": 400,
+            "error": "Enter a valid email address"
+        }
+
+
+## Group Loans [/loans]
+
+Resources related to loans in the API
+
+
+### Get all loans [GET /loans]
+
+Users and Admin may see past loan applications through this endpoint. Note that a user will only see loan applications from them while admin will get loan applications from all users.
+A loan object has the following attributes
+
++ id
++ user - email of the user who applied for it
++ createdOn - DateTime
++ status - pending, approved, rejected
++ repaid - Boolean
++ tenor - loan will be repaid maximum of 12 months
++ amount - amount to loan
++ paymentInstallment - monthly installment payment(amount + interest) / tenor
++ balance
++ interest - 5% of amount   
+
+
++ Request (application/json)
+
+    + Headers
+    
+        ```
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2hvbnViaWplcnJ5QGdtYWlsLmNhIiwiZmlyc3ROYW1lIjoiS29yZWRlIiwibGFzdE5hbWUiOiJTaG8iLCJhZGRyZXNzIjoiNiAgZmVsaXgiLCJwYXNzd29yZCI6IiQyYiQxMCRWUkVOTEd5cGFueHFHMkhZRU5pY1ZPTjRkM3FxRmZCbTFYMW9PbEJ3ZzNLSmd6V3Yxb2ltbSIsImlkIjoxMSwic3RhdHVzIjoidW52ZXJpZmllZCIsImlzQWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU3NDQwMjQ2LCJleHAiOjE1NTc1MjY2NDZ9.dr5U72FZonBYelmVFVycZlb-UhykWkXmy2F5e5IFdKw
+        ```
+        
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [
+                {
+                    "id": 1,
+                    "user": "shonubijerry@gmail.com",
+                    "createdOn": "01/05/2019 2:16:17 PM",
+                    "status": "approved",
+                    "repaid": true,
+                    "tenor": "5",
+                    "amount": 40000,
+                    "paymentInstallment": 8400,
+                    "balance": 0,
+                    "interest": 2000
+                },
+                {
+                    "id": 2,
+                    "user": "shonubijerry@gmail.com",
+                    "createdOn": "01/04/2019 2:16:17 PM'",
+                    "status": "approved",
+                    "repaid": false,
+                    "tenor": "7",
+                    "amount": 80000,
+                    "paymentInstallment": 12000,
+                    "balance": 84000,
+                    "interest": 4000
+                }
+            ]
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": 401,
+            "error": "You must login to have access to this feature"
+        }
+
++ Response 404 (application/json)
+    
+        
+        {
+            "status": 404,
+            "error": "You currently do not have any loan to display"
+        }
+
+
+### Get current loans [GET /loans?status=approved&repaid=false]
+
+Admin may see current loan applications through this endpoint. A loan is current if it has not been fully repaid
+A loan object has the following attributes
+
++ id
++ user - email of the user who applied for it
++ createdOn - DateTime
++ status - pending, approved, rejected
++ repaid - Boolean
++ tenor - loan will be repaid maximum of 12 months
++ amount - amount to loan
++ paymentInstallment - monthly installment payment(amount + interest) / tenor
++ balance
++ interest - 5% of amount   
+
++ Request (application/json)
+
+    + Headers
+    
+        ```
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2hvbnViaWplcnJ5QGdtYWlsLmNhIiwiZmlyc3ROYW1lIjoiS29yZWRlIiwibGFzdE5hbWUiOiJTaG8iLCJhZGRyZXNzIjoiNiAgZmVsaXgiLCJwYXNzd29yZCI6IiQyYiQxMCRWUkVOTEd5cGFueHFHMkhZRU5pY1ZPTjRkM3FxRmZCbTFYMW9PbEJ3ZzNLSmd6V3Yxb2ltbSIsImlkIjoxMSwic3RhdHVzIjoidW52ZXJpZmllZCIsImlzQWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU3NDQwMjQ2LCJleHAiOjE1NTc1MjY2NDZ9.dr5U72FZonBYelmVFVycZlb-UhykWkXmy2F5e5IFdKw
+        ```
+        
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [
+                {
+                    "id": 1,
+                    "user": "shonubijerry@gmail.com",
+                    "createdOn": "01/05/2019 2:16:17 PM",
+                    "status": "approved",
+                    "repaid": false,
+                    "tenor": "5",
+                    "amount": 40000,
+                    "paymentInstallment": 8400,
+                    "balance": 0,
+                    "interest": 2000
+                },
+                {
+                    "id": 2,
+                    "user": "shonubijerry@gmail.com",
+                    "createdOn": "01/04/2019 2:16:17 PM'",
+                    "status": "approved",
+                    "repaid": false,
+                    "tenor": "7",
+                    "amount": 80000,
+                    "paymentInstallment": 12000,
+                    "balance": 84000,
+                    "interest": 4000
+                }
+            ]
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": 401,
+            "error": "You must login to have access to this feature"
+        }
+        
++ Response 403 (application/json)
+
+        {
+            "status": 403,
+            "error": "You are forbidden from accessing this section of the app"
+        }
+
++ Response 404 (application/json)
+    
+        
+        {
+            "status": 404,
+            "error": "You currently do not have any loan to display"
+        }
+
+
+
+### Get Repaid Loans [GET /loans?status=approved&repaid=true]
+
+Admin may see current loan applications through this endpoint. Loans that have been fully repaid
+A loan object has the following attributes
+
++ id
++ user - email of the user who applied for it
++ createdOn - DateTime
++ status - pending, approved, rejected
++ repaid - Boolean
++ tenor - loan will be repaid maximum of 12 months
++ amount - amount to loan
++ paymentInstallment - monthly installment payment(amount + interest) / tenor
++ balance
++ interest - 5% of amount   
+
++ Request (application/json)
+
+    + Headers
+    
+        ```
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2hvbnViaWplcnJ5QGdtYWlsLmNhIiwiZmlyc3ROYW1lIjoiS29yZWRlIiwibGFzdE5hbWUiOiJTaG8iLCJhZGRyZXNzIjoiNiAgZmVsaXgiLCJwYXNzd29yZCI6IiQyYiQxMCRWUkVOTEd5cGFueHFHMkhZRU5pY1ZPTjRkM3FxRmZCbTFYMW9PbEJ3ZzNLSmd6V3Yxb2ltbSIsImlkIjoxMSwic3RhdHVzIjoidW52ZXJpZmllZCIsImlzQWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU3NDQwMjQ2LCJleHAiOjE1NTc1MjY2NDZ9.dr5U72FZonBYelmVFVycZlb-UhykWkXmy2F5e5IFdKw
+        ```
+        
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [
+                {
+                    "id": 1,
+                    "user": "shonubijerry@gmail.com",
+                    "createdOn": "01/05/2019 2:16:17 PM",
+                    "status": "approved",
+                    "repaid": true,
+                    "tenor": "5",
+                    "amount": 40000,
+                    "paymentInstallment": 8400,
+                    "balance": 0,
+                    "interest": 2000
+                },
+                {
+                    "id": 2,
+                    "user": "shonubijerry@gmail.com",
+                    "createdOn": "01/04/2019 2:16:17 PM'",
+                    "status": "approved",
+                    "repaid": true,
+                    "tenor": "7",
+                    "amount": 80000,
+                    "paymentInstallment": 12000,
+                    "balance": 84000,
+                    "interest": 4000
+                }
+            ]
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": 401,
+            "error": "You must login to have access to this feature"
+        }
+        
++ Response 403 (application/json)
+
+        {
+            "status": 403,
+            "error": "You are forbidden from accessing this section of the app"
+        }
+
++ Response 404 (application/json)
+    
+        
+        {
+            "status": 404,
+            "error": "You currently do not have any loan to display"
+        }
+
+
+
+### Get a specific loan [GET /loans/{loanId}]
+
+Admin see a specific loan application through this endpoint. Note that a user will only see loan applications from them while admin will get loan applications from all users.
+A loan object has the following attributes
+
++ id
++ user - email of the user who applied for it
++ createdOn - DateTime
++ status - pending, approved, rejected
++ repaid - Boolean
++ tenor - loan will be repaid maximum of 12 months
++ amount - amount to loan
++ paymentInstallment - monthly installment payment(amount + interest) / tenor
++ balance
++ interest - 5% of amount   
+
+
++ Parameters
+    + loanId: 5
+
++ Request (application/json)
+
+    + Headers
+    
+        ```
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2hvbnViaWplcnJ5QGdtYWlsLmNhIiwiZmlyc3ROYW1lIjoiS29yZWRlIiwibGFzdE5hbWUiOiJTaG8iLCJhZGRyZXNzIjoiNiAgZmVsaXgiLCJwYXNzd29yZCI6IiQyYiQxMCRWUkVOTEd5cGFueHFHMkhZRU5pY1ZPTjRkM3FxRmZCbTFYMW9PbEJ3ZzNLSmd6V3Yxb2ltbSIsImlkIjoxMSwic3RhdHVzIjoidW52ZXJpZmllZCIsImlzQWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU3NDQwMjQ2LCJleHAiOjE1NTc1MjY2NDZ9.dr5U72FZonBYelmVFVycZlb-UhykWkXmy2F5e5IFdKw
+        ```
+        
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data":  {
+                "id": 5,
+                "user": "shonubijerry@gmail.com",
+                "createdOn": "01/05/2019 2:16:17 PM",
+                "status": "approved",
+                "repaid": true,
+                "tenor": "5",
+                "amount": 40000,
+                "paymentInstallment": 8400,
+                "balance": 0,
+                "interest": 2000
+            }
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": 401,
+            "error": "You must login to have access to this feature"
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": 403,
+            "error": "You are forbidden from accessing this section of the app"
+        }
+
++ Response 404 (application/json)
+    
+
+        
+        {
+            "status": 404,
+            "error": "There is no such loan"
+        }
+
+
+
+
+### Get a loan repayments [GET /loans/{loanId}/repayments]
+
+Users and Admin may see repayments for a specific loan through this endpoint. A loan repayment object has the following attributes
+
++ id
++ createdOn - DateTime
++ monthlyInstallment - monthly installment payment
++ amount - amount paid  
+
++ Parameters
+    + loanId: 2
+    
++ Request (application/json)
+
+    + Headers
+    
+        ```
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2hvbnViaWplcnJ5QGdtYWlsLmNhIiwiZmlyc3ROYW1lIjoiS29yZWRlIiwibGFzdE5hbWUiOiJTaG8iLCJhZGRyZXNzIjoiNiAgZmVsaXgiLCJwYXNzd29yZCI6IiQyYiQxMCRWUkVOTEd5cGFueHFHMkhZRU5pY1ZPTjRkM3FxRmZCbTFYMW9PbEJ3ZzNLSmd6V3Yxb2ltbSIsImlkIjoxMSwic3RhdHVzIjoidW52ZXJpZmllZCIsImlzQWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU3NDQwMjQ2LCJleHAiOjE1NTc1MjY2NDZ9.dr5U72FZonBYelmVFVycZlb-UhykWkXmy2F5e5IFdKw
+        ```
+        
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [
+                {
+                    "loanId": 2,
+                    "createdOn": "01/05/2019 2:16:17 PM",
+                    "monthlyInstallment": 8400.00,
+                    "amount": 8400.00
+                },
+                {
+                    "loanId": 2,
+                    "createdOn": "21/04/2019 4:16:17 AM",
+                    "monthlyInstallment": 8400.00,
+                    "amount": 8400.00
+                }
+            ]
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": 401,
+            "error": "You must login to have access to this feature"
+        }
+
++ Response 404 (application/json)
+    
+
+        
+        {
+            "status": 404,
+            "error": "There are currently no repayments for this loan"
+        }
+
+### Apply for loan [POST /loans]
+
+Users may apply for loan using this endpoint, it takes a JSON object containing amount and tenor.
+
+
++ amount (float)
++ tenor (integer)
+
+
++ Request (application/json)
+
+    + Headers
+    
+            ```
+            token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2hvbnViaWplcnJ5QGdtYWlsLmNhIiwiZmlyc3ROYW1lIjoiS29yZWRlIiwibGFzdE5hbWUiOiJTaG8iLCJhZGRyZXNzIjoiNiAgZmVsaXgiLCJwYXNzd29yZCI6IiQyYiQxMCRWUkVOTEd5cGFueHFHMkhZRU5pY1ZPTjRkM3FxRmZCbTFYMW9PbEJ3ZzNLSmd6V3Yxb2ltbSIsImlkIjoxMSwic3RhdHVzIjoidW52ZXJpZmllZCIsImlzQWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU3NDQwMjQ2LCJleHAiOjE1NTc1MjY2NDZ9.dr5U72FZonBYelmVFVycZlb-UhykWkXmy2F5e5IFdKw
+            ```
+    + Body
+            
+            {
+                "amount" : "80000.00",
+                "tenor" : "5"
+            }
+            
++ Response 201 (application/json)
+
+        {
+            "status": 201,
+            "data": {
+                "loanId": 6,
+                "user": "shonubijerry@gmail.com",
+                "createdOn": "10/05/2019 12:54:46 AM",
+                "status": "pending",
+                "repaid": false,
+                "tenor": 5,
+                "amount": 80000,
+                "paymentInstallment": "2625.00",
+                "balance": "10500.00",
+                "interest": "500.00"
+            }
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": 401,
+            "error": "You must login to have access to this feature"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "status": 400,
+            "error": "Tenor must range from 1 to 12 months"
+        }
+
+
+### Post a loan repayment [POST /loans/{loanId}/repayment]
+
+Admin can post a loan repayment using this endpoint, it takes a JSON object containing amount to be paid.
+
+
++ amount (float) - amount to pay
+
++ Parameters
+    + loanId: 5
+    
+
++ Request (application/json)
+
+    + Headers
+    
+            ```
+            token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2hvbnViaWplcnJ5QGdtYWlsLmNhIiwiZmlyc3ROYW1lIjoiS29yZWRlIiwibGFzdE5hbWUiOiJTaG8iLCJhZGRyZXNzIjoiNiAgZmVsaXgiLCJwYXNzd29yZCI6IiQyYiQxMCRWUkVOTEd5cGFueHFHMkhZRU5pY1ZPTjRkM3FxRmZCbTFYMW9PbEJ3ZzNLSmd6V3Yxb2ltbSIsImlkIjoxMSwic3RhdHVzIjoidW52ZXJpZmllZCIsImlzQWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU3NDQwMjQ2LCJleHAiOjE1NTc1MjY2NDZ9.dr5U72FZonBYelmVFVycZlb-UhykWkXmy2F5e5IFdKw
+            ```
+    + Body
+            
+            {
+                "amount" : "2100.00"
+            }
+            
++ Response 201 (application/json)
+
+        {
+            "status": 201,
+            "data": {
+                "id": 14,
+                "loanId": 5,
+                "createdOn": "10/05/2019 2:13:40 AM",
+                "amount": "11760.00",
+                "monthlyInstallment": 11760,
+                "paidAmount": 94080,
+                "balance": 0
+            }
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": 401,
+            "error": "You must login to have access to this feature"
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": 403,
+            "error": "You are forbidden from accessing this section of the app"
+        }
+
++ Response 404 (application/json)
+        
+        {
+            "status": 404,
+            "error": "There is no such loan"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "status": 400,
+            "error": "The amount you entered is not what you are expected to pay"
+        }
+        
+
+### Approve or Reject a loan [PATCH /loans/{loanId}]
+
+Admin can approve or reject a loan using this endpoint, it takes a JSON object containing status value.
+
+
++ status (string) - can be 'approved' or 'rejected'
+
++ Parameters
+    + loanId: 3
+    
+
++ Request (application/json)
+
+    + Headers
+    
+            ```
+            token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2hvbnViaWplcnJ5QGdtYWlsLmNhIiwiZmlyc3ROYW1lIjoiS29yZWRlIiwibGFzdE5hbWUiOiJTaG8iLCJhZGRyZXNzIjoiNiAgZmVsaXgiLCJwYXNzd29yZCI6IiQyYiQxMCRWUkVOTEd5cGFueHFHMkhZRU5pY1ZPTjRkM3FxRmZCbTFYMW9PbEJ3ZzNLSmd6V3Yxb2ltbSIsImlkIjoxMSwic3RhdHVzIjoidW52ZXJpZmllZCIsImlzQWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU3NDQwMjQ2LCJleHAiOjE1NTc1MjY2NDZ9.dr5U72FZonBYelmVFVycZlb-UhykWkXmy2F5e5IFdKw
+            ```
+    + Body
+            
+            {
+                "status" : "approved"
+            }
+            
++ Response 201 (application/json)
+
+        {
+            "status": 201,
+            "data": {
+                "loanId": 6,
+                "loanAmount": 10000,
+                "tenor": 5,
+                "status": "pending",
+                "monthlyInstallment": "2100.00",
+                "interest": "500.00"
+            }
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": 401,
+            "error": "You must login to have access to this feature"
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": 403,
+            "error": "You are forbidden from accessing this section of the app"
+        }
+
++ Response 404 (application/json)
+        
+        {
+            "status": 404,
+            "error": "There is no such loan"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "status": 400,
+            "error": "Loan parameter should be either approved or rejected"
+        }
+        
+
+
+## Group Users [/users]
+
+Resources related to loans in the API
+
+
+### Verify a user [PATCH /users/{email}/verify]
+
+Admin can verify a user using this endpoint, it takes a JSON object containing status value.
+
+
++ email (string) - email of the user to verify
+
++ Parameters
+    + email: mikeo007@gmail.com
+    
+
++ Request (application/json)
+
+    + Headers
+    
+            ```
+            token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2hvbnViaWplcnJ5QGdtYWlsLmNhIiwiZmlyc3ROYW1lIjoiS29yZWRlIiwibGFzdE5hbWUiOiJTaG8iLCJhZGRyZXNzIjoiNiAgZmVsaXgiLCJwYXNzd29yZCI6IiQyYiQxMCRWUkVOTEd5cGFueHFHMkhZRU5pY1ZPTjRkM3FxRmZCbTFYMW9PbEJ3ZzNLSmd6V3Yxb2ltbSIsImlkIjoxMSwic3RhdHVzIjoidW52ZXJpZmllZCIsImlzQWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU3NDQwMjQ2LCJleHAiOjE1NTc1MjY2NDZ9.dr5U72FZonBYelmVFVycZlb-UhykWkXmy2F5e5IFdKw
+            ```
+            
++ Response 201 (application/json)
+
+        {
+            "status": 201,
+            "data": {
+                "email": "mikeo007@gmail.com"
+                "firstName": "Korede",
+                "lastName": "Sho",
+                "password": "$2b$10$969iuORO30O.Ipz/eyMOOuaToGEB5IQ/ZJ7BCmZiO/dVgdvreQ0wm",
+                "address": "9, Ahmed Fashola Street, Yaba"
+                "status": "verified"
+            }
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": 401,
+            "error": "You must login to have access to this feature"
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": 403,
+            "error": "You are forbidden from accessing this section of the app"
+        }
+
++ Response 404 (application/json)
+        
+        {
+            "status": 404,
+            "error": "User does not exist"
+        }
+
++ Response 400 (application/json)
+
+        {
+            "status": 400,
+            "error": "User has already been verified"
+        }
+        
+
+
+### Get all users [GET /users]
+
+Admin may see all users through this endpoint. A user object has the following attributes
+
++ id
++ email
++ firstName
++ lastName
++ password
++ address
++ status - verified or unverified
++ isAdmin - Boolean
+
+
++ Request (application/json)
+
+    + Headers
+    
+        ```
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImVtYWlsIjoic2hvbnViaWplcnJ5QGdtYWlsLmNhIiwiZmlyc3ROYW1lIjoiS29yZWRlIiwibGFzdE5hbWUiOiJTaG8iLCJhZGRyZXNzIjoiNiAgZmVsaXgiLCJwYXNzd29yZCI6IiQyYiQxMCRWUkVOTEd5cGFueHFHMkhZRU5pY1ZPTjRkM3FxRmZCbTFYMW9PbEJ3ZzNLSmd6V3Yxb2ltbSIsImlkIjoxMSwic3RhdHVzIjoidW52ZXJpZmllZCIsImlzQWRtaW4iOmZhbHNlfSwiaWF0IjoxNTU3NDQwMjQ2LCJleHAiOjE1NTc1MjY2NDZ9.dr5U72FZonBYelmVFVycZlb-UhykWkXmy2F5e5IFdKw
+        ```
+        
++ Response 200 (application/json)
+
+        {
+            "status": 200,
+            "data": [
+                {
+                    "id": 1,
+                    "firstName": "Shonubi",
+                    "lastName": "Oluwakorede",
+                    "email": "shonubijerry@gmail.com",
+                    "address": "33, Ahmed Oghere Street, Idimu",
+                    "status": "verified",
+                    "isAdmin": true
+                },
+                {
+                    "id": 2,
+                    "firstName": "Adenekan",
+                    "lastName": "Quadri",
+                    "email": "adenekan2017@gmail.com",
+                    "address": "6, Felix Street, Ikotun",
+                    "status": "verified",
+                    "isAdmin": false
+                }
+            ]
+        }
+
++ Response 401 (application/json)
+
+        {
+            "status": 401,
+            "error": "You must login to have access to this feature"
+        }
+
++ Response 403 (application/json)
+
+        {
+            "status": 403,
+            "error": "You are forbidden from accessing this section of the app"
+        }

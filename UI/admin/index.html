@@ -1,44 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	
-    <title>Admin | Quick Cash</title>
+
+    <title>Admin | Quick Credit</title>
+    <link rel='shortcut icon' type='image/x-icon' href='../favicon.png' />
 
     <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
-    
-  </head>
 
-  <body class="admin-home">
-    <header class="main-header">
-      <div class="nav">
-          <span class="navbar-title"><a href="index.html"><h2>QUICK CREDIT</h2></a></span>
-          <label for="show-navbar" class="show-navbar"><img src="../assets/images/menu-icon.png"/></label>
-          <input type="checkbox" id="show-navbar" role="button">
-          <ul id="navbar">
-              <li class="active"><a href="index.html">HOME</a></li>
-              <li><a href="users.html">USERS</a></li>
-              <li><a href="loans.html">LOANS</a></li>
-              <li><a href="signout.html">SIGN OUT</a></li>
-              <li><a href="signin.html">SIGN IN</a></li>
-          </ul>
-      </div>      
-    </header>
-    <div class="container">
-      <div class="home-div">
-        <div class="centered text-white">
-            <h1>WELCOME BACK ADMIN</h1>
-            <h3><a href="signin.html">Login</a> to your dashboard</h3>
+</head>
+
+<body class="user-home">
+    <div id="container">
+        <div id="header">
+            <header class="main-header">
+                <div class="nav">
+                    <input type="checkbox" id="nav-check">
+                    <div class="nav-header">
+                        <img src="../assets/images/logo.png" />
+                    </div>
+                    <div class="nav-btn">
+                        <label for="nav-check">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </label>
+                    </div>
+
+                    <div class="nav-links">
+                        <a class="active" href="index.html">HOME</a>
+                        <a href="signin.html">SIGN IN</a>
+                    </div>
+                </div>
+            </header>
         </div>
-        
-      </div>
+        <section>
+            <div class="content-div home-div">
+                <div class="centered text-center">
+                    <h1>WELCOME BACK ADMIN</h1>
+                    <h3>Click the button below to access your dashboard</a>
+                    </h3>
+                    <a href="dashboard.html" class="btn-primary btn-primary-big btn-apply">Dashboard</a>
+                </div>
+            </div>
+        </section>
+        <div id="footer" class="bg-dark text-white text-center">
+            <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
+            <p>Copyright © 2019</p>
+        </div>
     </div>
-    <footer class="home-footer fixed">
-      <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
-      <p>Copyright © 2019</p>
-    </footer>
     <script src="../js/main.js"></script>
-  </body>
+</body>
+
 </html>
