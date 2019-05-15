@@ -6,14 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <title>Home | Quick Credit</title>
+    <title>Dashboard | Quick Credit</title>
     <link rel='shortcut icon' type='image/x-icon' href='./favicon.png' />
 
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
 
 </head>
 
-<body class="user-home">
+<body>
     <div id="container">
         <div id="header">
             <header class="main-header">
@@ -32,8 +32,7 @@
 
                     <div class="nav-links">
                         <a class="active" href="index.html">HOME</a>
-                        <a href="signin.html">SIGN IN</a>
-                        <a href="signup.html">SIGN UP</a>
+                        <a href="signin.html">LOG OUT</a>
                     </div>
                 </div>
             </header>
@@ -42,9 +41,33 @@
             <section>
                 <div class="content-div home-div">
                     <div class="centered text-center">
-                        <h1>GET A LOAN TODAY</h1>
-                        <h3>It's quick and easy</h3>
-                        <a href="apply_loan.html" class="btn-primary btn-primary-big btn-apply">Apply Now</a>
+                        <div>
+                            <a href="apply_loan.html">
+                                <div class="dashboard-card-container">
+                                    <div class="dashboard-card">
+                                        <h2><b>Apply for loan</b></h2>
+                                        <p>Loan application</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="loans.html">
+                                <div class="dashboard-card-container">
+                                    <div class="dashboard-card">
+                                        <h2><b>View Loans</b></h2>
+                                        <p>Loan repayments</p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="profile.html">
+                                <div class="dashboard-card-container">
+                                    <div class="dashboard-card">
+                                        <h2><b>Profile</b></h2>
+                                        <p>User details</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
                     </div>
                 </div>
             </section>
