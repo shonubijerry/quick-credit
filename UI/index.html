@@ -1,44 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-	
-    <title>Home | Quick Cash</title>
+
+    <title>Home | Quick Credit</title>
+    <link rel='shortcut icon' type='image/x-icon' href='./favicon.png' />
 
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-    
-  </head>
 
-  <body class="home-body">
-    <header class="main-header">
-      <div class="nav">
-          <span class="navbar-title"><a href="index.html"><h2>QUICK CREDIT</h2></a></span>
-          <label for="show-navbar" class="show-navbar"><img src="assets/images/menu-icon.png"/></label>
-          <input type="checkbox" id="show-navbar" role="button">
-          <ul id="navbar">
-              <li class="active"><a href="index.html">HOME</a></li>
-              <li><a href="loans.html">LOANS</a></li>
-              <li><a href="signin.html">SIGN IN</a></li>
-              <li><a href="signup.html">SIGN UP</a></li>
-          </ul>
-      </div>      
-    </header>
-    <div class="container">
-      <div class="home-div">
-        <div class="centered">
-            <h1>GET A LOAN TODAY</h1>
-            <h3>It's quick and easy</h3>
-            <p><a href="signin.html">Login</a></li> or <a href="signup.html">Sign up</a></li> now</p>
+</head>
+
+<body class="user-home">
+    <div id="container">
+        <div id="header">
+            <header class="main-header">
+                <div class="nav">
+                    <input type="checkbox" id="nav-check">
+                    <div class="nav-header">
+                        <img src="./assets/images/logo.png" />
+                    </div>
+                    <div class="nav-btn">
+                        <label for="nav-check">
+                <span></span>
+                <span></span>
+                <span></span>
+              </label>
+                    </div>
+
+                    <div class="nav-links">
+                        <a class="active" href="index.html">HOME</a>
+                        <a href="signin.html">SIGN IN</a>
+                        <a href="signup.html">SIGN UP</a>
+                    </div>
+                </div>
+            </header>
         </div>
-        
-      </div>
+        <div id="content-wrap"></div>
+        <section>
+            <div class="content-div home-div">
+                <div class="centered text-center">
+                    <h1>GET A LOAN TODAY</h1>
+                    <h3>It's quick and easy</h3>
+                    <a href="apply_loan.html" class="btn-primary btn-primary-big btn-apply">Apply Now</a>
+                </div>
+            </div>
+        </section>
     </div>
-    <footer class="home-footer bg-dark text-white text-center">
-      <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
-      <p>Copyright © 2019</p>
-    </footer>
+    </div>
+    <div id="footer" class="bg-dark text-white text-center">
+        <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
+        <p>Copyright © 2019</p>
+    </div>
+    </div>
     <script src="js/main.js"></script>
-  </body>
+</body>
+
 </html>
