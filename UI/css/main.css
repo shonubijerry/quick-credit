@@ -160,7 +160,7 @@ a {
         height: 0px;
     }
     .nav>#nav-check:checked~.nav-links {
-        height: calc(100vh);
+        height: calc(30vh);
         overflow-y: auto;
         z-index: 999999;
     }
