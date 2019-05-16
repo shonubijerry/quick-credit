@@ -5,14 +5,13 @@
 
 const errorStrings = {
   pageNotFound: 'Page not found. Please enter a valid url',
-  validName: 'Name must be letters only and not less than 2.',
-  validEmail: 'Enter a valid email address',
+  validName: 'Firstname and Lastname field cannot be empty and must be only letters not less than 2.',
+  validEmail: 'Email field must be valid and not empty',
   emailExists: 'Email address has already been registered',
-  validAddress: 'Enter a valid Address',
+  validAddress: 'Address field must be valid and not empty',
   passwordEmpty: 'Your password is required',
   passwordLength: 'Password must be minimum eight characters, with at least one letter, one number and one special character ',
   loginFailure: 'Could not login. Email and password do not match',
-  emailNotExist: 'User does not exist',
   notAuthenticated: 'You must login to have access to this feature',
   sessionExpired: 'Session expired, login again',
   validTenor: 'Tenor must range from 1 to 12 months',
