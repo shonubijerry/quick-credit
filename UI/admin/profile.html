@@ -38,6 +38,16 @@
             </header>
         </div>
         <div id="content-wrap">
+            <a class="popup1-trigger" href="#popup1"></a>
+            <div id="popup1" class="overlay">
+                <div class="popup">
+                    <h2 id="mb_title">Message</h2>
+                    <a id="mb_link" onclick="history.back(-2)" class="close" href="#">&times;</a>
+                    <div id="mb_msg" class="content">
+                        Loan application Approved.
+                    </div>
+                </div>
+            </div>
             <section>
                 <div class="card-large">
                     <div class="card">
@@ -55,8 +65,9 @@
                             <p><span class="entry-title">State:</span><span class="entry-value">Lagos</span></p>
                         </div>
                         <hr>
-                        <div class="signup-footer">
-                            <button type="submit" class="btn-primary btn-primary-big">Edit</button>
+                        <div class="signup-footer cta cta-div profile-btn">
+                            <a class="btn-primary btn-primary-big" href="#">Edit</button>
+                            <a id="reject" class="btn-primary btn-primary-big" onclick="showMessageBox('Verified','User verification successful', '#verified')">Verify</a>
                         </div>
                     </div>
                 </div>
