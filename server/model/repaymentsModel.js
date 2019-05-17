@@ -44,16 +44,19 @@ class RepaymentsModel {
   static createRepayment(loanId, amount) {
     const loan = LoansModel.getSingleLoan(loanId);
     const checkRepayment = RepaymentsModel.checkCreateRepayment(loan, amount);
-    if (checkRepayment !== '') {
+    if (checkRepayment) {
       return checkRepayment;
     }
+
     const newRepayment = {
       id: repayments.length + 1, loanId: loan.id, createdOn: Utils.getNow(), amount,
     };
+
     repayments.push(newRepayment);
     const repaymentHistory = RepaymentsModel.getLoanRepayments(loanId);
     const paidAmount = Utils.sumProperty('amount', repaymentHistory);
     const updatedLoan = LoansModel.updateLoanAfterRepayment(loanId, amount);
+
     const returnedLoan = {
       id: newRepayment.id,
       loanId,
@@ -63,6 +66,7 @@ class RepaymentsModel {
       paidAmount,
       balance: updatedLoan.balance,
     };
+
     return returnedLoan;
   }
 

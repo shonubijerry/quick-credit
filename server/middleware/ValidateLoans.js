@@ -1,6 +1,7 @@
 import errorStrings from '../helpers/errorStrings';
 import Validator from '../helpers/Validator';
 import rules from '../helpers/rules';
+import responseHelper from '../helpers/responseHelper';
 
 
 /**
@@ -9,6 +10,7 @@ import rules from '../helpers/rules';
  *    @requires ../helpers/errorStrings
  *    @requires ../helpers/Validator
  *    @requires ../helpers/rules
+ *    @requires ../helpers/responseHelper
  *    @exports ValidateLoans
  */
 
@@ -31,7 +33,10 @@ class ValidateLoans {
       amount, rules.empty, rules.validAmount, errorStrings.validAmount,
     ));
 
-    Validator.findErrors(res, errors, next);
+    if (Validator.findErrors(errors)) {
+      return responseHelper.error(res, 422, errors.errorKey);
+    }
+    return next();
   }
 
   /**
@@ -52,7 +57,10 @@ class ValidateLoans {
       req.body.status, rules.empty, rules.validApproveLoan, errorStrings.validApproveLoan,
     ));
 
-    Validator.findErrors(res, error, next);
+    if (Validator.findErrors(error)) {
+      return responseHelper.error(res, 400, error.errorKey);
+    }
+    return next();
   }
 
   /**
@@ -71,7 +79,10 @@ class ValidateLoans {
     );
     Object.assign(error, getError);
 
-    Validator.findErrors(res, error, next);
+    if (Validator.findErrors(error)) {
+      return responseHelper.error(res, 400, error.errorKey);
+    }
+    return next();
   }
 }
 
