@@ -14,7 +14,6 @@ class Model {
 
   async insert(columns, selector, values) {
     const queryString = `INSERT INTO ${this.table} (${columns}) VALUES(${selector}) returning *`;
-    debug('app/debug')(queryString, values);
     try {
       const response = await this.pool.query(queryString, values);
       this.logJSON(response);

@@ -39,20 +39,11 @@ class RepaymentsModel extends Model {
   async createRepayment(loanId, amount) {
     try {
       const loan = await loansModel.getSingleLoanById(loanId);
-      if (!loan) {
-        return 'no-loan';
+      const validationError = RepaymentsModel.validateRepayment(loan, amount);
+      if (validationError) {
+        return validationError;
       }
-      if (loan.status !== 'approved') {
-        return 'not-approved';
-      }
-      if (Number.parseFloat(loan.paymentinstallment) !== Number.parseFloat(amount)) {
-        return 'not-amount';
-      }
-      if (loan.repaid) {
-        return 'loan-repaid';
-      }
-      const id = uuid();
-      const { rows } = await this.insert('id, loanid, amount', '$1, $2, $3', [id, loanId, Number.parseFloat(amount)]);
+      const { rows } = await this.insert('id, loanid, amount', '$1, $2, $3', [uuid(), loanId, Number.parseFloat(amount)]);
       const updatedLoan = await loansModel.updateLoanAfterRepayment(loanId, amount, loan.balance);
 
       // get paid amount because when repayment is merged with loan, amount will be overwritten
@@ -72,6 +63,22 @@ class RepaymentsModel extends Model {
     } catch (error) {
       throw error;
     }
+  }
+
+  static validateRepayment(loan, amount) {
+    if (!loan) {
+      return 'no-loan';
+    }
+    if (loan.status !== 'approved') {
+      return 'not-approved';
+    }
+    if (Number.parseFloat(loan.paymentinstallment) !== Number.parseFloat(amount)) {
+      return 'not-amount';
+    }
+    if (loan.repaid) {
+      return 'loan-repaid';
+    }
+    return '';
   }
 }
 
