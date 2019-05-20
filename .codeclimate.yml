@@ -1,4 +1,4 @@
-plugins:
+gitplugins:
   duplication:
     enabled: true
 checks:

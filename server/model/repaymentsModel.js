@@ -55,8 +55,7 @@ class RepaymentsModel extends Model {
       // remove paymentinstallment since we already have monthlyinstallment
       delete updatedLoan.paymentinstallment;
 
-      // merge repayment and it's referencing loan together into repayment
-      Object.assign(rows[0], updatedLoan);
+      Object.assign(rows[0], updatedLoan); // merge repayment and it's loan together into repayment
       return rows[0];
     } catch (error) {
       throw error;
