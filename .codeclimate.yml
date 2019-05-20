@@ -27,8 +27,8 @@ checks:
     config:
       threshold: 6
 exclude_patterns:
-  - node_modules/
-  - server/tests/
-  - build/
-  - UI
-  - coverage
+  - "node_modules/"
+  - "server/tests/"
+  - "dist/"
+  - "UI"
+  - "coverage"

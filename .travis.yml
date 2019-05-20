@@ -13,6 +13,9 @@ addons:
 services:
   - postgresql
 
+ignore:
+  - dist/* 
+
 env:
   global:
     - CC_TEST_REPORTER_ID=ad165e4a8c46703882439e668db63e13a7a9b12ecb2cdc4a884524fb9264a114
