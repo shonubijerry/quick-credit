@@ -1,7 +1,10 @@
-import usersModel from '../model/usersModel';
+import UsersModel from '../model/usersModel';
 import generateToken from '../helpers/token';
 import errorStrings from '../helpers/errorStrings';
 import ResponseHelper from '../helpers/responseHelper';
+
+
+const usersModel = new UsersModel('users');
 
 /**
 * @fileOverview - class manages all users logic
@@ -20,24 +23,22 @@ class UsersController {
  * @param {object} res
  */
 
-  static signup(req, res) {
-    if (usersModel.checkRegistered(req.body.email)) {
-      return ResponseHelper.error(res, 409, errorStrings.emailExists);
+  static async signup(req, res) {
+    try {
+      if (await usersModel.findUserByEmail(req.body.email)) {
+        return ResponseHelper.error(res, 409, errorStrings.emailExists);
+      }
+
+      const newUser = await usersModel.signupQuery(req);
+      if (!newUser) {
+        throw new Error(errorStrings.serverError);
+      }
+      newUser.token = generateToken(newUser);
+
+      return ResponseHelper.success(res, 201, newUser);
+    } catch (error) {
+      return ResponseHelper.error(res, 500, error.message);
     }
-
-    const newUser = usersModel.signupQuery(req);
-    const currentToken = generateToken(newUser);
-
-    return res.status(201).json({
-      status: 201,
-      data: {
-        token: currentToken,
-        id: newUser.id,
-        firstName: newUser.firstName,
-        lastName: newUser.lastName,
-        email: newUser.email,
-      },
-    });
   }
 
   /**
@@ -46,27 +47,21 @@ class UsersController {
      * @param {object} res
      */
 
-  static signin(req, res) {
-    const singinResult = usersModel.signinQuery(req);
+  static async signin(req, res) {
+    try {
+      const signInResult = await usersModel.signinQuery(req);
 
-    if (singinResult.error === 'wrong-password') {
-      return ResponseHelper.error(res, 403, errorStrings.loginFailure);
+      if (signInResult.error === 'wrong-password') {
+        return ResponseHelper.error(res, 403, errorStrings.loginFailure);
+      }
+      if (!signInResult) {
+        throw new Error(errorStrings.serverError);
+      }
+      signInResult.token = generateToken(signInResult);
+      return ResponseHelper.success(res, 200, signInResult);
+    } catch (error) {
+      return ResponseHelper.error(res, 500, error.message);
     }
-    const currentToken = generateToken(singinResult);
-
-    return res.status(200).json({
-      status: 200,
-      data: {
-        token: currentToken,
-        id: singinResult.id,
-        firstName: singinResult.firstName,
-        lastName: singinResult.lastName,
-        address: singinResult.address,
-        email: singinResult.email,
-        status: singinResult.status,
-        isAdmin: singinResult.isAdmin,
-      },
-    });
   }
 
   /**
@@ -76,16 +71,24 @@ class UsersController {
     * @returns json object
     */
 
-  static verifyUser(req, res) {
+  static async verifyUser(req, res) {
     const userEmail = req.params.email;
-    const foundUser = usersModel.verifyUser(userEmail);
-    if (foundUser === 'no-user') {
-      return ResponseHelper.error(res, 404, errorStrings.noUser);
+    try {
+      const foundUser = await usersModel.verifyUser(userEmail);
+      switch (foundUser) {
+        case 'no-user': {
+          return ResponseHelper.error(res, 404, errorStrings.noUser);
+        }
+        case 'already-verified': {
+          return ResponseHelper.error(res, 409, errorStrings.alreadyVerified);
+        }
+        default: {
+          return ResponseHelper.success(res, 200, foundUser);
+        }
+      }
+    } catch (error) {
+      return ResponseHelper.error(res, 500, errorStrings.serverError);
     }
-    if (foundUser === 'already-verified') {
-      return ResponseHelper.error(res, 409, errorStrings.alreadyVerified);
-    }
-    return ResponseHelper.success(res, 200, foundUser);
   }
 
   /**
@@ -95,8 +98,16 @@ class UsersController {
   * @returns json object
   */
 
-  static getUsers(req, res) {
-    return ResponseHelper.success(res, 200, usersModel.getUsers());
+  static async getUsers(req, res) {
+    try {
+      const users = await usersModel.getUsers();
+      if (!users) {
+        throw new Error(errorStrings.serverError);
+      }
+      return ResponseHelper.success(res, 200, users);
+    } catch (error) {
+      return ResponseHelper.error(res, 500, error.message);
+    }
   }
 }
 

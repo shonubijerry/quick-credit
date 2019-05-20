@@ -51,7 +51,7 @@ class ValidateLoans {
     const error = {};
 
     Object.assign(error, Validator.validate(
-      req.params.loanId, rules.empty, rules.validNumber, errorStrings.validNumber,
+      req.params.loanId, rules.empty, rules.validUuid, errorStrings.validLoanId,
     ));
     Object.assign(error, Validator.validate(
       req.body.status, rules.empty, rules.validApproveLoan, errorStrings.validApproveLoan,
@@ -74,10 +74,34 @@ class ValidateLoans {
   static validateRepayment(req, res, next) {
     const error = {};
     const { amount } = req.body;
+    Object.assign(error, Validator.validate(
+      req.params.loanId, rules.empty, rules.validUuid, errorStrings.validLoanId,
+    ));
     const getError = Validator.validate(
       amount, rules.empty, rules.validAmount, errorStrings.validAmount,
     );
     Object.assign(error, getError);
+
+    if (Validator.findErrors(error)) {
+      return responseHelper.error(res, 400, error.errorKey);
+    }
+    return next();
+  }
+
+  /**
+   * validate loanid from request.body.loanId
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @callback {Function} next
+   * @return {Object} error json object
+   */
+
+  static validateLoanId(req, res, next) {
+    const error = {};
+
+    Object.assign(error, Validator.validate(
+      req.params.loanId, rules.empty, rules.validUuid, errorStrings.validLoanId,
+    ));
 
     if (Validator.findErrors(error)) {
       return responseHelper.error(res, 400, error.errorKey);

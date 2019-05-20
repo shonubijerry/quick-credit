@@ -1,12 +1,15 @@
-import loansModel from '../model/loansModel';
+import LoansModel from '../model/loansModel';
 import ResponseHelper from '../helpers/responseHelper';
 import Utils from '../helpers/utils';
 import errorStrings from '../helpers/errorStrings';
+import Auth from '../middleware/Auth';
+
+const loansModel = new LoansModel('loans');
 
 /**
 * @fileOverview - class manages all users logic
 * @class - LoansController
-* @requires - ../model/loansModel
+* @requires - ../model/LoansModel
 * @requires - ../helpers/token
 * @requires - ../helpers/utils
 * @requires - ../helpers/errorStrings'
@@ -20,32 +23,20 @@ class LoansController {
      * @param {object} res
      */
 
-  static createLoan(req, res) {
-    const userEmail = req.token.user.email;
-    const currentLoan = loansModel.checkCurrentLoan(userEmail);
+  static async createLoan(req, res) {
     try {
+      const userEmail = req.token.user.email;
+      const currentLoan = await loansModel.checkCurrentOrPendingLoan(userEmail);
       if (currentLoan) {
-        throw new Error(`You have an unpaid loan of ${currentLoan.amount} which is under review or yet to be fully repaid`);
+        return ResponseHelper.error(
+          res, 409,
+          `You have an unpaid loan of ${currentLoan.balance} which is under review or yet to be fully repaid`,
+        );
       }
-      const newLoan = loansModel.createLoan(req, userEmail);
-
-      return res.status(201).json({
-        status: 201,
-        data: {
-          loanId: newLoan.id,
-          user: newLoan.user,
-          createdOn: newLoan.createdOn,
-          status: newLoan.status,
-          repaid: newLoan.repaid,
-          tenor: newLoan.tenor,
-          amount: newLoan.amount,
-          paymentInstallment: newLoan.paymentInstallment,
-          balance: newLoan.balance,
-          interest: newLoan.interest,
-        },
-      });
+      const newLoan = await loansModel.createLoan(req, userEmail);
+      return ResponseHelper.success(res, 201, newLoan);
     } catch (error) {
-      return ResponseHelper.error(res, 409, error.message);
+      return ResponseHelper.error(res, 500, errorStrings.serverError);
     }
   }
 
@@ -56,56 +47,43 @@ class LoansController {
      * @returns {object} return all user's loan applications or all loans if admin
      */
 
-  static getLoans(req, res) {
-    let allLoans = {};
-    if (Utils.hasQuery(req)) {
-      return LoansController.perpareLoansQuery(req, res);
+  static async getLoans(req, res) {
+    try {
+      req.token = Auth.verifyToken(req.headers.token);
+      const { email, isadmin } = req.token.user;
+      if (Utils.hasQuery(req)) {
+        const loans = await LoansController.perpareLoansQuery(req, res, isadmin);
+        return loans;
+      }
+      const loans = await loansModel.getLoans(email, isadmin);
+      return ResponseHelper.success(res, 200, loans);
+    } catch (error) {
+      return ResponseHelper.error(res, 500, errorStrings.serverError);
     }
-    const userEmail = req.token.user.email;
-    const { isAdmin } = req.token.user;
-
-    allLoans = loansModel.getLoans(userEmail, isAdmin);
-
-    if (Utils.checkLength(allLoans) > 0) {
-      return ResponseHelper.success(res, 200, allLoans);
-    }
-    return ResponseHelper.error(res, 404, errorStrings.noLoans);
   }
 
   /**
-     * Get query results for API endpoint /loans?...
+     * Get queries for API endpoint /loans?...
      * @param {object} req
      * @param {object} res
-     * @returns {object} return current loan or repaid loan or 404 error if query is wrong
+     * @returns {object} return current loan or repaid loan
+     * or 404 error if no loans, or query is wrong
      */
 
-  static perpareLoansQuery(req, res) {
-    const { status, repaid } = req.query;
-    if (status === 'approved' && (repaid === 'false' || repaid === 'true')) {
-      return LoansController.processLoansQuery(repaid, res);
+  static async perpareLoansQuery(req, res, isadmin) {
+    try {
+      const { status, repaid } = req.query;
+      if (status === 'approved' && (repaid === 'false' || repaid === 'true')) {
+        if (!isadmin) {
+          return ResponseHelper.error(res, 403, errorStrings.notAllowed);
+        }
+        const loans = await loansModel.getCurrentOrRepaidLoans(repaid);
+        return ResponseHelper.success(res, 200, loans);
+      }
+      return ResponseHelper.error(res, 404, errorStrings.pageNotFound);
+    } catch (error) {
+      return ResponseHelper.error(res, 500, errorStrings.serverError);
     }
-    return ResponseHelper.error(res, 404, errorStrings.pageNotFound);
-  }
-
-  /**
-  * Get query results for API endpoint /loans?...
-  * @param {object} req
-  * @param {object} res
-  * @returns {object} return json object for current or repaid loans or 404 error if no loans found
-  */
-
-  static processLoansQuery(repaid, res) {
-    let queryResult = {};
-    if (repaid === 'true') {
-      queryResult = loansModel.getRepaidLoans();
-    }
-    if (repaid === 'false') {
-      queryResult = loansModel.getCurrentLoans();
-    }
-    if (queryResult.error === false) {
-      return ResponseHelper.error(res, 404, errorStrings.noLoans);
-    }
-    return ResponseHelper.success(res, 200, queryResult);
   }
 
   /**
@@ -115,44 +93,45 @@ class LoansController {
      * @returns {object} json response object
      */
 
-  static getLoan(req, res) {
-    const userId = Number.parseInt(req.params.loanId, 10);
-
-    const loan = loansModel.getSingleLoan(userId);
-    if (loan === 'no-loan') {
-      return ResponseHelper.error(res, 404, errorStrings.noLoan);
+  static async getLoan(req, res) {
+    try {
+      const { loanId } = req.params;
+      const loan = await loansModel.getSingleLoanById(loanId);
+      if (!loan) {
+        return ResponseHelper.error(res, 404, errorStrings.noLoan);
+      }
+      return ResponseHelper.success(res, 200, loan);
+    } catch (error) {
+      return ResponseHelper.error(res, 500, errorStrings.serverError);
     }
-    return ResponseHelper.success(res, 200, loan);
   }
 
   /**
-  * Approve a loan application (admin privilege)
+  * Approve or reject a loan application (admin privilege)
   * @param {object} req
   * @param {object} res
-  * @returns {object} on success json response object with approved loan data or error
-  * if loan is already approved or loan does not exist
+  * @returns {object} Return approved or rejected loan if successfully updated
+  * Or return a conflict error if action has already been taken
+  * Or return 404 error if loan not found
   */
 
-  static approveLoan(req, res) {
-    const loanId = Number.parseInt(req.params.loanId, 10);
+  static async approveRejectLoan(req, res) {
+    const { loanId } = req.params;
     const { status } = req.body;
+    try {
+      const foundLoan = await loansModel.getSingleLoanById(loanId);
+      if (!foundLoan) {
+        return ResponseHelper.error(res, 404, errorStrings.noLoan);
+      }
+      if (foundLoan.status === status) {
+        return ResponseHelper.error(res, 409, `${errorStrings.alreadyApproved} ${status}`);
+      }
 
-    const foundLoan = loansModel.approveLoan(loanId, status);
-    if (foundLoan === 'no-loan') {
-      return ResponseHelper.error(res, 404, errorStrings.noLoan);
+      const approvedLoan = await loansModel.approveLoan(loanId, status);
+      return ResponseHelper.success(res, 200, approvedLoan);
+    } catch (error) {
+      return ResponseHelper.error(res, 500, errorStrings.serverError);
     }
-    if (foundLoan === 'no-action') {
-      return ResponseHelper.error(res, 409, errorStrings.alreadyApproved);
-    }
-    const approvedLoan = {
-      loanId: foundLoan.id,
-      loanAmount: foundLoan.amount,
-      tenor: foundLoan.tenor,
-      status: foundLoan.status,
-      monthlyInstallment: foundLoan.paymentInstallment,
-      interest: foundLoan.interest,
-    };
-    return ResponseHelper.success(res, 200, approvedLoan);
   }
 }
 
