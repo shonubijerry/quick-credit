@@ -57,8 +57,6 @@ class RepaymentsModel extends Model {
 
       // merge repayment and it's referencing loan together into repayment
       Object.assign(rows[0], updatedLoan);
-
-      // return repayment
       return rows[0];
     } catch (error) {
       throw error;
