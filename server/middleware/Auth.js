@@ -36,7 +36,7 @@ class Auth {
   static authenticateAdmin(request, response, next) {
     try {
       request.token = Auth.verifyToken(request.headers.token);
-      if (request.token.user.isAdmin === false) {
+      if (request.token.user.isadmin === false) {
         return ResponseHelper.error(response, 403, errorStrings.notAllowed);
       } return next();
     } catch (error) {

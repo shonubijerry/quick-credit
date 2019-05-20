@@ -1,4 +1,4 @@
-plugins:
+gitplugins:
   duplication:
     enabled: true
 checks:
@@ -7,7 +7,7 @@ checks:
       threshold: 4
   complex-logic:
     config:
-      threshold: 4
+      threshold: 7
   file-lines:
     config:
       threshold: 300
@@ -25,10 +25,10 @@ checks:
       threshold: 4
   return-statements:
     config:
-      threshold: 4
+      threshold: 6
 exclude_patterns:
-  - node_modules/
-  - server/tests/
-  - dist/
-  - UI
-  - coverage
+  - "node_modules/"
+  - "server/tests/"
+  - "dist/"
+  - "UI"
+  - "coverage"

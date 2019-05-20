@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import Express from 'express';
 import cors from 'cors';
+import debug from 'debug';
 import bodyParser from 'body-parser';
 import path from 'path';
 import dotenv from 'dotenv';
@@ -39,6 +40,6 @@ app.use('/api-docs', Express.static(path.join(__dirname, './public/api-docs')));
 routes(app);
 
 // listen to app port
-app.listen(port, () => console.log(`App listening on port ${port}`));
+app.listen(port, () => debug('app/debug')(`App listening on port ${port}`));
 
 export default app;

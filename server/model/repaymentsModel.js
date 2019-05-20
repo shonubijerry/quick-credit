@@ -1,6 +1,6 @@
+import uuid from 'uuid';
+import Model from './model';
 import LoansModel from './loansModel';
-import repayments from '../dummy/repayments';
-import Utils from '../helpers/utils';
 
 /**
 * @fileOverview - class manages all users data storage
@@ -11,27 +11,22 @@ import Utils from '../helpers/utils';
 * @requires - ../helpers/utils
 * */
 
-class RepaymentsModel {
+const loansModel = new LoansModel('loans');
+
+class RepaymentsModel extends Model {
   /**
      * Get a single loan repayments
      * @param {object} loanId
      * @returns {object} an object with loan repayments
      */
 
-  static getLoanRepayments(loanId) {
-    const repaymentsBuild = [];
-    const loanRepayments = Utils.findInArray(loanId, 'loanId', repayments);
-    const loan = LoansModel.getSingleLoan(loanId);
-
-    loanRepayments.forEach((entry) => {
-      repaymentsBuild.push({
-        loanId: entry.loanId,
-        createdOn: entry.createdOn,
-        monthlyInstallment: loan.paymentInstallment,
-        amount: entry.amount,
-      });
-    });
-    return repaymentsBuild;
+  async getLoanRepayments(loanId) {
+    try {
+      const { rows } = await this.selectWithJoin('repay.id, loanid, paymentinstallment monthlyinstallment, repay.createdon, repay.amount', 'loanid=$1', [loanId]);
+      return rows;
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
@@ -41,50 +36,46 @@ class RepaymentsModel {
      * @returns {object} return object with loan repayment
      */
 
-  static createRepayment(loanId, amount) {
-    const loan = LoansModel.getSingleLoan(loanId);
-    const checkRepayment = RepaymentsModel.checkCreateRepayment(loan, amount);
-    if (checkRepayment) {
-      return checkRepayment;
+  async createRepayment(loanId, amount) {
+    try {
+      const loan = await loansModel.getSingleLoanById(loanId);
+      const validationError = RepaymentsModel.validateRepayment(loan, amount);
+      if (validationError) {
+        return validationError;
+      }
+      const { rows } = await this.insert('id, loanid, amount', '$1, $2, $3', [uuid(), loanId, Number.parseFloat(amount)]);
+      const updatedLoan = await loansModel.updateLoanAfterRepayment(loanId, amount, loan.balance);
+
+      // get paid amount because when repayment is merged with loan, amount will be overwritten
+      rows[0].paidamount = rows[0].amount;
+
+      // get monthlyinstallment as given in the response specification
+      rows[0].monthlyinstallment = updatedLoan.paymentinstallment;
+
+      // remove paymentinstallment since we already have monthlyinstallment
+      delete updatedLoan.paymentinstallment;
+
+      Object.assign(rows[0], updatedLoan); // merge repayment and it's loan together into repayment
+      return rows[0];
+    } catch (error) {
+      throw error;
     }
-
-    const newRepayment = {
-      id: repayments.length + 1, loanId: loan.id, createdOn: Utils.getNow(), amount,
-    };
-
-    repayments.push(newRepayment);
-    const repaymentHistory = RepaymentsModel.getLoanRepayments(loanId);
-    const paidAmount = Utils.sumProperty('amount', repaymentHistory);
-    const updatedLoan = LoansModel.updateLoanAfterRepayment(loanId, amount);
-
-    const returnedLoan = {
-      id: newRepayment.id,
-      loanId,
-      createdOn: Utils.getNow(),
-      amount,
-      monthlyInstallment: updatedLoan.paymentInstallment,
-      paidAmount,
-      balance: updatedLoan.balance,
-    };
-
-    return returnedLoan;
   }
 
-  static checkCreateRepayment(loan, amount) {
-    const result = '';
-    if (loan === 'no-loan') {
+  static validateRepayment(loan, amount) {
+    if (!loan) {
       return 'no-loan';
     }
     if (loan.status !== 'approved') {
       return 'not-approved';
     }
-    if (loan.paymentInstallment !== Number.parseFloat(amount)) {
+    if (Number.parseFloat(loan.paymentinstallment) !== Number.parseFloat(amount)) {
       return 'not-amount';
     }
-    if (loan.balance <= 0) {
+    if (loan.repaid) {
       return 'loan-repaid';
     }
-    return result;
+    return '';
   }
 }
 
