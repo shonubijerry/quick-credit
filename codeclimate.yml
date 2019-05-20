@@ -25,10 +25,10 @@ checks:
       threshold: 4
   return-statements:
     config:
-      threshold: 4
+      threshold: 5
 exclude_patterns:
   - node_modules/
   - server/tests/
-  - dist/
+  - build/
   - UI
   - coverage

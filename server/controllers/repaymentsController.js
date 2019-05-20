@@ -48,24 +48,30 @@ class RepaymentsController {
       const { loanId } = req.params;
       const amount = Number.parseFloat(req.body.amount);
       const newRepayment = await repaymentModel.createRepayment(loanId, amount);
+      let errorInfo = {};
       switch (newRepayment) {
         case 'no-loan': {
-          return ResponseHelper.error(res, 404, errorStrings.noLoan);
+          errorInfo = { status: 404, error: errorStrings.noLoan };
+          break;
         }
         case 'not-approved': {
-          return ResponseHelper.error(res, 400, errorStrings.notApproved);
+          errorInfo = { status: 400, error: errorStrings.notApproved };
+          break;
         }
         case 'not-amount': {
           const theLoan = await loansModel.getSingleLoanById(loanId);
-          return ResponseHelper.error(res, 409, `${errorStrings.notAmount} ${theLoan.paymentinstallment}`);
+          errorInfo = { status: 409, error: `${errorStrings.notAmount} ${theLoan.paymentinstallment}` };
+          break;
         }
         case 'loan-repaid': {
-          return ResponseHelper.error(res, 409, errorStrings.loanRepaid);
+          errorInfo = { status: 409, error: errorStrings.loanRepaid };
+          break;
         }
         default: {
           return ResponseHelper.success(res, 201, newRepayment);
         }
       }
+      return ResponseHelper.error(res, errorInfo.status, errorInfo.error);
     } catch (error) {
       return ResponseHelper.error(res, 500, error.message);
     }

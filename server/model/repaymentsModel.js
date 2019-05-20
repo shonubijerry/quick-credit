@@ -54,14 +54,19 @@ class RepaymentsModel extends Model {
       const id = uuid();
       const { rows } = await this.insert('id, loanid, amount', '$1, $2, $3', [id, loanId, Number.parseFloat(amount)]);
       const updatedLoan = await loansModel.updateLoanAfterRepayment(loanId, amount, loan.balance);
+
       // get paid amount because when repayment is merged with loan, amount will be overwritten
       rows[0].paidamount = rows[0].amount;
+
       // get monthlyinstallment as given in the response specification
       rows[0].monthlyinstallment = updatedLoan.paymentinstallment;
+
       // remove paymentinstallment since we already have monthlyinstallment
       delete updatedLoan.paymentinstallment;
+
       // merge repayment and it's referencing loan together into repayment
       Object.assign(rows[0], updatedLoan);
+
       // return repayment
       return rows[0];
     } catch (error) {

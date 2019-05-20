@@ -9,7 +9,7 @@
     "lint": "eslint ./server",
     "migration": "DEBUG=app/debug node ./build/model/db/migrations.db",
     "seeder": "node ./build/model/db/seeders.db",
-    "exec-db": "npm run migration && npm run seeder",
+    "exec-db": "npm run build && npm run migration && npm run seeder",
     "start-dev": "NODE_ENV=development npm run exec-db && NODE_ENV=development DEBUG=app/debug nodemon --exec babel-node ./server/app.js",
     "build": "babel ./server --out-dir build --copy-files --ignore ./node_modules,./coverage,./.babelrc,.nyc_output,./package.json,./npm-debug.log,./.travis.yml,./.eslintrc.js,./UI,./README.md",
     "pre-test": "NODE_ENV=test npm run exec-db",
