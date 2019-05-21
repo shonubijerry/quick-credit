@@ -13,7 +13,7 @@
     "exec-db-production": "npm run build && npm run migration",
     "start-dev": "NODE_ENV=development npm run exec-db-dev && NODE_ENV=development DEBUG=app/debug nodemon --exec babel-node ./server/app.js",
     "build": "babel ./server --out-dir ./dist --copy-files --ignore ./node_modules,./coverage,./.babelrc,.nyc_output,./package.json,./npm-debug.log,./.travis.yml,./.eslintrc.js,./UI,./README.md",
-    "pre-test": "NODE_ENV=test npm run exec-db",
+    "pre-test": "NODE_ENV=test npm run exec-db-dev",
     "start": "NODE_ENV=production node ./dist/app.js",
     "test": "npm run pre-test && NODE_ENV=test nyc mocha --timeout 20000 -r @babel/register ./server/tests/ --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
