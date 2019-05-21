@@ -11,8 +11,4 @@ debug('app/debug')(connectTo);
 
 const pool = new Pool({ connectionString: connectTo.dataURL });
 
-pool.on('error', (error) => {
-  debug('app/connection')(error);
-});
-
 export default pool;

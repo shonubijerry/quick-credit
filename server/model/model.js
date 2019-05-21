@@ -61,24 +61,11 @@ class Model {
     debug('app/debug')(queryString);
     try {
       const response = await this.pool.query(queryString, values);
-      // this.logJSON(response);
       return response;
     } catch (err) {
       throw err;
     }
   }
-
-  // async delete(selector, value) {
-  //   const queryString = `DELETE FROM ${this.table} WHERE ${selector} returning *`;
-  //   debug('app/debug')(queryString);
-  //   try {
-  //     const response = await this.pool.query(queryString, value);
-  //     return response;
-  //   } catch (err) {
-  //     debug('app/debug')(err);
-  //     throw err;
-  //   }
-  // }
 }
 
 export default Model;
