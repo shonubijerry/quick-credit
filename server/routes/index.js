@@ -26,12 +26,12 @@ const routes = (app) => {
 
   app.post(`${api}/auth/signup`, ValidateUser.validateSignup, UsersController.signup);
   app.post(`${api}/auth/signin`, ValidateUser.validateSignin, UsersController.signin);
-  app.post(`${api}/loans`, Auth.authenticateUser, ValidateLoans.validateApplication, LoansController.createLoan);
+  app.post(`${api}/loans`, Auth.authenticateUser, ValidateUser.checkVerified, ValidateUser.checkVerified, ValidateLoans.validateApplication, LoansController.createLoan);
   app.post(`${api}/loans/:loanId/repayment`, Auth.authenticateAdmin, ValidateLoans.validateRepayment, RepaymentsController.createRepayment);
 
   app.get(`${api}/loans/:loanId`, Auth.authenticateAdmin, ValidateLoans.validateLoanId, LoansController.getLoan);
-  app.get(`${api}/loans`, Auth.authenticateUser, LoansController.getLoans);
-  app.get(`${api}/loans/:loanId/repayments`, Auth.authenticateUser, ValidateLoans.validateLoanId, RepaymentsController.getLoanRepayments);
+  app.get(`${api}/loans`, Auth.authenticateUser, ValidateUser.checkVerified, LoansController.getLoans);
+  app.get(`${api}/loans/:loanId/repayments`, Auth.authenticateUser, ValidateUser.checkVerified, ValidateLoans.validateLoanId, RepaymentsController.getLoanRepayments);
   app.get(`${api}/users`, Auth.authenticateAdmin, UsersController.getUsers);
 
   app.patch(`${api}/users/:email/verify`, Auth.authenticateAdmin, ValidateUser.validateParamEmail, UsersController.verifyUser);

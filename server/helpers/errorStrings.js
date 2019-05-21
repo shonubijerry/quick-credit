@@ -33,6 +33,7 @@ const errorStrings = {
   notAmount: 'You are expected to pay',
   loanRepaid: 'This loan has already been repaid',
   notApproved: 'You cannot post repayment for a pending or rejected loan',
+  notVerified: 'User account not verified',
 };
 
 export default errorStrings;
