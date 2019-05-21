@@ -73,7 +73,7 @@ class RepaymentsController {
       }
       return ResponseHelper.error(res, errorInfo.status, errorInfo.error);
     } catch (error) {
-      return ResponseHelper.error(res, 500, error.message);
+      return ResponseHelper.error(res, 500, errorStrings.serverError);
     }
   }
 }

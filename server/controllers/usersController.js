@@ -37,7 +37,7 @@ class UsersController {
 
       return ResponseHelper.success(res, 201, newUser);
     } catch (error) {
-      return ResponseHelper.error(res, 500, error.message);
+      return ResponseHelper.error(res, 500, errorStrings.serverError);
     }
   }
 
@@ -60,7 +60,7 @@ class UsersController {
       signInResult.token = generateToken(signInResult);
       return ResponseHelper.success(res, 200, signInResult);
     } catch (error) {
-      return ResponseHelper.error(res, 500, error.message);
+      return ResponseHelper.error(res, 500, errorStrings.serverError);
     }
   }
 
@@ -106,7 +106,7 @@ class UsersController {
       }
       return ResponseHelper.success(res, 200, users);
     } catch (error) {
-      return ResponseHelper.error(res, 500, error.message);
+      return ResponseHelper.error(res, 500, errorStrings.serverError);
     }
   }
 }

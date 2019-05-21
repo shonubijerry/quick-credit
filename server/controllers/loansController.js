@@ -10,7 +10,7 @@ const loansModel = new LoansModel('loans');
 * @fileOverview - class manages all users logic
 * @class - LoansController
 * @requires - ../model/LoansModel
-* @requires - ../helpers/token
+* @requires - ../helpers/responseHelper
 * @requires - ../helpers/utils
 * @requires - ../helpers/errorStrings'
 * @exports - loansController.js
