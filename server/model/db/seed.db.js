@@ -5,16 +5,6 @@
  */
 const users = [
   {
-    id: '2e0785a9-3611-491f-951c-62f2fe4c320a',
-    email: 'shonubijerry@gmail.com',
-    firstName: 'Shonubi',
-    lastName: 'Oluwakorede',
-    password: '$2b$10$DAUlN//SebBEPkWppjD1AeIRy6dWJ3k8DMv.T4hBSeZh/Lycb0Yki',
-    address: '33, Ahmed Oghere Street, Idimu',
-    status: 'verified',
-    isAdmin: true,
-  },
-  {
     id: '661b0c4b-1d4a-4e44-8b09-66e3554c045b',
     email: 'adenekan2017@gmail.com',
     firstName: 'Adenekan',

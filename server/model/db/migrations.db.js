@@ -31,6 +31,18 @@ pool.query(`DROP TABLE IF EXISTS users CASCADE;
             createdon TIMESTAMP NOT NULL DEFAULT NOW(),
             amount NUMERIC(10, 2) DEFAULT 0.00
         );
+        INSERT INTO users (
+        id, email, firstname, lastname, address, password, status, isadmin
+        ) VALUES (
+            '2e0785a9-3611-491f-951c-62f2fe4c320a',
+            'shonubijerry@gmail.com',
+            'Sho',
+            'Korey',
+            '6 felix street',
+            '$2b$10$DAUlN//SebBEPkWppjD1AeIRy6dWJ3k8DMv.T4hBSeZh/Lycb0Yki',
+            'verified',
+            true
+        )
     `).then(() => {
   pool.end();
 });

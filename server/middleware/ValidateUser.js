@@ -2,6 +2,10 @@ import errorStrings from '../helpers/errorStrings';
 import Validator from '../helpers/Validator';
 import rules from '../helpers/rules';
 import responseHelper from '../helpers/responseHelper';
+import UsersModel from '../model/usersModel';
+import Auth from './Auth';
+
+const usersModel = new UsersModel('users');
 
 
 /**
@@ -113,6 +117,26 @@ class ValidateUser {
 
     if (Validator.findErrors(error)) {
       return responseHelper.error(response, 400, error.errorKey);
+    }
+    return next();
+  }
+
+  /**
+  * Check user is verified so as to allow perform actions
+  * @param {object} req
+  * @param {object} res
+  * @returns json object
+  */
+
+  static async checkVerified(req, res, next) {
+    req.token = Auth.verifyToken(req.headers.token);
+    try {
+      const user = await usersModel.findUserByEmail(req.token.user.email);
+      if (user.status !== 'verified') {
+        return responseHelper.error(res, 401, errorStrings.notVerified);
+      }
+    } catch (error) {
+      return responseHelper.error(res, 500, error.message);
     }
     return next();
   }
