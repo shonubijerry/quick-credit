@@ -6,8 +6,10 @@
 const errorStrings = {
   serverError: 'Something went wrong',
   pageNotFound: 'Page not found. Please enter a valid url',
-  validName: 'Firstname or Lastname field cannot be empty and must be only letters not less than 2.',
-  validEmail: 'Email field must be valid and not empty',
+  validFirstName: 'Firstname field cannot be empty and must be only letters',
+  validLastName: 'Lastname field cannot be empty and must be only letters.',
+  validEmail: 'Enter valid email with top level domain and must not be empty',
+  validVerifyEmail: 'Enter valid email address',
   emailExists: 'Email address has already been registered',
   validAddress: 'Address field must be valid and not empty',
   passwordEmpty: 'Your password is required',
