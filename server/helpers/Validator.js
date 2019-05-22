@@ -11,14 +11,10 @@ class Validator {
    * @return {boolean} false
    */
   static findErrors(errors) {
-    const error = [];
-    errors.map((item) => {
-      if (item !== '') {
-        error.push(item);
-      }
-      return error;
-    });
-    return error;
+    if (Object.keys(errors).length > 0) {
+      return true;
+    }
+    return false;
   }
 
 
@@ -32,9 +28,9 @@ class Validator {
    */
 
   static validate(input, emptyRule, validRule, errorString) {
-    let error = '';
+    const error = {};
     if (!input || !emptyRule.test(input) || !validRule.test(input)) {
-      error = errorString;
+      error.errorKey = errorString;
     }
     return error;
   }

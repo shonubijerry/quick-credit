@@ -40,7 +40,7 @@ describe('Loans Controller', () => {
       chai.request(app)
         .post(loansUrl)
         .send(testDb.loanApplication[0])
-        .set('Authorization', currentToken)
+        .set('token', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(201);
           expect(res.body).to.be.a('object');
@@ -64,12 +64,12 @@ describe('Loans Controller', () => {
       chai.request(app)
         .post(loansUrl)
         .send(testDb.loanApplication[1])
-        .set('Authorization', currentToken)
+        .set('token', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(422);
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.eql([`${errorStrings.validAmount}`]);
+          expect(res.body.error).to.equal(errorStrings.validAmount);
           done();
         });
     });
@@ -78,12 +78,12 @@ describe('Loans Controller', () => {
       chai.request(app)
         .post(loansUrl)
         .send(testDb.loanApplication[2])
-        .set('Authorization', currentToken)
+        .set('token', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(422);
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.eql([`${errorStrings.validTenor}`]);
+          expect(res.body.error).to.equal(errorStrings.validTenor);
           done();
         });
     });
@@ -103,7 +103,7 @@ describe('Loans Controller', () => {
         chai.request(app)
           .post(loansUrl)
           .send(testDb.loanApplication[0])
-          .set('Authorization', currentToken)
+          .set('token', currentToken)
           .end((error, res) => {
             expect(res).to.have.status(409);
             expect(res.body).to.be.a('object');
@@ -118,7 +118,7 @@ describe('Loans Controller', () => {
       chai.request(app)
         .post(loansUrl)
         .send(testDb.loanApplication[0])
-        .set('Authorization', currentToken)
+        .set('token', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(409);
           expect(res.body).to.be.a('object');
@@ -134,7 +134,7 @@ describe('Loans Controller', () => {
       it('it should get user\'s loans', (done) => {
         chai.request(app)
           .get(loansUrl)
-          .set('Authorization', currentToken)
+          .set('token', currentToken)
           .end((error, res) => {
             expect(res).to.have.status(200);
             expect(res.body).to.be.a('object');
@@ -170,7 +170,7 @@ describe('Loans Controller', () => {
       it('It should get all loans for admin', (done) => {
         chai.request(app)
           .get(loansUrl)
-          .set('Authorization', currentToken)
+          .set('token', currentToken)
           .end((error, res) => {
             expect(res).to.have.status(200);
             expect(res.body).to.be.a('object');
@@ -218,7 +218,7 @@ describe('Loans Controller', () => {
       it('it should not get the loan if user is not admin', (done) => {
         chai.request(app)
           .get(`${loansUrl}/6f746db2-e5e7-4824-8926-cdec24a02312`)
-          .set('Authorization', currentToken)
+          .set('token', currentToken)
           .end((error, res) => {
             expect(res).to.have.status(403);
             expect(res.body).to.be.a('object');
@@ -242,7 +242,7 @@ describe('Loans Controller', () => {
         it('It should get a specific loan application for admin', (done) => {
           chai.request(app)
             .get(`${loansUrl}/6f746db2-e5e7-4824-8926-cdec24a02312`)
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(200);
               expect(res.body).to.be.a('object');
@@ -265,7 +265,7 @@ describe('Loans Controller', () => {
         it('it should return error if no loan is found', (done) => {
           chai.request(app)
             .get(`${loansUrl}/6f746db2-e5e7-4824-8926-cdec24a02355`)
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(404);
               expect(res.body).to.be.a('object');
@@ -278,7 +278,7 @@ describe('Loans Controller', () => {
         it('it should return error if invalid loan id', (done) => {
           chai.request(app)
             .get(`${loansUrl}/6f746db2-e5e7-4824-8926`)
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(400);
               expect(res.body).to.be.a('object');
@@ -317,7 +317,7 @@ describe('Loans Controller', () => {
       it('it should not get current loans if user is not admin', (done) => {
         chai.request(app)
           .get(`${loansUrl}/4`)
-          .set('Authorization', currentToken)
+          .set('token', currentToken)
           .end((error, res) => {
             expect(res).to.have.status(403);
             expect(res.body).to.be.a('object');
@@ -341,7 +341,7 @@ describe('Loans Controller', () => {
         it('It should get all current loans for admin', (done) => {
           chai.request(app)
             .get(`${loansUrl}?status=approved&repaid=false`)
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(200);
               expect(res.body).to.be.a('object');
@@ -365,7 +365,7 @@ describe('Loans Controller', () => {
         it('it should return page not found if query citerea not correct', (done) => {
           chai.request(app)
             .get(`${loansUrl}?status=wrongCiteria&repaid=false`)
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(404);
               expect(res.body).to.be.a('object');
@@ -381,7 +381,7 @@ describe('Loans Controller', () => {
           chai.request(app)
             .patch(`${loansUrl}/ff741315-7075-4488-8627-8f8ccccbada6`)
             .send(testDb.approveRejectLoan[3])
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(200);
               done();
@@ -391,7 +391,7 @@ describe('Loans Controller', () => {
           chai.request(app)
             .patch(`${loansUrl}/4a860db6-aac6-47cc-954b-7912900be2eb`)
             .send(testDb.approveRejectLoan[3])
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(200);
               done();
@@ -401,7 +401,7 @@ describe('Loans Controller', () => {
         it('it should return empty loan if citerea matched but no result', (done) => {
           chai.request(app)
             .get(`${loansUrl}?status=approved&repaid=false`)
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(200);
               expect(res.body).to.be.a('object');
@@ -440,7 +440,7 @@ describe('Loans Controller', () => {
       it('it should not get repaid loans if user is not admin', (done) => {
         chai.request(app)
           .get(`${loansUrl}?status=approved&repaid=true`)
-          .set('Authorization', currentToken)
+          .set('token', currentToken)
           .end((error, res) => {
             expect(res).to.have.status(403);
             expect(res.body).to.be.a('object');
@@ -463,7 +463,7 @@ describe('Loans Controller', () => {
         it('it should return page not found if query citerea not correct', (done) => {
           chai.request(app)
             .get(`${loansUrl}?status=wrongCiteria&repaid=false`)
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(404);
               expect(res.body).to.be.a('object');
@@ -476,7 +476,7 @@ describe('Loans Controller', () => {
         it('It should get all repaid loans for admin', (done) => {
           chai.request(app)
             .get(`${loansUrl}?status=approved&repaid=true`)
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(200);
               expect(res.body).to.be.a('object');
@@ -527,7 +527,7 @@ describe('Loans Controller', () => {
         chai.request(app)
           .patch(`${loansUrl}/00298627-71e4-4ede-af91-aec1862fae22`)
           .send(testDb.approveRejectLoan[0])
-          .set('Authorization', currentToken)
+          .set('token', currentToken)
           .end((error, res) => {
             expect(res).to.have.status(403);
             expect(res.body).to.be.a('object');
@@ -552,12 +552,12 @@ describe('Loans Controller', () => {
           chai.request(app)
             .patch(`${loansUrl}/00298627-71e4-4ede-af91-aec1862fae22`)
             .send(testDb.approveRejectLoan[2])
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(400);
               expect(res.body).to.be.a('object');
               expect(res.body).to.have.property('error');
-              expect(res.body.error).to.eql([`${errorStrings.validApproveLoan}`]);
+              expect(res.body.error).to.equal(errorStrings.validApproveLoan);
               done();
             });
         });
@@ -566,12 +566,12 @@ describe('Loans Controller', () => {
           chai.request(app)
             .patch(`${loansUrl}/00298627-71e4-4ede-af9`)
             .send(testDb.approveRejectLoan[0])
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(400);
               expect(res.body).to.be.a('object');
               expect(res.body).to.have.property('error');
-              expect(res.body.error).to.eql([`${errorStrings.validLoanId}`]);
+              expect(res.body.error).to.equal(errorStrings.validLoanId);
               done();
             });
         });
@@ -580,7 +580,7 @@ describe('Loans Controller', () => {
           chai.request(app)
             .patch(`${loansUrl}/00298627-71e4-4ede-af91-aec1862fae25`)
             .send(testDb.approveRejectLoan[0])
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(404);
               expect(res.body).to.be.a('object');
@@ -594,7 +594,7 @@ describe('Loans Controller', () => {
           chai.request(app)
             .patch(`${loansUrl}/00298627-71e4-4ede-af91-aec1862fae22`)
             .send(testDb.approveRejectLoan[0])
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(200);
               expect(res.body).to.be.a('object');
@@ -618,7 +618,7 @@ describe('Loans Controller', () => {
           chai.request(app)
             .patch(`${loansUrl}/00298627-71e4-4ede-af91-aec1862fae22`)
             .send(testDb.approveRejectLoan[0])
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(409);
               expect(res.body).to.be.a('object');

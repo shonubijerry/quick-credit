@@ -25,12 +25,11 @@ class UsersController {
 
   static async signup(req, res) {
     try {
-      const isAreadyRegistered = await usersModel.findUserByEmail(req.body.email);
-      if (isAreadyRegistered) {
+      if (await usersModel.findUserByEmail(req.body.email)) {
         return ResponseHelper.error(res, 409, errorStrings.emailExists);
       }
 
-      const newUser = await usersModel.signupQuery(req.body);
+      const newUser = await usersModel.signupQuery(req);
       if (!newUser) {
         throw new Error(errorStrings.serverError);
       }
@@ -50,7 +49,7 @@ class UsersController {
 
   static async signin(req, res) {
     try {
-      const signInResult = await usersModel.signinQuery(req.body);
+      const signInResult = await usersModel.signinQuery(req);
 
       if (signInResult.error === 'wrong-password') {
         return ResponseHelper.error(res, 403, errorStrings.loginFailure);

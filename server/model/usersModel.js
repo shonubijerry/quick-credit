@@ -19,12 +19,12 @@ class UsersModel extends Model {
      * @returns {object} user
      */
 
-  async signupQuery(formdata) {
-    const password = passwordHelper.passwordHash(formdata.password);
+  async signupQuery(req) {
+    const password = passwordHelper.passwordHash(req.body.password);
     const id = uuid();
     const {
       email, firstName, lastName, address,
-    } = formdata;
+    } = req.body;
     try {
       const { rows } = await this.insert(
         'id, email, firstname, lastname, address, password', '$1, $2, $3, $4, $5, $6',
@@ -44,7 +44,8 @@ class UsersModel extends Model {
      * @returns {object}
      */
 
-  async signinQuery({ email, password }) {
+  async signinQuery(req) {
+    const { email, password } = req.body;
     try {
       const foundUser = await this.findUserByEmail(email);
       if (foundUser && passwordHelper.comparePasswords(password, foundUser.password)) {

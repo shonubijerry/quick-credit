@@ -23,23 +23,18 @@ class ValidateLoans {
    */
 
   static validateApplication(req, res, next) {
-    const errors = [];
+    const errors = {};
     const { amount, tenor } = req.body;
 
-    const tenorError = Validator.validate(
+    Object.assign(errors, Validator.validate(
       tenor, rules.empty, rules.validTenor, errorStrings.validTenor,
-    );
-    errors.push(tenorError);
-
-    const amountError = Validator.validate(
+    ));
+    Object.assign(errors, Validator.validate(
       amount, rules.empty, rules.validAmount, errorStrings.validAmount,
-    );
-    errors.push(amountError);
+    ));
 
-    const error = Validator.findErrors(errors);
-
-    if (error.length > 0) {
-      return responseHelper.error(res, 422, error);
+    if (Validator.findErrors(errors)) {
+      return responseHelper.error(res, 422, errors.errorKey);
     }
     return next();
   }
@@ -53,22 +48,17 @@ class ValidateLoans {
    */
 
   static validateApproveLoan(req, res, next) {
-    const errors = [];
+    const error = {};
 
-    const loanIdError = Validator.validate(
+    Object.assign(error, Validator.validate(
       req.params.loanId, rules.empty, rules.validUuid, errorStrings.validLoanId,
-    );
-    errors.push(loanIdError);
-
-    const approvalError = Validator.validate(
+    ));
+    Object.assign(error, Validator.validate(
       req.body.status, rules.empty, rules.validApproveLoan, errorStrings.validApproveLoan,
-    );
-    errors.push(approvalError);
+    ));
 
-    const error = Validator.findErrors(errors);
-
-    if (error.length > 0) {
-      return responseHelper.error(res, 400, error);
+    if (Validator.findErrors(error)) {
+      return responseHelper.error(res, 400, error.errorKey);
     }
     return next();
   }
@@ -82,23 +72,18 @@ class ValidateLoans {
    */
 
   static validateRepayment(req, res, next) {
-    const errors = [];
+    const error = {};
     const { amount } = req.body;
-
-    const loanIdError = Validator.validate(
+    Object.assign(error, Validator.validate(
       req.params.loanId, rules.empty, rules.validUuid, errorStrings.validLoanId,
-    );
-    errors.push(loanIdError);
-
-    const amountError = Validator.validate(
+    ));
+    const getError = Validator.validate(
       amount, rules.empty, rules.validAmount, errorStrings.validAmount,
     );
-    errors.push(amountError);
+    Object.assign(error, getError);
 
-    const error = Validator.findErrors(errors);
-
-    if (error.length > 0) {
-      return responseHelper.error(res, 400, error);
+    if (Validator.findErrors(error)) {
+      return responseHelper.error(res, 400, error.errorKey);
     }
     return next();
   }
@@ -112,17 +97,14 @@ class ValidateLoans {
    */
 
   static validateLoanId(req, res, next) {
-    const errors = [];
+    const error = {};
 
-    const loanIdError = Validator.validate(
+    Object.assign(error, Validator.validate(
       req.params.loanId, rules.empty, rules.validUuid, errorStrings.validLoanId,
-    );
-    errors.push(loanIdError);
+    ));
 
-    const error = Validator.findErrors(errors);
-
-    if (error.length > 0) {
-      return responseHelper.error(res, 400, error[0]);
+    if (Validator.findErrors(error)) {
+      return responseHelper.error(res, 400, error.errorKey);
     }
     return next();
   }

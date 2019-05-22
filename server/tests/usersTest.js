@@ -1,14 +1,11 @@
 import chaiHttp from 'chai-http';
 import chai from 'chai';
-import dotenv from 'dotenv';
 import app from '../app';
 import testDb from './testDb';
 import errorStrings from '../helpers/errorStrings';
 
-
 const { expect } = chai;
 chai.use(chaiHttp);
-dotenv.config();
 
 let currentToken;
 const signupUrl = '/api/v1/auth/signup';
@@ -37,12 +34,12 @@ describe('User Controller', () => {
     it('it should not register a user with empty firstname or lastname', (done) => {
       chai.request(app)
         .post(signupUrl)
-        .send(testDb.users[14])
+        .send(testDb.users[1])
         .end((error, res) => {
           expect(res).to.have.status(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.eql([`${errorStrings.validFirstName}`]);
+          expect(res.body.error).to.equal(errorStrings.validName);
           done();
         });
     });
@@ -55,7 +52,7 @@ describe('User Controller', () => {
           expect(res).to.have.status(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.eql([`${errorStrings.validLastName}`]);
+          expect(res.body.error).to.equal(errorStrings.validName);
           done();
         });
     });
@@ -68,7 +65,7 @@ describe('User Controller', () => {
           expect(res).to.have.status(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.eql([`${errorStrings.validEmail}`]);
+          expect(res.body.error).to.equal(errorStrings.validEmail);
           done();
         });
     });
@@ -94,7 +91,7 @@ describe('User Controller', () => {
           expect(res).to.have.status(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.eql([`${errorStrings.validAddress}`]);
+          expect(res.body.error).to.equal(errorStrings.validAddress);
           done();
         });
     });
@@ -107,7 +104,7 @@ describe('User Controller', () => {
           expect(res).to.have.status(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.eql([`${errorStrings.passwordLength}`]);
+          expect(res.body.error).to.equal(errorStrings.passwordLength);
           done();
         });
     });
@@ -120,7 +117,7 @@ describe('User Controller', () => {
           expect(res).to.have.status(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error[1]).to.equal(errorStrings.passwordEmpty);
+          expect(res.body.error).to.equal(errorStrings.passwordEmpty);
           done();
         });
     });
@@ -154,7 +151,7 @@ describe('User Controller', () => {
           expect(res).to.have.status(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.eql([`${errorStrings.validEmail}`]);
+          expect(res.body.error).to.equal(errorStrings.validEmail);
           done();
         });
     });
@@ -167,7 +164,7 @@ describe('User Controller', () => {
           expect(res).to.have.status(400);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.eql([`${errorStrings.passwordEmpty}`]);
+          expect(res.body.error).to.equal(errorStrings.passwordEmpty);
           done();
         });
     });
@@ -213,7 +210,7 @@ describe('User Controller', () => {
       it('it should not get all users if subject is not admin', (done) => {
         chai.request(app)
           .get(usersUrl)
-          .set('Authorization', currentToken)
+          .set('token', currentToken)
           .end((error, res) => {
             expect(res).to.have.status(403);
             expect(res.body).to.be.an('object');
@@ -238,7 +235,7 @@ describe('User Controller', () => {
       it('It should get all users for admin', (done) => {
         chai.request(app)
           .get(usersUrl)
-          .set('Authorization', currentToken)
+          .set('token', currentToken)
           .end((error, res) => {
             expect(res).to.have.status(200);
             expect(res.body).to.be.an('object');
@@ -285,7 +282,7 @@ describe('User Controller', () => {
         const email = 'badmanga@yahoo.com'; // unverified user
         chai.request(app)
           .patch(`${usersUrl}/${email}/verify`)
-          .set('Authorization', currentToken)
+          .set('token', currentToken)
           .end((error, res) => {
             expect(res).to.have.status(403);
             expect(res.body).to.be.an('object');
@@ -308,7 +305,7 @@ describe('User Controller', () => {
           const email = 'badmanga@yahoo.com'; // unverified user
           chai.request(app)
             .patch(`${usersUrl}/${email}/verify`)
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(200);
               expect(res.body).to.be.an('object');
@@ -328,7 +325,7 @@ describe('User Controller', () => {
           const email = 'badmanga@yahoo.com'; // user already verified from above test case
           chai.request(app)
             .patch(`${usersUrl}/${email}/verify`)
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(409);
               expect(res.body).to.be.an('object');
@@ -342,7 +339,7 @@ describe('User Controller', () => {
           const email = 'johnokoro@yahoo.com'; // user does not exist
           chai.request(app)
             .patch(`${usersUrl}/${email}/verify`)
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(404);
               expect(res.body).to.be.an('object');
@@ -356,12 +353,12 @@ describe('User Controller', () => {
           const email = 'johnokoroyahoo.com'; // invalid emal
           chai.request(app)
             .patch(`${usersUrl}/${email}/verify`)
-            .set('Authorization', currentToken)
+            .set('token', currentToken)
             .end((error, res) => {
               expect(res).to.have.status(400);
               expect(res.body).to.be.an('object');
               expect(res.body).to.have.property('error');
-              expect(res.body.error).to.equal(errorStrings.validVerifyEmail);
+              expect(res.body.error).to.equal(errorStrings.validEmail);
               done();
             });
         });
