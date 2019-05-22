@@ -1,8 +1,10 @@
 import jwt from 'jsonwebtoken';
 import errorStrings from '../helpers/errorStrings';
 import ResponseHelper from '../helpers/responseHelper';
+import UsersModel from '../model/usersModel';
 
 const secretKey = process.env.SECRET_KEY;
+const usersModel = new UsersModel('users');
 
 /**
  * @class Authenticate User
@@ -19,7 +21,8 @@ class Auth {
 
   static authenticateUser(request, response, next) {
     try {
-      request.token = Auth.verifyToken(request.headers.token);
+      const token = request.headers.authorization;
+      request.user = Auth.verifyToken(token);
       return next();
     } catch (error) {
       return ResponseHelper.error(response, 401, errorStrings.notAuthenticated);
@@ -33,12 +36,15 @@ class Auth {
  * @param {Function} next
  * @return {Object}
  */
-  static authenticateAdmin(request, response, next) {
+  static async authenticateAdmin(request, response, next) {
     try {
-      request.token = Auth.verifyToken(request.headers.token);
-      if (request.token.user.isadmin === false) {
+      const token = request.headers.authorization;
+      request.user = Auth.verifyToken(token);
+      const user = await usersModel.findUserByEmail(request.user.email);
+      if (user.isadmin === false) {
         return ResponseHelper.error(response, 403, errorStrings.notAllowed);
-      } return next();
+      }
+      return next();
     } catch (error) {
       return ResponseHelper.error(response, 401, errorStrings.notAuthenticated);
     }

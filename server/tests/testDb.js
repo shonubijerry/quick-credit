@@ -6,7 +6,7 @@
 const users = [
   {
     // sign up test data
-    email: 'shonubijerry@gmail.cam', // valid registration details
+    email: 'shonubijerry@yahoo.com', // valid registration details
     firstName: 'Shonubi',
     lastName: 'Oluwakorede',
     password: 'olujac1$',
@@ -15,7 +15,7 @@ const users = [
   {
     // array item 1
     email: 'adenekan@gmail.info',
-    firstName: '', // no name
+    firstName: 'John',
     lastName: '#Quad%ri*', // invalid name
     password: 'olujac1$',
     address: '6, Felix Street, Ikotun',
@@ -74,7 +74,7 @@ const users = [
   },
   {
     // array item 9
-    email: 'shonubijerrygmail.com',
+    email: 'shonubijerry@gmail.com',
     password: '', // empty login password
   },
   {
@@ -96,6 +96,14 @@ const users = [
     // array item 13
     email: 'adeade@gmail.com', // user with current loan and status approved
     password: 'olujac1$',
+  },
+  {
+    // array item 14
+    email: 'adenekan@gmail.info',
+    firstName: '', // empty name
+    lastName: 'Quadri',
+    password: 'olujac1$',
+    address: '6, Felix Street, Ikotun',
   },
 
 ];

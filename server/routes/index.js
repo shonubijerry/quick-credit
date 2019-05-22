@@ -24,9 +24,9 @@ import errorStrings from '../helpers/errorStrings';
 const routes = (app) => {
   const api = '/api/v1';
 
-  app.post(`${api}/auth/signup`, ValidateUser.validateSignup, UsersController.signup);
-  app.post(`${api}/auth/signin`, ValidateUser.validateSignin, UsersController.signin);
-  app.post(`${api}/loans`, Auth.authenticateUser, ValidateUser.checkVerified, ValidateUser.checkVerified, ValidateLoans.validateApplication, LoansController.createLoan);
+  app.post(`${api}/auth/signup`, ValidateUser.validateSignupFormData, UsersController.signup);
+  app.post(`${api}/auth/signin`, ValidateUser.validateSigninFormData, UsersController.signin);
+  app.post(`${api}/loans`, Auth.authenticateUser, ValidateUser.checkVerified, ValidateLoans.validateApplication, LoansController.createLoan);
   app.post(`${api}/loans/:loanId/repayment`, Auth.authenticateAdmin, ValidateLoans.validateRepayment, RepaymentsController.createRepayment);
 
   app.get(`${api}/loans/:loanId`, Auth.authenticateAdmin, ValidateLoans.validateLoanId, LoansController.getLoan);

@@ -2,9 +2,10 @@ import LoansModel from '../model/loansModel';
 import ResponseHelper from '../helpers/responseHelper';
 import Utils from '../helpers/utils';
 import errorStrings from '../helpers/errorStrings';
-import Auth from '../middleware/Auth';
+import UsersModel from '../model/usersModel';
 
 const loansModel = new LoansModel('loans');
+const usersModel = new UsersModel('users');
 
 /**
 * @fileOverview - class manages all users logic
@@ -25,7 +26,7 @@ class LoansController {
 
   static async createLoan(req, res) {
     try {
-      const userEmail = req.token.user.email;
+      const userEmail = req.user.email;
       const currentLoan = await loansModel.checkCurrentOrPendingLoan(userEmail);
       if (currentLoan) {
         return ResponseHelper.error(
@@ -49,13 +50,13 @@ class LoansController {
 
   static async getLoans(req, res) {
     try {
-      req.token = Auth.verifyToken(req.headers.token);
-      const { email, isadmin } = req.token.user;
+      const { email } = req.user;
+      const user = await usersModel.findUserByEmail(req.user.email);
       if (Utils.hasQuery(req)) {
-        const loans = await LoansController.perpareLoansQuery(req, res, isadmin);
+        const loans = await LoansController.perpareLoansQuery(req, res, user.isadmin);
         return loans;
       }
-      const loans = await loansModel.getLoans(email, isadmin);
+      const loans = await loansModel.getLoans(email, user.isadmin);
       return ResponseHelper.success(res, 200, loans);
     } catch (error) {
       return ResponseHelper.error(res, 500, errorStrings.serverError);
