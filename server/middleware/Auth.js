@@ -22,7 +22,7 @@ class Auth {
   static authenticateUser(request, response, next) {
     try {
       const token = request.headers.authorization;
-      request.headers.user = Auth.verifyToken(token);
+      request.user = Auth.verifyToken(token);
       return next();
     } catch (error) {
       return ResponseHelper.error(response, 401, errorStrings.notAuthenticated);
@@ -39,8 +39,8 @@ class Auth {
   static async authenticateAdmin(request, response, next) {
     try {
       const token = request.headers.authorization;
-      request.headers.user = Auth.verifyToken(token);
-      const user = await usersModel.findUserByEmail(request.headers.user.email);
+      request.user = Auth.verifyToken(token);
+      const user = await usersModel.findUserByEmail(request.user.email);
       if (user.isadmin === false) {
         return ResponseHelper.error(response, 403, errorStrings.notAllowed);
       }

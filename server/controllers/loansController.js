@@ -26,7 +26,7 @@ class LoansController {
 
   static async createLoan(req, res) {
     try {
-      const userEmail = req.headers.user.email;
+      const userEmail = req.user.email;
       const currentLoan = await loansModel.checkCurrentOrPendingLoan(userEmail);
       if (currentLoan) {
         return ResponseHelper.error(
@@ -50,8 +50,8 @@ class LoansController {
 
   static async getLoans(req, res) {
     try {
-      const { email } = req.headers.user;
-      const user = await usersModel.findUserByEmail(req.headers.user.email);
+      const { email } = req.user;
+      const user = await usersModel.findUserByEmail(req.user.email);
       if (Utils.hasQuery(req)) {
         const loans = await LoansController.perpareLoansQuery(req, res, user.isadmin);
         return loans;
