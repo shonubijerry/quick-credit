@@ -3,7 +3,6 @@ import Validator from '../helpers/Validator';
 import rules from '../helpers/rules';
 import responseHelper from '../helpers/responseHelper';
 import UsersModel from '../model/usersModel';
-import Auth from './Auth';
 
 const usersModel = new UsersModel('users');
 
@@ -20,83 +19,98 @@ const usersModel = new UsersModel('users');
 
 class ValidateUser {
   /**
-   * validate signup input
+   * validate signup input form data
    * @param {Object} request
    * @param {Object} response
    * @callback {Function} next
    * @return {Object} error
    */
 
-  static validateSignup(request, response, next) {
-    const signupErrors = ValidateUser.checkSignupErrors(request.body);
-    const signinErrors = ValidateUser.checkSigninErrors(request.body);
+  static validateSignupFormData(request, response, next) {
+    const signupErrors = ValidateUser.checkNamesAndAddressErrors(request.body);
+    const signinErrors = ValidateUser.checkEmailAndPasswordErrors(request.body);
 
-    const errors = Object.assign(signupErrors, signinErrors);
+    const errors = signupErrors.concat(signinErrors);
 
-    if (Validator.findErrors(errors)) {
-      return responseHelper.error(response, 400, errors.errorKey);
+    const error = Validator.findErrors(errors);
+
+    if (error.length > 0) {
+      return responseHelper.error(response, 400, error);
     }
     return next();
   }
 
   /**
-   * collect all possible errors
+   * collect all possible errors from firstname, lastname and address inputs
    * @param {Object} request
    * @return {String} errors
    */
 
-  static checkSignupErrors({
+  static checkNamesAndAddressErrors({
     firstName, lastName, password, address,
   }) {
-    const errors = {};
+    const errors = [];
 
-    Object.assign(errors, Validator.validate(
-      firstName, rules.empty, rules.validName, errorStrings.validName,
-    ));
-    Object.assign(errors, Validator.validate(
-      lastName, rules.empty, rules.validName, errorStrings.validName,
-    ));
-    Object.assign(errors, Validator.validate(
+    const firstNameError = Validator.validate(
+      firstName, rules.empty, rules.validName, errorStrings.validFirstName,
+    );
+    errors.push(firstNameError);
+
+    const lastnameError = Validator.validate(
+      lastName, rules.empty, rules.validName, errorStrings.validLastName,
+    );
+    errors.push(lastnameError);
+
+    const addressError = Validator.validate(
       address, rules.empty, rules.validAddress, errorStrings.validAddress,
-    ));
+    );
+    errors.push(addressError);
 
-    if (!rules.passwordLength.test(password)) errors.errorKey = errorStrings.passwordLength;
+    if (!rules.passwordLength.test(password)) {
+      const passwordError = errorStrings.passwordLength;
+      errors.push(passwordError);
+    }
 
     return errors;
   }
 
   /**
-   * validate signin input
+   * validate email and password
    * @param {Object} request
    * @param {Object} response
    * @callback {Function} next
    * @return {Object} error
    */
 
-  static validateSignin(request, response, next) {
-    const signinErrors = ValidateUser.checkSigninErrors(request.body);
+  static validateSigninFormData(request, response, next) {
+    const signinErrors = ValidateUser.checkEmailAndPasswordErrors(request.body);
 
-    if (Validator.findErrors(signinErrors)) {
-      return responseHelper.error(response, 400, signinErrors.errorKey);
+    const error = Validator.findErrors(signinErrors);
+
+    if (error.length > 0) {
+      return responseHelper.error(response, 400, error);
     }
     return next();
   }
 
   /**
-   * collect possible singin errors
+   * collect all possible errors from email and password inputs
    * @param {Object} request
    * @return {String} errors
    */
 
-  static checkSigninErrors({ email, password }) {
-    const errors = {};
+  static checkEmailAndPasswordErrors({ email, password }) {
+    const errors = [];
 
-    Object.assign(errors, Validator.validate(
+    const emailError = Validator.validate(
       email, rules.empty, rules.validEmail, errorStrings.validEmail,
-    ));
+    );
+    errors.push(emailError);
 
-    if (!password || !rules.empty.test(password)) { errors.errorKey = errorStrings.passwordEmpty; }
-
+    if (!password || !rules.empty.test(password)) {
+      const passwordEmptyError = errorStrings.passwordEmpty;
+      errors.push(passwordEmptyError    );
+    }
     return errors;
   }
 
@@ -109,14 +123,15 @@ class ValidateUser {
    */
 
   static validateParamEmail(request, response, next) {
-    const error = {};
+    const error = [];
 
-    Object.assign(error, Validator.validate(
-      request.params.email, rules.empty, rules.validEmail, errorStrings.validEmail,
-    ));
+    const emailError = Validator.validate(
+      request.params.email, rules.empty, rules.validEmail, errorStrings.validVerifyEmail,
+    );
+    error.push(emailError);
 
-    if (Validator.findErrors(error)) {
-      return responseHelper.error(response, 400, error.errorKey);
+    if (Validator.findErrors(error).length > 0) {
+      return responseHelper.error(response, 400, error[0]);
     }
     return next();
   }
@@ -129,14 +144,13 @@ class ValidateUser {
   */
 
   static async checkVerified(req, res, next) {
-    req.token = Auth.verifyToken(req.headers.token);
     try {
-      const user = await usersModel.findUserByEmail(req.token.user.email);
+      const user = await usersModel.findUserByEmail(req.headers.user.email);
       if (user.status !== 'verified') {
         return responseHelper.error(res, 401, errorStrings.notVerified);
       }
     } catch (error) {
-      return responseHelper.error(res, 500, error.message);
+      return responseHelper.error(res, 500, errorStrings.serverError);
     }
     return next();
   }

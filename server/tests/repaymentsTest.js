@@ -38,7 +38,7 @@ describe('Repayment Controller', () => {
     it('it should get loan repayments', (done) => {
       chai.request(app)
         .get(`${loansUrl}/00298627-71e4-4ede-af91-aec1862fae22/repayments`)
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.a('object');
@@ -57,7 +57,7 @@ describe('Repayment Controller', () => {
     it('it should return empty data set if no repayment is found', (done) => {
       chai.request(app)
         .get(`${loansUrl}/00298627-71e4-4ede-af91-aec1862ffe55/repayments`)
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.a('object');
@@ -76,7 +76,7 @@ describe('Repayment Controller', () => {
       chai.request(app)
         .patch(`${loansUrl}/ff741315-7075-4488-8627-8f8ccccbada6`)
         .send(testDb.approveRejectLoan[0])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(200);
           done();
@@ -86,7 +86,7 @@ describe('Repayment Controller', () => {
       chai.request(app)
         .patch(`${loansUrl}/4a860db6-aac6-47cc-954b-7912900be2eb`)
         .send(testDb.approveRejectLoan[0])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(200);
           done();
@@ -123,7 +123,7 @@ describe('Repayment Controller', () => {
       chai.request(app)
         .post(`${loansUrl}/ff741315-7075-4488-8627-8f8ccccbada6/repayment`)
         .send(testDb.repaymentAmount[1])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(201);
           expect(res.body).to.be.a('object');
@@ -144,7 +144,7 @@ describe('Repayment Controller', () => {
       chai.request(app)
         .post(`${loansUrl}/4a860db6-aac6-47cc-954b-7912900be2eb/repayment`)
         .send(testDb.repaymentAmount[0])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(201);
           expect(res.body).to.be.a('object');
@@ -165,7 +165,7 @@ describe('Repayment Controller', () => {
       chai.request(app)
         .post(`${loansUrl}/67298627-71e4-4ede-af91-aec1462fae32/repayment`)
         .send(testDb.repaymentAmount[3])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(404);
           expect(res.body).to.be.a('object');
@@ -179,7 +179,7 @@ describe('Repayment Controller', () => {
       chai.request(app)
         .post(`${loansUrl}/6f746db2-e5e7-4824-8926-cdec24a02312/repayment`)
         .send(testDb.repaymentAmount[6])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(400);
           expect(res.body).to.be.a('object');
@@ -193,7 +193,7 @@ describe('Repayment Controller', () => {
       chai.request(app)
         .post(`${loansUrl}/4a860db6-aac6-47cc-954b-7912900be2eb/repayment`)
         .send(testDb.repaymentAmount[4])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(409);
           expect(res.body).to.be.a('object');
@@ -207,12 +207,12 @@ describe('Repayment Controller', () => {
       chai.request(app)
         .post(`${loansUrl}/4a860db6-aac6-47cc-954b-7912900be2eb/repayment`)
         .send(testDb.repaymentAmount[2])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(400);
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.equal(errorStrings.validAmount);
+          expect(res.body.error).to.eql([`${errorStrings.validAmount}`]);
           done();
         });
     });
@@ -221,7 +221,7 @@ describe('Repayment Controller', () => {
       chai.request(app)
         .post(`${loansUrl}/8502d3d7-9c27-4a3e-bcd0-b1ecf914e628/repayment`)
         .send(testDb.repaymentAmount[4])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(409);
           expect(res.body).to.be.a('object');
@@ -235,12 +235,12 @@ describe('Repayment Controller', () => {
       chai.request(app)
         .post(`${loansUrl}/8502d3d7-9c27-4a3e-bcd0-b1ecf914e628/repayment`)
         .send(testDb.repaymentAmount[5])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(400);
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('error');
-          expect(res.body.error).to.equal(errorStrings.validAmount);
+          expect(res.body.error).to.eql([`${errorStrings.validAmount}`]);
           done();
         });
     });
