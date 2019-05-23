@@ -369,3 +369,29 @@ describe('User Controller', () => {
     });
   });
 });
+describe('Expired session', () => {
+  it('it Return session expired for admin', (done) => {
+    const email = 'shonubijerry@gmail.com';
+    chai.request(app)
+      .patch(`${usersUrl}/${email}/verify`)
+      .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJlbWFpbCI6InNob251YmlqZXJyeUBnbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJTaG9udWJpIiwibGFzdE5hbWUiOiJPbHV3YWtvcmVkZSIsInBhc3N3b3JkIjoiJDJiJDEwJGVIN1dITk9VUjVjc1Q1c0tuVVNkdXVJTEQ2bWJUamVwWkFBSzVCZXdBdXZENlZzZDRuQ2N5IiwiYWRkcmVzcyI6IjMzLCBBaG1lZCBPZ2hlcmUgU3RyZWV0LCBJZGltdSIsInN0YXR1cyI6InZlcmlmaWVkIiwiaXNBZG1pbiI6dHJ1ZX0sImlhdCI6MTU1NzQ0MzIzOCwiZXhwIjoxNTU3NTI5NjM4fQ.hOlVCFzTxL5ut1knfTwEA3lx2yuhljEsVek7X-sov-g')
+      .end((error, res) => {
+        expect(res).to.have.status(419);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+
+  it('it Return session expired for a user', (done) => {
+    chai.request(app)
+      .get('/api/v1/loans')
+      .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFmZDE5YzhhLTM3ZDctNDNmMi05YzVlLThiNGVjYTExMGZlNiIsImVtYWlsIjoiYWRlYWRlQGdtYWlsLmNvbSIsImZpcnN0bmFtZSI6IkFkZSIsImxhc3RuYW1lIjoiQWRlYmF5byIsImlhdCI6MTU1ODU4MjYyNCwiZXhwIjoxNTU4NTgyNjM0fQ.zt13SrUTRfa7URkgYnr6h3tMqc-1c2HnhNugBLb3biY')
+      .end((error, res) => {
+        expect(res).to.have.status(419);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+});
