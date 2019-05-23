@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <title>Edit Profile | Quick Credit</title>
+    <link rel='shortcut icon' type='image/x-icon' href='./favicon.png' />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+
+  </head>
+
+  <body class="form-body">
+    <div id="container">
+      <div id="header">
+        <header class="main-header">
+          <div class="nav">
+            <input type="checkbox" id="nav-check">
+            <div class="nav-header">
+              <a href="index.html"><img src="./assets/images/logo.png" /></a>
+            </div>
+            <div class="nav-btn">
+              <label for="nav-check">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </label>
+            </div>
+
+            <div class="nav-links">
+              <a href="dashboard.html">DASHBOARD</a>
+              <a href="apply_loan.html">APPLY</a>
+              <a href="loans.html">LOANS</a>
+              <a class="active" href="profile.html">PROFILE</a>
+              <a href="signin.html">LOG OUT</a>
+            </div>
+          </div>
+        </header>
+      </div>
+      <div id="content-wrap">
+        <section>
+          <div class="content-div">
+            <div class="centered">
+              <form action="#">
+                <div class="signup-content signup-width">
+                  <h1 class="margin-left">Edit Profile</h1>
+                  <hr>
+                  <div class="left-div left-text">
+                    <label for="firstname"><b>First name <span class="required">*</span></b></label>
+                    <input type="text" name="firstname" minlength="3" id="firstname" value="Abel" required>
+
+                    <label for="lastname"><b>Last name <span class="required">*</span></b></label>
+                    <input type="text" name="lastname" minlength="3" id="lastname" value="Abaimu" required>
+
+                    <label for="email"><b>Email <span class="required">*</span></b></label>
+                    <input type="text" value="abelabaimu34@yahoo.com" name="email" required>
+
+                    <label for="psw"><b>Password <span class="required">*</span></b></label>
+                    <input type="password" placeholder="Enter Password" name="psw" required>
+                  </div>
+                  <div class="right-div right-text">
+                    <label for="address"><b>Address <span class="required">*</span></b></label>
+                    <input type="text" name="address" id="address" value="33, Ahmed Oghere Street" required>
+
+                    <label for="city"><b>City <span class="required">*</span></b></label>
+                    <input type="text" name="address" id="address" value="Idimu" required>
+
+                    <label for="state"><b>State <span class="required">*</span></b></label>
+                    <input type="text" name="address" id="address" value="Lagos" required>
+                  </div>
+                  <hr>
+                  <div class="signup-footer">
+                    <a href="profile.html" class="btn-primary btn-primary-big">Save</a>
+                  </div>
+
+
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    </div>
+    <footer id="footer" class="text-white">
+      <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
+      <p>Copyright © 2019</p>
+    </footer>
+    </div>
+    <script src="js/main.js"></script>
+  </body>
+
+</html>

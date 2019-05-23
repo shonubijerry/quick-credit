@@ -52,7 +52,7 @@
             <div id="confirm_action" class="overlay">
                 <div class="popup">
                     <h2 id="confirm_title"></h2>
-                    <a id="mb_link" onclick="history.back(-2)" class="close" href="#">&times;</a>
+                    <a id="confirm_link" onclick="history.back(-2)" class="close" href="#">&times;</a>
                     <div id="confirm_msg" class="content"></div>
                     <p><a id="confirm_next" onclick="history.back(-2)" class="btn-primary btn-primary-big" href="#">Proceed</a></p>
                 </div>
@@ -76,14 +76,9 @@
                         <p><span class="entry-title">Repaid:</span><span class="entry-value">No</span></p>
                         <hr>
                         <div class="cta cta-div">
-                            <a id="repay" class="btn-primary btn-primary-big" onclick="showConfirmBox('Confirm payment?','Monthly installment of ₦17,500 will be paid.<br/>After this action your balance will be ₦52,500.', '#')">Repay</a>
+                            <a id="repay" class="btn-primary btn-primary-big" onclick="showConfirmBox('Confirm payment?','Monthly installment of ₦17,500 will be paid.<br/>After this action your balance will be ₦52,500.', 'current.html')">Repay</a>
                             <a class="btn-primary btn-primary-big" href="repayments.html">Repayments</a>
                         </div>
-                        <div class="cta cta-div">
-                            <a id="approve" class="btn-primary btn-primary-big" onclick="showMessageBox('Approved','Loan approved', '#approved')">Approve</a>
-                            <a id="reject" class="btn-danger btn-danger-big" onclick="showMessageBox('Rejected','Loan rejected', '#rejected')">Reject</a>
-                        </div>
-
                     </div>
                 </div>
 
