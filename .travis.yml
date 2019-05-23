@@ -10,12 +10,20 @@ addons:
   apt:
     update: true
 
+services:
+  - postgresql
+
+ignore:
+  - dist/* 
+
 env:
   global:
     - CC_TEST_REPORTER_ID=ad165e4a8c46703882439e668db63e13a7a9b12ecb2cdc4a884524fb9264a114
     - NODE_ENV=test
 
 before_script:
+  - psql -c 'create database quick_credit_test;' -U postgres
+  - psql -c "CREATE USER shonubijerry WITH PASSWORD null;" -U postgres
   - yarn global add nyc
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter

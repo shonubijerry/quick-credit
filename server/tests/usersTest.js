@@ -1,11 +1,14 @@
 import chaiHttp from 'chai-http';
 import chai from 'chai';
+import dotenv from 'dotenv';
 import app from '../app';
 import testDb from './testDb';
 import errorStrings from '../helpers/errorStrings';
 
+
+const { expect } = chai;
 chai.use(chaiHttp);
-chai.should();
+dotenv.config();
 
 let currentToken;
 const signupUrl = '/api/v1/auth/signup';
@@ -19,15 +22,14 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[0])
         .end((error, res) => {
-          res.should.have.status(201);
-          res.body.should.be.a('object');
-          res.body.should.have.property('data');
-          res.body.data.should.be.a('object');
-          res.body.data.should.have.property('token');
-          res.body.data.should.have.property('id');
-          res.body.data.should.have.property('firstName');
-          res.body.data.should.have.property('lastName');
-          res.body.data.should.have.property('email');
+          expect(res).to.have.status(201);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.have.property('token');
+          expect(res.body.data).to.have.property('id');
+          expect(res.body.data).to.have.property('firstname');
+          expect(res.body.data).to.have.property('lastname');
+          expect(res.body.data).to.have.property('email');
           done();
         });
     });
@@ -35,12 +37,12 @@ describe('User Controller', () => {
     it('it should not register a user with empty firstname or lastname', (done) => {
       chai.request(app)
         .post(signupUrl)
-        .send(testDb.users[1])
+        .send(testDb.users[14])
         .end((error, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.validName);
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.eql([`${errorStrings.validFirstName}`]);
           done();
         });
     });
@@ -50,10 +52,10 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[1])
         .end((error, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.validName);
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.eql([`${errorStrings.validLastName}`]);
           done();
         });
     });
@@ -63,10 +65,10 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[2])
         .end((error, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.validEmail);
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.eql([`${errorStrings.validEmail}`]);
           done();
         });
     });
@@ -76,10 +78,10 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[3])
         .end((error, res) => {
-          res.should.have.status(409);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.emailExists);
+          expect(res).to.have.status(409);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal(errorStrings.emailExists);
           done();
         });
     });
@@ -89,10 +91,10 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[4])
         .end((error, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.validAddress);
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.eql([`${errorStrings.validAddress}`]);
           done();
         });
     });
@@ -102,10 +104,10 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[5])
         .end((error, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.passwordLength);
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.eql([`${errorStrings.passwordLength}`]);
           done();
         });
     });
@@ -115,10 +117,10 @@ describe('User Controller', () => {
         .post(signupUrl)
         .send(testDb.users[6])
         .end((error, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.passwordEmpty);
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error[1]).to.equal(errorStrings.passwordEmpty);
           done();
         });
     });
@@ -131,15 +133,15 @@ describe('User Controller', () => {
         .post(signinUrl)
         .send(testDb.users[7])
         .end((error, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.should.have.property('data');
-          res.body.data.should.be.a('object');
-          res.body.data.should.have.property('token');
-          res.body.data.should.have.property('id');
-          res.body.data.should.have.property('firstName');
-          res.body.data.should.have.property('lastName');
-          res.body.data.should.have.property('email');
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.be.a('object');
+          expect(res.body.data).to.have.property('token');
+          expect(res.body.data).to.have.property('id');
+          expect(res.body.data).to.have.property('firstname');
+          expect(res.body.data).to.have.property('lastname');
+          expect(res.body.data).to.have.property('email');
           done();
         });
     });
@@ -149,10 +151,10 @@ describe('User Controller', () => {
         .post(signinUrl)
         .send(testDb.users[8])
         .end((error, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.validEmail);
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.eql([`${errorStrings.validEmail}`]);
           done();
         });
     });
@@ -162,10 +164,10 @@ describe('User Controller', () => {
         .post(signinUrl)
         .send(testDb.users[9])
         .end((error, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.passwordEmpty);
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.eql([`${errorStrings.passwordEmpty}`]);
           done();
         });
     });
@@ -175,10 +177,10 @@ describe('User Controller', () => {
         .post(signinUrl)
         .send(testDb.users[11])
         .end((error, res) => {
-          res.should.have.status(403);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.loginFailure);
+          expect(res).to.have.status(403);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal(errorStrings.loginFailure);
           done();
         });
     });
@@ -190,10 +192,10 @@ describe('User Controller', () => {
       chai.request(app)
         .get(usersUrl)
         .end((error, res) => {
-          res.should.have.status(401);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.notAuthenticated);
+          expect(res).to.have.status(401);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal(errorStrings.notAuthenticated);
           done();
         });
     });
@@ -211,12 +213,12 @@ describe('User Controller', () => {
       it('it should not get all users if subject is not admin', (done) => {
         chai.request(app)
           .get(usersUrl)
-          .set('token', currentToken)
+          .set('Authorization', currentToken)
           .end((error, res) => {
-            res.should.have.status(403);
-            res.body.should.be.a('object');
-            res.body.should.have.property('error');
-            res.body.error.should.equal(errorStrings.notAllowed);
+            expect(res).to.have.status(403);
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.have.property('error');
+            expect(res.body.error).to.equal(errorStrings.notAllowed);
             done();
           });
       });
@@ -236,20 +238,20 @@ describe('User Controller', () => {
       it('It should get all users for admin', (done) => {
         chai.request(app)
           .get(usersUrl)
-          .set('token', currentToken)
+          .set('Authorization', currentToken)
           .end((error, res) => {
-            res.should.have.status(200);
-            res.body.should.be.a('object');
-            res.body.should.have.property('data');
-            res.body.data.should.be.a('array');
-            res.body.data[0].should.be.a('object');
-            res.body.data[0].should.have.property('id');
-            res.body.data[0].should.have.property('email');
-            res.body.data[0].should.have.property('firstName');
-            res.body.data[0].should.have.property('lastName');
-            res.body.data[0].should.have.property('address');
-            res.body.data[0].should.have.property('status');
-            res.body.data[0].should.have.property('isAdmin');
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.have.property('data');
+            expect(res.body.data).to.be.a('array');
+            expect(res.body.data[0]).to.be.a('object');
+            expect(res.body.data[0]).to.have.property('id');
+            expect(res.body.data[0]).to.have.property('email');
+            expect(res.body.data[0]).to.have.property('firstname');
+            expect(res.body.data[0]).to.have.property('lastname');
+            expect(res.body.data[0]).to.have.property('address');
+            expect(res.body.data[0]).to.have.property('status');
+            expect(res.body.data[0]).to.have.property('isadmin');
             done();
           });
       });
@@ -262,10 +264,10 @@ describe('User Controller', () => {
       chai.request(app)
         .patch(`${usersUrl}/${email}/verify`)
         .end((error, res) => {
-          res.should.have.status(401);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.notAuthenticated);
+          expect(res).to.have.status(401);
+          expect(res.body).to.be.an('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal(errorStrings.notAuthenticated);
           done();
         });
     });
@@ -283,12 +285,12 @@ describe('User Controller', () => {
         const email = 'badmanga@yahoo.com'; // unverified user
         chai.request(app)
           .patch(`${usersUrl}/${email}/verify`)
-          .set('token', currentToken)
+          .set('Authorization', currentToken)
           .end((error, res) => {
-            res.should.have.status(403);
-            res.body.should.be.a('object');
-            res.body.should.have.property('error');
-            res.body.error.should.equal(errorStrings.notAllowed);
+            expect(res).to.have.status(403);
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.have.property('error');
+            expect(res.body.error).to.equal(errorStrings.notAllowed);
             done();
           });
       });
@@ -306,18 +308,18 @@ describe('User Controller', () => {
           const email = 'badmanga@yahoo.com'; // unverified user
           chai.request(app)
             .patch(`${usersUrl}/${email}/verify`)
-            .set('token', currentToken)
+            .set('Authorization', currentToken)
             .end((error, res) => {
-              res.should.have.status(200);
-              res.body.should.be.a('object');
-              res.body.should.have.property('data');
-              res.body.data.should.be.a('object');
-              res.body.data.should.have.property('email');
-              res.body.data.should.have.property('firstName');
-              res.body.data.should.have.property('lastName');
-              res.body.data.should.have.property('password');
-              res.body.data.should.have.property('address');
-              res.body.data.should.have.property('status');
+              expect(res).to.have.status(200);
+              expect(res.body).to.be.an('object');
+              expect(res.body).to.have.property('data');
+              expect(res.body.data).to.be.a('object');
+              expect(res.body.data).to.have.property('email');
+              expect(res.body.data).to.have.property('firstname');
+              expect(res.body.data).to.have.property('lastname');
+              expect(res.body.data).to.have.property('password');
+              expect(res.body.data).to.have.property('address');
+              expect(res.body.data).to.have.property('status');
               done();
             });
         });
@@ -326,12 +328,12 @@ describe('User Controller', () => {
           const email = 'badmanga@yahoo.com'; // user already verified from above test case
           chai.request(app)
             .patch(`${usersUrl}/${email}/verify`)
-            .set('token', currentToken)
+            .set('Authorization', currentToken)
             .end((error, res) => {
-              res.should.have.status(409);
-              res.body.should.be.a('object');
-              res.body.should.have.property('error');
-              res.body.error.should.equal(errorStrings.alreadyVerified);
+              expect(res).to.have.status(409);
+              expect(res.body).to.be.an('object');
+              expect(res.body).to.have.property('error');
+              expect(res.body.error).to.equal(errorStrings.alreadyVerified);
               done();
             });
         });
@@ -340,12 +342,12 @@ describe('User Controller', () => {
           const email = 'johnokoro@yahoo.com'; // user does not exist
           chai.request(app)
             .patch(`${usersUrl}/${email}/verify`)
-            .set('token', currentToken)
+            .set('Authorization', currentToken)
             .end((error, res) => {
-              res.should.have.status(404);
-              res.body.should.be.a('object');
-              res.body.should.have.property('error');
-              res.body.error.should.equal(errorStrings.noUser);
+              expect(res).to.have.status(404);
+              expect(res.body).to.be.an('object');
+              expect(res.body).to.have.property('error');
+              expect(res.body.error).to.equal(errorStrings.noUser);
               done();
             });
         });
@@ -354,16 +356,42 @@ describe('User Controller', () => {
           const email = 'johnokoroyahoo.com'; // invalid emal
           chai.request(app)
             .patch(`${usersUrl}/${email}/verify`)
-            .set('token', currentToken)
+            .set('Authorization', currentToken)
             .end((error, res) => {
-              res.should.have.status(400);
-              res.body.should.be.a('object');
-              res.body.should.have.property('error');
-              res.body.error.should.equal(errorStrings.validEmail);
+              expect(res).to.have.status(400);
+              expect(res.body).to.be.an('object');
+              expect(res.body).to.have.property('error');
+              expect(res.body.error).to.equal(errorStrings.validVerifyEmail);
               done();
             });
         });
       });
     });
+  });
+});
+describe('Expired session', () => {
+  it('it Return session expired for admin', (done) => {
+    const email = 'shonubijerry@gmail.com';
+    chai.request(app)
+      .patch(`${usersUrl}/${email}/verify`)
+      .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJlbWFpbCI6InNob251YmlqZXJyeUBnbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJTaG9udWJpIiwibGFzdE5hbWUiOiJPbHV3YWtvcmVkZSIsInBhc3N3b3JkIjoiJDJiJDEwJGVIN1dITk9VUjVjc1Q1c0tuVVNkdXVJTEQ2bWJUamVwWkFBSzVCZXdBdXZENlZzZDRuQ2N5IiwiYWRkcmVzcyI6IjMzLCBBaG1lZCBPZ2hlcmUgU3RyZWV0LCBJZGltdSIsInN0YXR1cyI6InZlcmlmaWVkIiwiaXNBZG1pbiI6dHJ1ZX0sImlhdCI6MTU1NzQ0MzIzOCwiZXhwIjoxNTU3NTI5NjM4fQ.hOlVCFzTxL5ut1knfTwEA3lx2yuhljEsVek7X-sov-g')
+      .end((error, res) => {
+        expect(res).to.have.status(419);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+
+  it('it Return session expired for a user', (done) => {
+    chai.request(app)
+      .get('/api/v1/loans')
+      .set('Authorization', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFmZDE5YzhhLTM3ZDctNDNmMi05YzVlLThiNGVjYTExMGZlNiIsImVtYWlsIjoiYWRlYWRlQGdtYWlsLmNvbSIsImZpcnN0bmFtZSI6IkFkZSIsImxhc3RuYW1lIjoiQWRlYmF5byIsImlhdCI6MTU1ODU4MjYyNCwiZXhwIjoxNTU4NTgyNjM0fQ.zt13SrUTRfa7URkgYnr6h3tMqc-1c2HnhNugBLb3biY')
+      .end((error, res) => {
+        expect(res).to.have.status(419);
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('error');
+        done();
+      });
   });
 });

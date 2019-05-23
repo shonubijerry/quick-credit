@@ -11,7 +11,8 @@ const showConfirmBox = (title = '', msg, link) => {
   const confirmBoxTrigger = document.querySelector('.confirmation-trigger');
   document.querySelector('#confirm_title').innerHTML = title;
   document.querySelector('#confirm_msg').innerHTML = msg;
-  document.querySelector('#confirm_next').setAttribute('href', link);
+  document.querySelector('#confirm_next').href = link;
+  document.querySelector('#confirm_link').href = link;
   confirmBoxTrigger.click();
 };
 

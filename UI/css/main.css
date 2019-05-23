@@ -98,7 +98,7 @@ a {
 }
 
 .nav>.nav-links .active {
-  color: #c0bdff
+  color: #c0bdff;
 }
 
 .nav>.nav-links>a {
@@ -110,6 +110,8 @@ a {
 
 .nav>.nav-links>a:hover {
   background-color: rgba(0, 0, 0, 0.3);
+  transition: 0.5s;
+  border-radius: 5px;
 }
 
 .nav>#nav-check {
@@ -178,6 +180,7 @@ a {
   border: 1px solid #ccc;
   background: rgb(255, 255, 255, 0.6);
   padding: 10px;
+  box-shadow: 0 6px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 .signup-width {
@@ -445,226 +448,87 @@ h1 {
  Tables
 ------------------------------*/
 
-.table-container {
-  padding: 1em;
-  overflow-x: auto;
-}
-
 table {
-  border-collapse: collapse;
   width: 100%;
+  border-collapse: collapse;
+  margin: 1em auto;
 }
 
-th,
-td {
-  text-align: left;
-  padding: 8px;
-}
-
-tr {
-  height: 40px;
-  background-color: #f2f2f2;
-  border-bottom: 1px solid #818181;
+tr:nth-of-type(odd) {
+  background: #dedbe8;
 }
 
 th {
-  background-color: #339CC6;
+  background: #3498db;
   color: white;
+  font-weight: bold;
 }
 
-.table-container tr:hover {
+td,
+th {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+  word-break: break-word;
+}
+
+table tr:hover {
   cursor: pointer;
+  background: rgb(118, 167, 187);
 }
 
 
 /** styling for mobile **/
 
-@media only screen and (max-width: 760px) {
+@media only screen and (max-width: 600px),
+(min-width: 600px) and (max-width: 1024px) {
+  table {
+    width: 100%;
+  }
+  /* Force table to not be like tables anymore */
   table,
-  th,
+  thead,
   tbody,
   th,
   td,
   tr {
     display: block;
   }
-  th tr {
+  /* Hide table headers (but not display: none;, for accessibility) */
+  thead tr {
     position: absolute;
     top: -9999px;
     left: -9999px;
   }
-  .table-head {
-    display: none;
-  }
   tr {
-    height: auto;
-    overflow-x: scroll;
-    margin: 0 0 1em;
-    padding: 0.5em;
-    background: #d3d4e0;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
+    margin: 1.1em auto;
+    background: #dedbe8;
+  }
+  table tr:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   }
   td {
-    word-break: break-word;
+    /* Behave  like a "row" */
     border: none;
     position: relative;
     padding-left: 50%;
+    word-break: break-word;
   }
   td:before {
+    /* Now like a table header */
     position: absolute;
-    top: 6px;
-    font-weight: 700;
-    left: 6px;
+    left: 0;
+    padding-left: 0.8em;
     width: 45%;
     padding-right: 10px;
     white-space: nowrap;
+    /* Label the data */
+    content: attr(data-column);
+    color: #000;
+    font-weight: bold;
   }
-  .table-container {
-    width: 100%;
-    margin: 0 auto;
-  }
-  td:nth-of-type(1):before {
-    content: "S/N";
-  }
-  td:nth-of-type(2):before {
-    content: "Amount";
-  }
-  td:nth-of-type(3):before {
-    content: "Tenor";
-  }
-  td:nth-of-type(4):before {
-    content: "Installment";
-  }
-  td:nth-of-type(5):before {
-    content: "Balance";
-  }
-  td:nth-of-type(6):before {
-    content: "Interest";
-  }
-  td:nth-of-type(7):before {
-    content: "Date";
-  }
-  td:nth-of-type(8):before {
-    content: "Status";
-  }
-  td:nth-of-type(9):before {
-    content: "Repaid";
-  }
-  .pending td:nth-of-type(9):before {
-    content: "Action";
-  }
-  .users td:nth-of-type(2):before {
-    content: "Firstname";
-  }
-  .users td:nth-of-type(3):before {
-    content: "Lastname";
-  }
-  .users td:nth-of-type(4):before {
-    content: "Address";
-  }
-  .users td:nth-of-type(5):before {
-    content: "Email";
-  }
-  .users td:nth-of-type(6):before {
-    content: "Status";
-  }
-}
-
-
-/* Styling for single loan view page */
-
-.sl-container table,
-.sl-container tbody,
-.sl-container th,
-.sl-container th,
-.sl-container td,
-.sl-container tr {
-  display: block;
-}
-
-.sl-container th tr {
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
-}
-
-.sl-container .table-head {
-  display: none;
-}
-
-.sl-container tbody {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.sl-container tr {
-  overflow-x: scroll;
-  margin: 0 1em 1em 0;
-  padding: 1em;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
-}
-
-.sl-container td {
-  border: none;
-  border-bottom: 1px solid #eee;
-  position: relative;
-  padding-left: 50%;
-}
-
-.sl-container td:before {
-  position: absolute;
-  top: 6px;
-  font-weight: 700;
-  left: 6px;
-  width: 45%;
-  padding-right: 10px;
-  white-space: nowrap;
-}
-
-.sl-container td:nth-of-type(1):before {
-  content: "Full Name";
-}
-
-.sl-container td:nth-of-type(2):before {
-  content: "Address";
-}
-
-.sl-container td:nth-of-type(3):before {
-  content: "Email";
-}
-
-.sl-container td:nth-of-type(4):before {
-  content: "Amount";
-}
-
-.sl-container td:nth-of-type(5):before {
-  content: "Tenor";
-}
-
-.sl-container td:nth-of-type(6):before {
-  content: "Payment Installment";
-}
-
-.sl-container td:nth-of-type(7):before {
-  content: "Balance";
-}
-
-.sl-container td:nth-of-type(8):before {
-  content: "Interest";
-}
-
-.sl-container td:nth-of-type(9):before {
-  content: "Date";
-}
-
-.sl-container td:nth-of-type(10):before {
-  content: "Status";
-}
-
-.sl-container td:nth-of-type(11):before {
-  content: "Repaid";
 }
 
 

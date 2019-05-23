@@ -2,90 +2,93 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <title>Loan History | Quick Credit</title>
-    <link rel='shortcut icon' type='image/x-icon' href='./favicon.png' />
+  <title>Loan History | Quick Credit</title>
+  <link rel='shortcut icon' type='image/x-icon' href='./favicon.png' />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
 
 </head>
 
 <body>
-    <div id="container">
-        <div id="header">
-            <header class="main-header">
-                <div class="nav">
-                    <input type="checkbox" id="nav-check">
-                    <div class="nav-header">
-                        <a href="index.html"><img src="./assets/images/logo.png" /></a>
-                    </div>
-                    <div class="nav-btn">
-                        <label for="nav-check">
+  <div id="container">
+    <div id="header">
+      <header class="main-header">
+        <div class="nav">
+          <input type="checkbox" id="nav-check">
+          <div class="nav-header">
+            <a href="index.html"><img src="./assets/images/logo.png" /></a>
+          </div>
+          <div class="nav-btn">
+            <label for="nav-check">
                 <span></span>
                 <span></span>
                 <span></span>
               </label>
-                    </div>
+          </div>
 
-                    <div class="nav-links">
-                        <a href="dashboard.html">DASHBOARD</a>
-                        <a href="signin.html">LOG OUT</a>
-                    </div>
-                </div>
-            </header>
+          <div class="nav-links">
+            <a href="dashboard.html">DASHBOARD</a>
+            <a href="apply_loan.html">APPLY</a>
+            <a class="active" href="loans.html">LOANS</a>
+            <a href="profile.html">PROFILE</a>
+            <a href="signin.html">LOG OUT</a>
+          </div>
         </div>
-        <div id="content-wrap">
-            <a class="popup1-trigger" href="#popup1">Let me Pop up</a>
-            <div id="popup1" class="overlay">
-                <div class="popup">
-                    <h2 id="mb_title">Message</h2>
-                    <a id="mb_link" class="close" href="#">&times;</a>
-                    <div id="mb_msg" class="content">
-                        Loan application pending review.
-                    </div>
-                </div>
-            </div>
-            <section>
-
-                <div class="card">
-                    <div class="page-title">
-                        <h2>Loan Repayment History</h2>
-                    </div>
-                    <div class="card-content first">
-                        <p><span class="entry-title">Full Name:</span><span class="entry-value">Abel Abaimu</span></span>
-                        </p>
-                        <p><span class="entry-title">Address:</span><span class="entry-value">6, Felix Street, Ijegun</span></p>
-                        <p><span class="entry-title">Email:</span><span class="entry-value">abelabaimu34@yahoo.com</span></p>
-                        <p><span class="entry-title">Date Collected:</span><span class="entry-value">18/04/2018</span></p>
-                        <p><span class="entry-title">Amount Paid:</span><span class="entry-value">₦70,000</span></p>
-                        <p><span class="entry-title">Balance:</span><span class="entry-value">₦35,000</span></p>
-                    </div>
-                    <div class="card-content">
-                        <p><span class="entry-title">Date:</span><span class="entry-value">16/04/2018</span></p>
-                        <p><span class="entry-title">Amount:</span><span class="entry-value">₦17,500</span></p>
-                        <hr>
-                        <p><span class="entry-title">Date:</span><span class="entry-value">18/03/2018</span></p>
-                        <p><span class="entry-title">Amount:</span><span class="entry-value">₦17,500</span></p>
-                        <hr>
-                        <p><span class="entry-title">Date:</span><span class="entry-value">10/02/2018</span></p>
-                        <p><span class="entry-title">Amount:</span><span class="entry-value">₦17,500</span></p>
-                        <hr>
-                        <p><span class="entry-title">Date:</span><span class="entry-value">15/01/2018</span></p>
-                        <p><span class="entry-title">Amount:</span><span class="entry-value">₦17,500</span></p>
-
-                    </div>
-                </div>
-            </section>
-        </div>
+      </header>
     </div>
-    <footer id="footer" class="text-white">
-        <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
-        <p>Copyright © 2019</p>
-    </footer>
-    <script src="js/main.js"></script>
+    <div id="content-wrap">
+      <a class="popup1-trigger" href="#popup1">Let me Pop up</a>
+      <div id="popup1" class="overlay">
+        <div class="popup">
+          <h2 id="mb_title">Message</h2>
+          <a id="mb_link" class="close" href="#">&times;</a>
+          <div id="mb_msg" class="content">
+            Loan application pending review.
+          </div>
+        </div>
+      </div>
+      <section>
+
+        <div class="card">
+          <div class="page-title">
+            <h2>Loan Repayment History</h2>
+          </div>
+          <div class="card-content first">
+            <p><span class="entry-title">Full Name:</span><span class="entry-value">Abel Abaimu</span></span>
+            </p>
+            <p><span class="entry-title">Address:</span><span class="entry-value">6, Felix Street, Ijegun</span></p>
+            <p><span class="entry-title">Email:</span><span class="entry-value">abelabaimu34@yahoo.com</span></p>
+            <p><span class="entry-title">Date Collected:</span><span class="entry-value">18/04/2018</span></p>
+            <p><span class="entry-title">Amount Paid:</span><span class="entry-value">₦70,000</span></p>
+            <p><span class="entry-title">Balance:</span><span class="entry-value">₦35,000</span></p>
+          </div>
+          <div class="card-content">
+            <p><span class="entry-title">Date:</span><span class="entry-value">16/04/2018</span></p>
+            <p><span class="entry-title">Amount:</span><span class="entry-value">₦17,500</span></p>
+            <hr>
+            <p><span class="entry-title">Date:</span><span class="entry-value">18/03/2018</span></p>
+            <p><span class="entry-title">Amount:</span><span class="entry-value">₦17,500</span></p>
+            <hr>
+            <p><span class="entry-title">Date:</span><span class="entry-value">10/02/2018</span></p>
+            <p><span class="entry-title">Amount:</span><span class="entry-value">₦17,500</span></p>
+            <hr>
+            <p><span class="entry-title">Date:</span><span class="entry-value">15/01/2018</span></p>
+            <p><span class="entry-title">Amount:</span><span class="entry-value">₦17,500</span></p>
+
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <footer id="footer" class="text-white">
+    <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
+    <p>Copyright © 2019</p>
+  </footer>
+  <script src="js/main.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -11,152 +11,201 @@
 
     <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
 
-</head>
+  </head>
 
-<body class="">
+  <body class="">
     <div id="container">
-        <div id="header">
-            <header class="main-header">
-                <div class="nav">
-                    <input type="checkbox" id="nav-check">
-                    <div class="nav-header">
-                        <a href="index.html"><img src="../assets/images/logo.png" /></a>
-                    </div>
-                    <div class="nav-btn">
-                        <label for="nav-check">
+      <div id="header">
+        <header class="main-header">
+          <div class="nav">
+            <input type="checkbox" id="nav-check">
+            <div class="nav-header">
+              <a href="index.html"><img src="../assets/images/logo.png" /></a>
+            </div>
+            <div class="nav-btn">
+              <label for="nav-check">
                                 <span></span>
                                 <span></span>
                                 <span></span>
                               </label>
-                    </div>
+            </div>
 
-                    <div class="nav-links">
-                        <a class="active" href="dashboard.html">DASHBOARD</a>
-                        <a href="signin.html">LOG OUT</a>
-                    </div>
-                </div>
-            </header>
-        </div>
-        <div id="content-wrap">
-            <section>
-                <div class="table-container">
-                    <h2>All Loans</h2>
-                    <p>You can view all loans and filter by state.</p>
-                    <div class="">
-                        <span class="filter-title"><strong>Filter: </strong></span>
-                        <div class="filter blue semi-square">
-                            <select name="filter-loan" onchange="filterLoan(this)">
+            <div class="nav-links">
+              <a href="dashboard.html">DASHBOARD</a>
+              <a href="users.html">USERS</a>
+              <a class="active" href="loans.html">LOANS</a>
+              <a href="profile.html">PROFILE</a>
+              <a href="signin.html">LOG OUT</a>
+            </div>
+          </div>
+        </header>
+      </div>
+      <div id="content-wrap">
+        <section>
+          <div class="table-container">
+            <h2>All Loans</h2>
+            <p>You can view all loans and filter by state.</p>
+            <div class="">
+              <span class="filter-title"><strong>Filter: </strong></span>
+              <div class="filter blue semi-square">
+                <select name="filter-loan" onchange="filterLoan(this)">
                         <option value="loans">All Loans</option>
                         <option value="current">Current Loans</option>
                         <option value="repaid">Repaid Loans</option>
                         <option value="pending">Pending Loans</option>
                         <!-- <option value="rejected">Rejected Loans</option> -->
                     </select>
-                        </div>
-                    </div>
-
-
-                    <table id="table-data">
-                        <tr class="table-head">
-                            <th>S/N</th>
-                            <th>Amount(₦)</th>
-                            <th>Tenor(Months)</th>
-                            <th>Installment(₦)</th>
-                            <th>Balance(₦)</th>
-                            <th>Interest(₦)</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            <th>Repaid</th>
-                        </tr>
-                        <tr id="tableRow" onclick="window.location='view_loan.html'">
-                            <td>1</td>
-                            <td>50,000</td>
-                            <td>2</td>
-                            <td>26,250</td>
-                            <td>52,500</td>
-                            <td>2,500</td>
-                            <td>09/04/2019</td>
-                            <td>Approved</td>
-                            <td>No</td>
-                        </tr>
-                        <tr id="tableRow" onclick="window.location='view_loan.html'">
-                            <td>2</td>
-                            <td>350,000</td>
-                            <td>3</td>
-                            <td>122,500</td>
-                            <td>245,000</td>
-                            <td>17,500</td>
-                            <td>09/03/2019</td>
-                            <td>Approved</td>
-                            <td>No</td>
-                        </tr>
-                        <tr id="tableRow" onclick="window.location='view_loan.html'">
-                            <td>3</td>
-                            <td>150,000</td>
-                            <td>4</td>
-                            <td>39,375</td>
-                            <td>78,750</td>
-                            <td>7,500</td>
-                            <td>20/02/2019</td>
-                            <td>Approved</td>
-                            <td>No</td>
-                        </tr>
-                        <tr id="tableRow" onclick="window.location='view_loan.html'">
-                            <td>4</td>
-                            <td>1,000,000</td>
-                            <td>10</td>
-                            <td>105,000</td>
-                            <td>735,000</td>
-                            <td>50,000</td>
-                            <td>05/11/2018</td>
-                            <td>Approved</td>
-                            <td>No</td>
-                        </tr>
-                        <tr id="tableRow" onclick="window.location='view_loan.html'">
-                            <td>5</td>
-                            <td>100,000</td>
-                            <td>6</td>
-                            <td>17,500</td>
-                            <td>87,500</td>
-                            <td>5,000</td>
-                            <td>18/04/2019</td>
-                            <td>Approved</td>
-                            <td>No</td>
-                        </tr>
-                        <tr id="tableRow" onclick="window.location='view_loan.html'">
-                            <td>6</td>
-                            <td>180,000</td>
-                            <td>4</td>
-                            <td>45,500</td>
-                            <td>87,500</td>
-                            <td>5,000</td>
-                            <td>18/04/2019</td>
-                            <td>Approved</td>
-                            <td>No</td>
-                        </tr>
-                    </table>
-                </div>
-                <br/>
-                <div class="pagination-center">
-                    <div class="pagination">
-                        <a href="#">&laquo;</a>
-                        <a class="active" href="#">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                        <a href="#">4</a>
-                        <a href="#">5</a>
-                        <a href="#">6</a>
-                        <a href="#">&raquo;</a>
-                    </div>
-                </div>
-            </section>
-        </div>
-        <div id="footer" class="bg-dark text-white text-center">
-            <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
-            <p>Copyright © 2019</p>
-        </div>
+              </div>
+            </div>
+            <table>
+              <thead>
+                <tr class="table-head">
+                  <th>S/N</th>
+                  <th>Amount(₦)</th>
+                  <th>Tenor(Months)</th>
+                  <th>Installment(₦)</th>
+                  <th>Balance(₦)</th>
+                  <th>Interest(₦)</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Repaid</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr id="tableRow" onclick="window.location='view_loan_approved.html'">
+                  <td data-column="#">1</td>
+                  <td data-column="Amount(₦)">50,000</td>
+                  <td data-column="Tenor(Months)">2</td>
+                  <td data-column="Installment(₦)">26,250</td>
+                  <td data-column="Balance(₦)">52,500</td>
+                  <td data-column="Interest(₦)">2,500</td>
+                  <td data-column="Date">09/04/2019</td>
+                  <td data-column="Status">Approved</td>
+                  <td data-column="Repaid">No</td>
+                </tr>
+                <tr id="tableRow" onclick="window.location='view_loan_pending.html'">
+                  <td data-column="#">2</td>
+                  <td data-column="Amount(₦)">350,000</td>
+                  <td data-column="Tenor(Months)">3</td>
+                  <td data-column="Installment(₦)">122,500</td>
+                  <td data-column="Balance(₦)">245,000</td>
+                  <td data-column="Interest(₦)">17,500</td>
+                  <td data-column="Date">09/03/2019</td>
+                  <td data-column="Status">Rejected</td>
+                  <td data-column="Repaid">No</td>
+                </tr>
+                <tr id="tableRow" onclick="window.location='view_loan_approved.html'">
+                  <td data-column="#">3</td>
+                  <td data-column="Amount(₦)">150,000</td>
+                  <td data-column="Tenor(Months)">4</td>
+                  <td data-column="Installment(₦)">39,375</td>
+                  <td data-column="Balance(₦)">78,750</td>
+                  <td data-column="Interest(₦)">7,500</td>
+                  <td data-column="Date">20/02/2019</td>
+                  <td data-column="Status">Approved</td>
+                  <td data-column="Repaid">No</td>
+                </tr>
+                <tr id="tableRow" onclick="window.location='view_loan_approved.html'">
+                  <td data-column="#">4</td>
+                  <td data-column="Amount(₦)">1,000,000</td>
+                  <td data-column="Tenor(Months)">10</td>
+                  <td data-column="Installment(₦)">105,000</td>
+                  <td data-column="Balance(₦)">735,000</td>
+                  <td data-column="Interest(₦)">50,000</td>
+                  <td data-column="Date">05/11/2018</td>
+                  <td data-column="Status">Approved</td>
+                  <td data-column="Repaid">No</td>
+                </tr>
+                <tr id="tableRow" onclick="window.location='view_loan_repaid.html'">
+                  <td data-column="#">5</td>
+                  <td data-column="Amount(₦)">100,000</td>
+                  <td data-column="Tenor(Months)">6</td>
+                  <td data-column="Installment(₦)">17,500</td>
+                  <td data-column="Balance(₦)">0</td>
+                  <td data-column="Interest(₦)">5,000</td>
+                  <td data-column="Date">18/04/2019</td>
+                  <td data-column="Status">Approved</td>
+                  <td data-column="Repaid">Yes</td>
+                </tr>
+                <tr id="tableRow" onclick="window.location='view_loan_pending.html'">
+                  <td data-column="#">6</td>
+                  <td data-column="Amount(₦)">350,000</td>
+                  <td data-column="Tenor(Months)">3</td>
+                  <td data-column="Installment(₦)">122,500</td>
+                  <td data-column="Balance(₦)">245,000</td>
+                  <td data-column="Interest(₦)">17,500</td>
+                  <td data-column="Date">09/03/2019</td>
+                  <td data-column="Status">Pending</td>
+                  <td data-column="Repaid">No</td>
+                </tr>
+                <tr id="tableRow" onclick="window.location='view_loan_pending.html'">
+                  <td data-column="#">7</td>
+                  <td data-column="Amount(₦)">50,000</td>
+                  <td data-column="Tenor(Months)">2</td>
+                  <td data-column="Installment(₦)">26,250</td>
+                  <td data-column="Balance(₦)">52,500</td>
+                  <td data-column="Interest(₦)">2,500</td>
+                  <td data-column="Date">09/04/2019</td>
+                  <td data-column="Status">Rejected</td>
+                  <td data-column="Repaid">No</td>
+                </tr>
+                <tr id="tableRow" onclick="window.location='view_loan_approved.html'">
+                  <td data-column="#">8</td>
+                  <td data-column="Amount(₦)">150,000</td>
+                  <td data-column="Tenor(Months)">4</td>
+                  <td data-column="Installment(₦)">39,375</td>
+                  <td data-column="Balance(₦)">78,750</td>
+                  <td data-column="Interest(₦)">7,500</td>
+                  <td data-column="Date">20/02/2019</td>
+                  <td data-column="Status">Approved</td>
+                  <td data-column="Repaid">No</td>
+                </tr>
+                <tr id="tableRow" onclick="window.location='view_loan_approved.html'">
+                  <td data-column="#">9</td>
+                  <td data-column="Amount(₦)">1,000,000</td>
+                  <td data-column="Tenor(Months)">10</td>
+                  <td data-column="Installment(₦)">105,000</td>
+                  <td data-column="Balance(₦)">735,000</td>
+                  <td data-column="Interest(₦)">50,000</td>
+                  <td data-column="Date">05/11/2018</td>
+                  <td data-column="Status">Approved</td>
+                  <td data-column="Repaid">No</td>
+                </tr>
+                <tr id="tableRow" onclick="window.location='view_loan_approved.html'">
+                  <td data-column="#">10</td>
+                  <td data-column="Amount(₦)">100,000</td>
+                  <td data-column="Tenor(Months)">6</td>
+                  <td data-column="Installment(₦)">17,500</td>
+                  <td data-column="Balance(₦)">87,500</td>
+                  <td data-column="Interest(₦)">5,000</td>
+                  <td data-column="Date">18/04/2019</td>
+                  <td data-column="Status">Approved</td>
+                  <td data-column="Repaid">No</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <br/>
+          <div class="pagination-center">
+            <div class="pagination">
+              <a href="#">&laquo;</a>
+              <a class="active" href="#">1</a>
+              <a href="#">2</a>
+              <a href="#">3</a>
+              <a href="#">4</a>
+              <a href="#">5</a>
+              <a href="#">6</a>
+              <a href="#">&raquo;</a>
+            </div>
+          </div>
+        </section>
+      </div>
+      <div id="footer" class="bg-dark text-white text-center">
+        <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
+        <p>Copyright © 2019</p>
+      </div>
     </div>
     <script src="../js/main.js"></script>
-</body>
+  </body>
 
 </html>

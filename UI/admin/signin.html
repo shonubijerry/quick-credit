@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -11,65 +11,65 @@
 
     <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
 
-</head>
+  </head>
 
-<body class="form-body">
+  <body class="form-body">
     <div id="container">
-        <div id="header">
-            <header class="main-header">
-                <div class="nav">
-                    <input type="checkbox" id="nav-check">
-                    <div class="nav-header">
-                        <a href="index.html"><img src="../assets/images/logo.png" /></a>
-                    </div>
-                    <div class="nav-btn">
-                        <label for="nav-check">
+      <div id="header">
+        <header class="main-header">
+          <div class="nav">
+            <input type="checkbox" id="nav-check">
+            <div class="nav-header">
+              <a href="index.html"><img src="../assets/images/logo.png" /></a>
+            </div>
+            <div class="nav-btn">
+              <label for="nav-check">
                 <span></span>
                 <span></span>
                 <span></span>
               </label>
-                    </div>
+            </div>
 
-                    <div class="nav-links">
-                        <a href="index.html">HOME</a>
-                        <a class="active" href="signin.html">SIGN IN</a>
-                    </div>
+            <div class="nav-links">
+              <a href="index.html">HOME</a>
+              <a class="active" href="signin.html">SIGN IN</a>
+            </div>
+          </div>
+        </header>
+      </div>
+      <div id="content-wrap">
+        <section>
+          <div class="content-div home-div">
+            <div class="centered">
+              <form action="#">
+                <div class="signup-content">
+                  <h1>Sign In</h1>
+                  <p>Signin to your dashboard.</p>
+                  <hr>
+
+                  <label for="email"><b>Email</b></label>
+                  <input type="text" placeholder="Enter Email" name="email" required>
+
+                  <label for="psw"><b>Password</b></label>
+                  <input type="password" placeholder="Enter Password" name="psw" required>
+
+                  <hr>
+                  <div class="signup-footer">
+                    <a href="dashboard.html" class="btn-primary btn-primary-big">Sign In</a>
+                  </div>
+
                 </div>
-            </header>
-        </div>
-        <div id="content-wrap">
-            <section>
-                <div class="content-div home-div">
-                    <div class="centered">
-                        <form action="#">
-                            <div class="signup-content">
-                                <h1>Sign In</h1>
-                                <p>Signin to your dashboard.</p>
-                                <hr>
-
-                                <label for="email"><b>Email</b></label>
-                                <input type="text" placeholder="Enter Email" name="email" required>
-
-                                <label for="psw"><b>Password</b></label>
-                                <input type="password" placeholder="Enter Password" name="psw" required>
-
-                                <hr>
-                                <div class="signup-footer">
-                                    <button type="submit" class="btn-primary btn-primary-big">Sign In</button>
-                                </div>
-
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </section>
-        </div>
-        <footer id="footer" class="text-white">
-            <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
-            <p>Copyright © 2019</p>
-        </footer>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+      <footer id="footer" class="text-white">
+        <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
+        <p>Copyright © 2019</p>
+      </footer>
     </div>
     <script src="../js/main.js"></script>
-</body>
+  </body>
 
 </html>

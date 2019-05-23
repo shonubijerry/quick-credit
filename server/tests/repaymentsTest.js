@@ -5,7 +5,7 @@ import testDb from './testDb';
 import errorStrings from '../helpers/errorStrings';
 
 chai.use(chaiHttp);
-chai.should();
+const { expect } = chai;
 
 let currentToken;
 const signinUrl = '/api/v1/auth/signin';
@@ -16,10 +16,10 @@ describe('Repayment Controller', () => {
     chai.request(app)
       .get(`${loansUrl}/3/repayments`)
       .end((error, res) => {
-        res.should.have.status(401);
-        res.body.should.be.a('object');
-        res.body.should.have.property('error');
-        res.body.error.should.equal(errorStrings.notAuthenticated);
+        expect(res).to.have.status(401);
+        expect(res.body).to.be.a('object');
+        expect(res.body).to.have.property('error');
+        expect(res.body.error).to.equal(errorStrings.notAuthenticated);
         done();
       });
   });
@@ -37,32 +37,33 @@ describe('Repayment Controller', () => {
 
     it('it should get loan repayments', (done) => {
       chai.request(app)
-        .get(`${loansUrl}/3/repayments`)
-        .set('token', currentToken)
+        .get(`${loansUrl}/00298627-71e4-4ede-af91-aec1862fae22/repayments`)
+        .set('Authorization', currentToken)
         .end((error, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.should.have.property('data');
-          res.body.data.should.be.a('array');
-          res.body.data[0].should.be.a('object');
-          res.body.data[0].should.have.property('loanId');
-          res.body.data[0].should.have.property('createdOn');
-          res.body.data[0].should.have.property('amount');
-          res.body.data[0].should.have.property('monthlyInstallment');
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.be.a('array');
+          expect(res.body.data[0]).to.be.a('object');
+          expect(res.body.data[0]).to.have.property('id');
+          expect(res.body.data[0]).to.have.property('loanid');
+          expect(res.body.data[0]).to.have.property('createdon');
+          expect(res.body.data[0]).to.have.property('amount');
+          expect(res.body.data[0]).to.have.property('monthlyinstallment');
           done();
         });
     });
 
     it('it should return empty data set if no repayment is found', (done) => {
       chai.request(app)
-        .get(`${loansUrl}/6/repayments`)
-        .set('token', currentToken)
+        .get(`${loansUrl}/00298627-71e4-4ede-af91-aec1862ffe55/repayments`)
+        .set('Authorization', currentToken)
         .end((error, res) => {
-          res.should.have.status(200);
-          res.body.should.be.a('object');
-          res.body.should.have.property('data');
-          res.body.data.should.be.a('object');
-          res.body.data.should.eql({});
+          expect(res).to.have.status(200);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.be.a('array');
+          expect(res.body.data).to.eql([]);
           done();
         });
     });
@@ -73,21 +74,21 @@ describe('Repayment Controller', () => {
     // This block return altered loans inside loansTest.js, back to their original state
     it('Alter loans so next test will not find a current loan', (done) => {
       chai.request(app)
-        .patch(`${loansUrl}/2`)
+        .patch(`${loansUrl}/ff741315-7075-4488-8627-8f8ccccbada6`)
         .send(testDb.approveRejectLoan[0])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
-          res.should.have.status(200);
+          expect(res).to.have.status(200);
           done();
         });
     });
     it('Alter loans so next test will not find a current loan', (done) => {
       chai.request(app)
-        .patch(`${loansUrl}/5`)
+        .patch(`${loansUrl}/4a860db6-aac6-47cc-954b-7912900be2eb`)
         .send(testDb.approveRejectLoan[0])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
-          res.should.have.status(200);
+          expect(res).to.have.status(200);
           done();
         });
     });
@@ -97,13 +98,13 @@ describe('Repayment Controller', () => {
   describe('POST LOAN REPAYMENT', () => {
     it('it should return authentication error', (done) => {
       chai.request(app)
-        .post(`${loansUrl}/3/repayment`)
+        .post(`${loansUrl}/00298627-71e4-4ede-af91-aec1862fae22/repayment`)
         .send(testDb.repaymentAmount[0])
         .end((error, res) => {
-          res.should.have.status(401);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.notAuthenticated);
+          expect(res).to.have.status(401);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal(errorStrings.notAuthenticated);
           done();
         });
     });
@@ -120,126 +121,126 @@ describe('Repayment Controller', () => {
 
     it('it should post a loan repayment', (done) => {
       chai.request(app)
-        .post(`${loansUrl}/2/repayment`)
+        .post(`${loansUrl}/ff741315-7075-4488-8627-8f8ccccbada6/repayment`)
         .send(testDb.repaymentAmount[1])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
-          res.should.have.status(201);
-          res.body.should.be.a('object');
-          res.body.should.have.property('data');
-          res.body.data.should.be.a('object');
-          res.body.data.should.have.property('id');
-          res.body.data.should.have.property('loanId');
-          res.body.data.should.have.property('createdOn');
-          res.body.data.should.have.property('amount');
-          res.body.data.should.have.property('monthlyInstallment');
-          res.body.data.should.have.property('paidAmount');
-          res.body.data.should.have.property('balance');
+          expect(res).to.have.status(201);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.be.a('object');
+          expect(res.body.data).to.have.property('id');
+          expect(res.body.data).to.have.property('loanid');
+          expect(res.body.data).to.have.property('createdon');
+          expect(res.body.data).to.have.property('amount');
+          expect(res.body.data).to.have.property('monthlyinstallment');
+          expect(res.body.data).to.have.property('paidamount');
+          expect(res.body.data).to.have.property('balance');
           done();
         });
     });
 
     it('it should post a loan repayment to test last repayment', (done) => {
       chai.request(app)
-        .post(`${loansUrl}/5/repayment`)
+        .post(`${loansUrl}/4a860db6-aac6-47cc-954b-7912900be2eb/repayment`)
         .send(testDb.repaymentAmount[0])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
-          res.should.have.status(201);
-          res.body.should.be.a('object');
-          res.body.should.have.property('data');
-          res.body.data.should.be.a('object');
-          res.body.data.should.have.property('id');
-          res.body.data.should.have.property('loanId');
-          res.body.data.should.have.property('createdOn');
-          res.body.data.should.have.property('amount');
-          res.body.data.should.have.property('monthlyInstallment');
-          res.body.data.should.have.property('paidAmount');
-          res.body.data.should.have.property('balance');
+          expect(res).to.have.status(201);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.be.a('object');
+          expect(res.body.data).to.have.property('id');
+          expect(res.body.data).to.have.property('loanid');
+          expect(res.body.data).to.have.property('createdon');
+          expect(res.body.data).to.have.property('amount');
+          expect(res.body.data).to.have.property('monthlyinstallment');
+          expect(res.body.data).to.have.property('paidamount');
+          expect(res.body.data).to.have.property('balance');
           done();
         });
     });
 
     it('it should return error loan id does not exist', (done) => {
       chai.request(app)
-        .post(`${loansUrl}/99/repayment`)
+        .post(`${loansUrl}/67298627-71e4-4ede-af91-aec1462fae32/repayment`)
         .send(testDb.repaymentAmount[3])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
-          res.should.have.status(404);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.noLoan);
+          expect(res).to.have.status(404);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal(errorStrings.noLoan);
           done();
         });
     });
 
     it('it should return error if loan is not approved', (done) => {
       chai.request(app)
-        .post(`${loansUrl}/3/repayment`)
-        .send(testDb.repaymentAmount[3])
-        .set('token', currentToken)
+        .post(`${loansUrl}/6f746db2-e5e7-4824-8926-cdec24a02312/repayment`)
+        .send(testDb.repaymentAmount[6])
+        .set('Authorization', currentToken)
         .end((error, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.notApproved);
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal(errorStrings.notApproved);
           done();
         });
     });
 
     it('it should return error if loan paymentInstallment is not equal to amount paid', (done) => {
       chai.request(app)
-        .post(`${loansUrl}/5/repayment`)
+        .post(`${loansUrl}/4a860db6-aac6-47cc-954b-7912900be2eb/repayment`)
         .send(testDb.repaymentAmount[4])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(`${errorStrings.notAmount} 11760.00`);
+          expect(res).to.have.status(409);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal(`${errorStrings.notAmount} 11760.00`);
           done();
         });
     });
 
     it('it should return error if amount sent is not valid', (done) => {
       chai.request(app)
-        .post(`${loansUrl}/5/repayment`)
+        .post(`${loansUrl}/4a860db6-aac6-47cc-954b-7912900be2eb/repayment`)
         .send(testDb.repaymentAmount[2])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.validAmount);
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.eql([`${errorStrings.validAmount}`]);
           done();
         });
     });
 
     it('it should return error if loan has already been repaid', (done) => {
       chai.request(app)
-        .post(`${loansUrl}/1/repayment`)
+        .post(`${loansUrl}/8502d3d7-9c27-4a3e-bcd0-b1ecf914e628/repayment`)
         .send(testDb.repaymentAmount[4])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
-          res.should.have.status(409);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.loanRepaid);
+          expect(res).to.have.status(409);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal(errorStrings.loanRepaid);
           done();
         });
     });
 
     it('it should return error if loan post parameter is wrong', (done) => {
       chai.request(app)
-        .post(`${loansUrl}/1/repayment`)
+        .post(`${loansUrl}/8502d3d7-9c27-4a3e-bcd0-b1ecf914e628/repayment`)
         .send(testDb.repaymentAmount[5])
-        .set('token', currentToken)
+        .set('Authorization', currentToken)
         .end((error, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a('object');
-          res.body.should.have.property('error');
-          res.body.error.should.equal(errorStrings.validAmount);
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.eql([`${errorStrings.validAmount}`]);
           done();
         });
     });

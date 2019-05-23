@@ -1,6 +1,6 @@
-import loans from '../dummy/loans';
+import uuid from 'uuid';
 import LoanHelper from '../helpers/loanHelper';
-import Utils from '../helpers/utils';
+import Model from './model';
 
 /**
 * @fileOverview - class manages all users data storage
@@ -10,7 +10,7 @@ import Utils from '../helpers/utils';
 * @requires - ../dummy/loans
 * */
 
-class LoansModel {
+class LoansModel extends Model {
   /**
      * Add new user to data structure
      * @param {object} req
@@ -18,28 +18,25 @@ class LoansModel {
      * @returns {object} returns created loan as an object
      */
 
-  static createLoan(req, user) {
-    let { tenor, amount } = req.body;
-    tenor = parseFloat(tenor);
-    amount = parseFloat(amount);
-    const interest = LoanHelper.getInterest(amount).toFixed(2);
-    const balance = LoanHelper.getBalance(amount).toFixed(2);
-    const paymentInstallment = LoanHelper.getInstallment(amount, tenor).toFixed(2);
-    const newLoan = {
-      id: loans.length + 1,
-      user,
-      createdOn: Utils.getNow(),
-      status: 'pending',
-      repaid: false,
-      tenor,
-      amount,
-      paymentInstallment,
-      balance,
-      interest,
-    };
-
-    loans.push(newLoan);
-    return newLoan;
+  async createLoan(req, email) {
+    try {
+      let { tenor, amount } = req.body;
+      tenor = parseFloat(tenor);
+      amount = parseFloat(amount);
+      const interest = LoanHelper.getInterest(amount).toFixed(2);
+      const balance = LoanHelper.getBalance(amount).toFixed(2);
+      const paymentInstallment = LoanHelper.getInstallment(amount, tenor).toFixed(2);
+      const { rows } = await this.insert(
+        'id, loanuser, tenor, amount, paymentinstallment, balance, interest',
+        '$1, $2, $3, $4, $5, $6, $7',
+        [
+          uuid(), email, tenor, amount, paymentInstallment, balance, interest,
+        ],
+      );
+      return rows[0];
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
@@ -48,44 +45,63 @@ class LoansModel {
      * @returns {object} an object with all loans
      */
 
-  static getLoans(email, isAdmin) {
-    if (isAdmin) {
-      return loans;
+  async getLoans(email, isAdmin) {
+    try {
+      if (isAdmin) {
+        const { rows } = await this.select('*');
+        return rows;
+      }
+      const { rows } = await this.selectWhere('*', 'loanuser=$1', [email]);
+      return rows;
+    } catch (error) {
+      throw error;
     }
-    return Utils.findInArray(email, 'user', loans);
   }
 
   /**
-     * Get single loans by loanId
-     * @param {object} loanId
+     * Check if a user have current loan or pending loan
+     * @param {object} email
      * @returns {object} a single loan object
      */
 
-  static getSingleLoan(loanId) {
-    const loan = Utils.findSingleItem(loanId, 'id', loans);
-    if (!loan) {
-      return 'no-loan';
+  async checkCurrentOrPendingLoan(email) {
+    try {
+      const { rows } = await this.selectWhere('*', 'loanuser=$1 and repaid=$2 and status!=$3',
+        [email, false, 'rejected']);
+      return rows[0];
+    } catch (error) {
+      throw error;
     }
-    return loan;
+  }
+
+
+  /**
+    * Get single loan by loanId
+    * @param {String} email
+    * @return boolean
+    */
+
+  async getSingleLoanById(loanId) {
+    try {
+      const { rows } = await this.selectWhere('*', 'id=$1', [loanId]);
+      return rows[0];
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
-     * Get current loans
-     * @returns {object} an object with array of current loans
+     * Get current or replaid loans depending on the argument
+     * @returns {object} returns array of current loans or repaid loans
      */
 
-  static getCurrentLoans() {
-    return Utils.findDoubleKeysInArray(loans, 'status', 'approved', 'repaid', false);
-  }
-
-  /**
-     * Get repaid loans
-     * @param {object} query
-     * @returns {object} an object with array of repaid loans
-     */
-
-  static getRepaidLoans() {
-    return Utils.findDoubleKeysInArray(loans, 'status', 'approved', 'repaid', true);
+  async getCurrentOrRepaidLoans(query) {
+    try {
+      const { rows } = await this.selectWhere('*', 'status=$1 AND repaid=$2', ['approved', query]);
+      return rows;
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
@@ -96,59 +112,34 @@ class LoansModel {
   * loan is approved or does't exist
   */
 
-  static approveLoan(loanId, status) {
-    let info;
-    const foundItem = Utils.updateItems(loans, 'id', loanId);
-    if (foundItem === false) {
-      info = 'no-loan';
-    } else if (foundItem.item.status === status) {
-      info = 'no-action';
-    } else {
-      foundItem.item.status = status;
-      loans.splice(foundItem.index, 1, foundItem.item);
-      info = foundItem.item;
+  async approveLoan(loanId, status) {
+    try {
+      const { rows } = await this.update('status=$1', 'id=$2', [status, loanId]);
+      return rows[0];
+    } catch (error) {
+      throw error;
     }
-
-    return info;
   }
 
   /**
-  * Update loan application after each repayment by subtracting paid amount from balance
+  * Update loan balance after each repayment by subtracting paid amount from balance
   * and check if there is no balance. If there is no more balance, then loan is repaid.
   * @param {object} loanId id of loan to update
   * @param {float} amount amount repaid for user's loan
   * @returns {object} return json object with updated loan data
   */
 
-  static updateLoanAfterRepayment(loanId, amount) {
-    const foundItem = Utils.updateItems(loans, 'id', loanId);
-
-    foundItem.item.balance -= Number.parseFloat(amount);
-    if (foundItem.item.balance < 1) { // check if this is the last repayment
-      foundItem.item.repaid = true;
-    }
-    const updatedLoan = loans.splice(foundItem.index, 1, foundItem.item);
-    return updatedLoan[0]; // loans.splice returned an array with updated object as only element
-  }
-
-  /**
-  * Check if a user has an unpaid loan
-  * @param {object} email
-  * @returns {object} loan object and boolean isFound
-  */
-
-  static checkCurrentLoan(email) {
+  async updateLoanAfterRepayment(loanId, paidAmount, balance) {
+    const newBalance = Number.parseFloat(balance) - Number.parseFloat(paidAmount);
     try {
-      const foundLoan = loans.find(loan => (loan.user === email
-        && !loan.repaid
-        && (loan.status === 'pending'
-        || loan.status === 'approved')));
-      if (foundLoan) {
-        return foundLoan;
+      if (newBalance < 1) { // check if this is the last repayment
+        const { rows } = await this.update('repaid=$1, balance=$2', 'id=$3', [true, newBalance, loanId]);
+        return rows[0];
       }
-      throw new Error('');
+      const { rows } = await this.update('balance=$1', 'id=$2', [newBalance, loanId]);
+      return rows[0];
     } catch (error) {
-      return false;
+      throw error;
     }
   }
 }
