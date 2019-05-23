@@ -25,6 +25,9 @@ class Auth {
       request.user = Auth.verifyToken(token);
       return next();
     } catch (error) {
+      if (error.message === 'jwt expired') {
+        return ResponseHelper.error(response, 419, errorStrings.sessionExpired);
+      }
       return ResponseHelper.error(response, 401, errorStrings.notAuthenticated);
     }
   }
@@ -46,6 +49,9 @@ class Auth {
       }
       return next();
     } catch (error) {
+      if (error.message === 'jwt expired') {
+        return ResponseHelper.error(response, 419, errorStrings.sessionExpired);
+      }
       return ResponseHelper.error(response, 401, errorStrings.notAuthenticated);
     }
   }
