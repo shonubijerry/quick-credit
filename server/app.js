@@ -40,6 +40,6 @@ app.use('/api-docs', Express.static(path.join(__dirname, './public/api-docs')));
 routes(app);
 
 // listen to app port
-app.listen(port, () => debug('app/debug')(`App listening on port ${port}`));
+app.listen(port, debug('app/debug')(`App listening on port ${port}`));
 
 export default app;
