@@ -109,7 +109,7 @@ class ValidateUser {
 
     if (!password || !rules.empty.test(password)) {
       const passwordEmptyError = errorStrings.passwordEmpty;
-      errors.push(passwordEmptyError    );
+      errors.push(passwordEmptyError);
     }
     return errors;
   }

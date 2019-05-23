@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -11,75 +11,78 @@
 
     <link rel="stylesheet" type="text/css" media="screen" href="../css/main.css" />
 
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="container">
-        <div id="header">
-            <header class="main-header">
-                <div class="nav">
-                    <input type="checkbox" id="nav-check">
-                    <div class="nav-header">
-                        <a href="index.html"><img src="../assets/images/logo.png" /></a>
-                    </div>
-                    <div class="nav-btn">
-                        <label for="nav-check">
+      <div id="header">
+        <header class="main-header">
+          <div class="nav">
+            <input type="checkbox" id="nav-check">
+            <div class="nav-header">
+              <a href="index.html"><img src="../assets/images/logo.png" /></a>
+            </div>
+            <div class="nav-btn">
+              <label for="nav-check">
                 <span></span>
                 <span></span>
                 <span></span>
               </label>
-                    </div>
-
-                    <div class="nav-links">
-                        <a class="active" href="dashboard.html">DASHBOARD</a>
-                        <a href="signin.html">LOG OUT</a>
-                    </div>
-                </div>
-            </header>
-        </div>
-        <div id="content-wrap">
-            <a class="popup1-trigger" href="#popup1"></a>
-            <div id="popup1" class="overlay">
-                <div class="popup">
-                    <h2 id="mb_title">Message</h2>
-                    <a id="mb_link" onclick="history.back(-2)" class="close" href="#">&times;</a>
-                    <div id="mb_msg" class="content">
-                        Loan application Approved.
-                    </div>
-                </div>
             </div>
-            <section>
-                <div class="card-large">
-                    <div class="card">
-                        <div class="card-content first">
-                            <h2>CLIENT PROFILE</h2>
-                        </div>
-                        <div class="card-content">
-                            <p><span class="entry-title">First Name:</span><span class="entry-value">Abaimu</span></span>
-                            </p>
-                            <p><span class="entry-title">Last Name:</span><span class="entry-value">Abel</span></span>
-                            </p>
-                            <p><span class="entry-title">Email:</span><span class="entry-value">abelabaimu34@yahoo.com</span></p>
-                            <p><span class="entry-title">Address:</span><span class="entry-value">33, Ahmed Oghere Street</span></p>
-                            <p><span class="entry-title">City:</span><span class="entry-value">Ikeja</span></p>
-                            <p><span class="entry-title">State:</span><span class="entry-value">Lagos</span></p>
-                        </div>
-                        <hr>
-                        <div class="signup-footer cta cta-div profile-btn">
-                            <a id="reject" class="btn-primary btn-primary-big" onclick="showMessageBox('Verified','User verification successful', '#verified')">Verify</a>
-                        </div>
-                    </div>
-                </div>
 
-            </section>
+            <div class="nav-links">
+              <a href="dashboard.html">DASHBOARD</a>
+              <a class="active" href="users.html">USERS</a>
+              <a href="loans.html">LOANS</a>
+              <a href="profile.html">PROFILE</a>
+              <a href="signin.html">LOG OUT</a>
+            </div>
+          </div>
+        </header>
+      </div>
+      <div id="content-wrap">
+        <a class="popup1-trigger" href="#popup1"></a>
+        <div id="popup1" class="overlay">
+          <div class="popup">
+            <h2 id="mb_title">Message</h2>
+            <a id="mb_link" onclick="history.back(-2)" class="close" href="#">&times;</a>
+            <div id="mb_msg" class="content">
+              Loan application Approved.
+            </div>
+          </div>
         </div>
+        <section>
+          <div class="card-large">
+            <div class="card">
+              <div class="card-content first">
+                <h2>CLIENT PROFILE</h2>
+              </div>
+              <div class="card-content">
+                <p><span class="entry-title">First Name:</span><span class="entry-value">Abaimu</span></span>
+                </p>
+                <p><span class="entry-title">Last Name:</span><span class="entry-value">Abel</span></span>
+                </p>
+                <p><span class="entry-title">Email:</span><span class="entry-value">abelabaimu34@yahoo.com</span></p>
+                <p><span class="entry-title">Address:</span><span class="entry-value">33, Ahmed Oghere Street</span></p>
+                <p><span class="entry-title">City:</span><span class="entry-value">Ikeja</span></p>
+                <p><span class="entry-title">State:</span><span class="entry-value">Lagos</span></p>
+              </div>
+              <hr>
+              <div class="signup-footer cta cta-div profile-btn">
+                <a id="reject" class="btn-primary btn-primary-big" onclick="showMessageBox('Verified','User verification successful', 'users.html')">Verify</a>
+              </div>
+            </div>
+          </div>
+
+        </section>
+      </div>
     </div>
     <div id="footer" class="bg-dark text-white text-center">
-        <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
-        <p>Copyright © 2019</p>
+      <p>Developed by Shonubi Oluwakorede - for Andela 44</p>
+      <p>Copyright © 2019</p>
     </div>
     </div>
     <script src="../js/main.js"></script>
-</body>
+  </body>
 
 </html>
