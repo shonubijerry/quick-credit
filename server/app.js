@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // 3rd party middleware
-app.use(cors());
+app.use(cors('*'));
 
 // At the moment GET request on '/' should show documentation inside ./index.html
 app.use('/', Express.static(path.join(__dirname, './public/api-docs')));
