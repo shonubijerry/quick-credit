@@ -23,7 +23,7 @@ class RepaymentsModel extends Model {
   async getLoanRepayments(loanId) {
     try {
       const { rows } = await this.selectWithJoin(
-        'repay.id, loanid, paymentinstallment monthlyinstallment, repay.createdon, repay.amount paidamount, loans.amount,loans.createdon loandate, loans.loanuser, users.firstname, users.lastname, users.address',
+        'repay.id, loanid, paymentinstallment monthlyinstallment, repay.createdon, repay.amount paidamount, loans.amount, loans.balance, loans.createdon loandate, loans.loanuser, users.firstname, users.lastname, users.address',
         'loanid=$1', [loanId],
       );
       return rows;
