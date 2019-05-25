@@ -46,7 +46,10 @@ class Model {
   }
 
   async selectWithJoin(columns, selectors, values) {
-    const queryString = `SELECT ${columns} FROM ${this.table} repay INNER JOIN loans ON (repay.loanid = loans.id) WHERE ${selectors} `;
+    const queryString = `SELECT ${columns} FROM ${this.table} repay
+    JOIN loans ON (repay.loanid = loans.id)
+    JOIN users ON (loans.loanuser = users.email)
+     WHERE ${selectors} `;
     debug('app/debug')(queryString);
     try {
       const response = await this.pool.query(queryString, values);
