@@ -26,15 +26,15 @@ class LoansController {
 
   static async createLoan(req, res) {
     try {
-      const userEmail = req.user.email;
-      const currentLoan = await loansModel.checkCurrentOrPendingLoan(userEmail);
+      const user = await usersModel.findUserById(req.user.id);
+      const currentLoan = await loansModel.checkCurrentOrPendingLoan(user.email);
       if (currentLoan) {
         return ResponseHelper.error(
           res, 409,
           `You have an unpaid loan of ${currentLoan.balance} which is under review or yet to be fully repaid`,
         );
       }
-      const newLoan = await loansModel.createLoan(req, userEmail);
+      const newLoan = await loansModel.createLoan(req, user.email);
       return ResponseHelper.success(res, 201, newLoan);
     } catch (error) {
       return ResponseHelper.error(res, 500, errorStrings.serverError);
@@ -50,13 +50,12 @@ class LoansController {
 
   static async getLoans(req, res) {
     try {
-      const { email } = req.user;
-      const user = await usersModel.findUserByEmail(req.user.email);
+      const user = await usersModel.findUserById(req.user.id);
       if (Utils.hasQuery(req)) {
         const loans = await LoansController.perpareLoansQuery(req, res, user.isadmin);
         return loans;
       }
-      const loans = await loansModel.getLoans(email, user.isadmin);
+      const loans = await loansModel.getLoans(user.email, user.isadmin);
       return ResponseHelper.success(res, 200, loans);
     } catch (error) {
       return ResponseHelper.error(res, 500, errorStrings.serverError);

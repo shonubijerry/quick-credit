@@ -32,7 +32,7 @@ class RepaymentsController {
       }
       return ResponseHelper.success(res, 200, loanRepayments);
     } catch (error) {
-      return ResponseHelper.error(res, 500, errorStrings.serverError);
+      return ResponseHelper.error(res, 500, error.message);
     }
   }
 

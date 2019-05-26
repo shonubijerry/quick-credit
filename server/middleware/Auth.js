@@ -1,10 +1,8 @@
 import jwt from 'jsonwebtoken';
 import errorStrings from '../helpers/errorStrings';
 import ResponseHelper from '../helpers/responseHelper';
-import UsersModel from '../model/usersModel';
 
 const secretKey = process.env.SECRET_KEY;
-const usersModel = new UsersModel('users');
 
 /**
  * @class Authenticate User
@@ -39,12 +37,11 @@ class Auth {
  * @param {Function} next
  * @return {Object}
  */
-  static async authenticateAdmin(request, response, next) {
+  static authenticateAdmin(request, response, next) {
     try {
       const token = request.headers.authorization;
       request.user = Auth.verifyToken(token);
-      const user = await usersModel.findUserByEmail(request.user.email);
-      if (user.isadmin === false) {
+      if (request.user.isadmin === false) {
         return ResponseHelper.error(response, 403, errorStrings.notAllowed);
       }
       return next();

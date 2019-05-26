@@ -22,11 +22,16 @@ class RepaymentsModel extends Model {
 
   async getLoanRepayments(loanId) {
     try {
-      const { rows } = await this.selectWithJoin(
-        'repay.id, loanid, paymentinstallment monthlyinstallment, repay.createdon, repay.amount paidamount, loans.amount, loans.balance, loans.createdon loandate, loans.loanuser, users.firstname, users.lastname, users.address',
-        'loanid=$1', [loanId],
+      const user = await loansModel.selectWithJoin(
+        'amount, tenor, balance, createdon loandate, paymentinstallment monthlyinstallment, loanuser, firstname, lastname, address',
+        'loans.id=$1',
+        'JOIN users ON (loans.loanuser = users.email)',
+        [loanId],
       );
-      return rows;
+      const result = user.rows[0];
+      const { rows } = await this.selectWhere('*', 'loanid=$1', [loanId]);
+      result.repayments = rows;
+      return result;
     } catch (error) {
       throw error;
     }
