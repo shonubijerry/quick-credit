@@ -141,24 +141,43 @@ const approveRejectLoan = [
 const repaymentAmount = [
   {
     amount: 11760.00, // valid amount for post repayment
+    tenor: 1,
   },
   {
     amount: 12000.00, // amount posted is not what is expected to pay
+    tenor: 1,
   },
   {
     amount: '17,000.00', // invalid amount because of comma
+    tenor: 1,
   },
   {
     amount: 81600.00, // loan is rejected or pending approval
+    tenor: 1,
   },
   {
     amount: 8400.00, // loan is repaid
+    tenor: 1,
   },
   {
     money: 12000.00, // invalid post parameter - money
+    tenor: 1,
   },
   {
     amount: 9000.00, // loan is rejected or pending approval
+    tenor: 1,
+  },
+  {
+    amount: 12000.00, // amount paid is more than balance
+    tenor: 9,
+  },
+  {
+    amount: 12000.00,
+    tenor: 99, // tenor is invalid
+  },
+  {
+    amount: 12000.00,
+    month: 4, // tenor does not exist
   },
 ];
 

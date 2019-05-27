@@ -1,5 +1,4 @@
 import uuid from 'uuid';
-import LoanHelper from '../helpers/loanHelper';
 import Model from './model';
 
 /**
@@ -21,16 +20,17 @@ class LoansModel extends Model {
   async createLoan(req, email) {
     try {
       let { tenor, amount } = req.body;
-      tenor = parseFloat(tenor);
-      amount = parseFloat(amount);
-      const interest = LoanHelper.getInterest(amount).toFixed(2);
-      const balance = LoanHelper.getBalance(amount).toFixed(2);
-      const paymentInstallment = LoanHelper.getInstallment(amount, tenor).toFixed(2);
+      tenor = parseInt(tenor, 10);
+      amount = parseFloat(amount).toFixed(2);
+      const interest = parseFloat(amount) * 0.05;
+      const sumAmountInterst = parseFloat(amount) + parseFloat(interest.toFixed(2));
+      const paymentInstallment = (sumAmountInterst / tenor).toFixed(2);
+      const balance = parseFloat(paymentInstallment) * tenor;
       const { rows } = await this.insert(
         'id, loanuser, tenor, amount, paymentinstallment, balance, interest',
         '$1, $2, $3, $4, $5, $6, $7',
         [
-          uuid(), email, tenor, amount, paymentInstallment, balance, interest,
+          uuid(), email, tenor, amount, parseFloat(paymentInstallment), balance, interest,
         ],
       );
       return rows[0];
