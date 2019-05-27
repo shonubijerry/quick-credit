@@ -145,7 +145,7 @@ class ValidateUser {
 
   static async checkVerified(req, res, next) {
     try {
-      const user = await usersModel.findUserByEmail(req.user.email);
+      const user = await usersModel.findUserById(req.user.id);
       if (user.status !== 'verified') {
         return responseHelper.error(res, 401, errorStrings.notVerified);
       }

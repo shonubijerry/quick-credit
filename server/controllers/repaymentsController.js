@@ -27,12 +27,12 @@ class RepaymentsController {
     try {
       const { loanId } = req.params;
       const loanRepayments = await repaymentModel.getLoanRepayments(loanId);
-      if (!loanRepayments) {
-        return ResponseHelper.error(res, 404, errorStrings.noRepayments);
+      if (loanRepayments === 'no-loan') {
+        return ResponseHelper.error(res, 404, errorStrings.noLoan);
       }
       return ResponseHelper.success(res, 200, loanRepayments);
     } catch (error) {
-      return ResponseHelper.error(res, 500, errorStrings.serverError);
+      return ResponseHelper.error(res, 500, error.message);
     }
   }
 

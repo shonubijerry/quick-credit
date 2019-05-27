@@ -57,7 +57,7 @@ class UsersModel extends Model {
   }
 
   /**
-    * check if user email already exists
+    * Find a user by email
     * @param {String} email
     * @return boolean
     */
@@ -65,6 +65,21 @@ class UsersModel extends Model {
   async findUserByEmail(email) {
     try {
       const { rows } = await this.selectWhere('*', 'email=$1', [email]);
+      return rows[0];
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  /**
+    * Find a user by id
+    * @param {String} id
+    * @return boolean
+    */
+
+  async findUserById(id) {
+    try {
+      const { rows } = await this.selectWhere('*', 'id=$1', [id]);
       return rows[0];
     } catch (error) {
       throw error;

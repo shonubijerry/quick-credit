@@ -45,10 +45,8 @@ class Model {
     }
   }
 
-  async selectWithJoin(columns, selectors, values) {
-    const queryString = `SELECT ${columns} FROM ${this.table} repay
-    JOIN loans ON (repay.loanid = loans.id)
-    JOIN users ON (loans.loanuser = users.email)
+  async selectWithJoin(columns, selectors, joinStatement, values) {
+    const queryString = `SELECT ${columns} FROM ${this.table} ${joinStatement}
      WHERE ${selectors} `;
     debug('app/debug')(queryString);
     try {

@@ -12,9 +12,9 @@ const expirationTime = 86400;
 * @returns {Object} generateToken
  */
 const generateToken = ({
-  id, email, firstname, lastname,
+  id, isadmin,
 }) => jwt.sign({
-  id, email, firstname, lastname,
+  id, isadmin,
 }, secretKey,
 {
   expiresIn: expirationTime,

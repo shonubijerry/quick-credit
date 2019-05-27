@@ -22,11 +22,19 @@ class RepaymentsModel extends Model {
 
   async getLoanRepayments(loanId) {
     try {
-      const { rows } = await this.selectWithJoin(
-        'repay.id, loanid, paymentinstallment monthlyinstallment, repay.createdon, repay.amount paidamount, loans.amount, loans.balance, loans.createdon loandate, loans.loanuser, users.firstname, users.lastname, users.address',
-        'loanid=$1', [loanId],
+      const user = await loansModel.selectWithJoin(
+        'amount, tenor, balance, createdon loandate, paymentinstallment monthlyinstallment, loanuser, firstname, lastname, address',
+        'loans.id=$1',
+        'JOIN users ON (loans.loanuser = users.email)',
+        [loanId],
       );
-      return rows;
+      if (user.rows.length < 1) {
+        return 'no-loan';
+      }
+      const [result] = user.rows;
+      const { rows } = await this.selectWhere('*', 'loanid=$1', [loanId]);
+      result.repayments = rows;
+      return result;
     } catch (error) {
       throw error;
     }
@@ -49,17 +57,16 @@ class RepaymentsModel extends Model {
       const { rows } = await this.insert('id, loanid, amount', '$1, $2, $3', [uuid(), loanId, Number.parseFloat(amount)]);
       const updatedLoan = await loansModel.updateLoanAfterRepayment(loanId, amount, loan.balance);
 
-      // get paid amount because when repayment is merged with loan, amount will be overwritten
-      rows[0].paidamount = rows[0].amount;
+      const user = await loansModel.selectWithJoin(
+        'amount, tenor, balance, createdon loandate, paymentinstallment monthlyinstallment, loanuser, firstname, lastname, address',
+        'loans.id=$1',
+        'JOIN users ON (loans.loanuser = users.email)',
+        [updatedLoan.id],
+      );
 
-      // get monthlyinstallment as given in the response specification
-      rows[0].monthlyinstallment = updatedLoan.paymentinstallment;
-
-      // remove paymentinstallment since we already have monthlyinstallment
-      delete updatedLoan.paymentinstallment;
-
-      Object.assign(rows[0], updatedLoan); // merge repayment and it's loan together into repayment
-      return rows[0];
+      const result = user.rows[0];
+      [result.repayment] = rows;
+      return result;
     } catch (error) {
       throw error;
     }

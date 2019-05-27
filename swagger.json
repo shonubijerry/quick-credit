@@ -1,0 +1,968 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Quick Credit is an online lending platform that provides short term soft loans to individuals. This helps solve problems of financial inclusion as a way to alleviate poverty and empower low income earners.",
+        "version": "1.0.0",
+        "title": "QUICK CREDIT",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "shonubijerry@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "https://quick-credit-shonubi.herokuapp.com",
+    "basePath": "/api/v1",
+    "tags": [{
+        "name": "auth"
+    }, {
+        "name": "user"
+    }, {
+        "name": "admin"
+    }],
+    "schemes": ["https", "http"],
+    "consumes": ["application/x-www-form-urlencoded", "application/json"],
+    "produces": ["application/json"],
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
+    "paths": {
+        "/auth/signup": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "Registers a new user",
+                "description": "Allows new user to create an account",
+                "operationId": "signup",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [{
+                    "in": "body",
+                    "name": "user",
+                    "description": "User object",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/User"
+                    }
+                }],
+                "responses": {
+                    "201": {
+                        "description": "Account created successfully",
+                        "schema": {
+                            "$ref": "#/definitions/UserSignupRes"
+                        },
+                        "headers": {}
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequest"
+                        }
+                    },
+                    "409": {
+                        "description": "User already exist",
+                        "schema": {
+                            "$ref": "#/definitions/UserExists"
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/signin": {
+            "post": {
+                "tags": ["auth"],
+                "summary": "Allows registered user to signin",
+                "description": "Signs user in",
+                "operationId": "signin",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [{
+                    "name": "body",
+                    "in": "body",
+                    "description": "Created user object",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/UserSignin"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "You have successfully logged in",
+                        "schema": {
+                            "$ref": "#/definitions/UserSignedinResp"
+                        },
+                        "headers": {}
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequest"
+                        }
+                    },
+                    "404": {
+                        "description": "User does not exists",
+                        "schema": {
+                            "$ref": "#/definitions/UserNotFound"
+                        }
+                    }
+                }
+            }
+        },
+        "/loans": {
+            "post": {
+                "tags": ["user"],
+                "security": [{
+                    "Bearer": []
+                }],
+                "summary": "Create a loan application",
+                "description": "User can apply for a loan",
+                "operationId": "postLoanId",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [{
+                    "name": "loan",
+                    "in": "body",
+                    "description": "new loan",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/Loans"
+                    }
+                }],
+                "responses": {
+                    "201": {
+                        "description": "You have applied for a loan successfully",
+                        "schema": {
+                            "$ref": "#/definitions/LoanCreatedResp"
+                        },
+                        "headers": {}
+                    },
+                    "400": {
+                        "description": "User not verified. You cannot apply for a loan yet",
+                        "schema": {
+                            "$ref": "#/definitions/BadRequest"
+                        }
+                    },
+                    "401": {
+                        "description": "Invalid or No token provided",
+                        "schema": {
+                            "$ref": "#/definitions/InvalidToken"
+                        }
+                    },
+                    "403": {
+                        "description": "Only Authenticated User can access this route",
+                        "schema": {
+                            "$ref": "#/definitions/UnauthorizedEntry"
+                        }
+                    },
+                    "409": {
+                        "description": "Already applied for a loan",
+                        "schema": {
+                            "$ref": "#/definitions/LoanExists"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": ["admin"],
+                "security": [{
+                    "Bearer": []
+                }],
+                "summary": "Gets all loan applications",
+                "description": "View all loan applications",
+                "operationId": "getAllLoans",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [{
+                    "name": "status",
+                    "in": "query",
+                    "description": "Enter status ('approved')",
+                    "required": false,
+                    "type": "string"
+                }, {
+                    "name": "repaid",
+                    "in": "query",
+                    "description": "Enter repaid status ('true' or 'false')",
+                    "required": false,
+                    "type": "boolean"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Successfully got all loans",
+                        "schema": {
+                            "$ref": "#/definitions/AllLoansResp"
+                        },
+                        "headers": {}
+                    },
+                    "404": {
+                        "description": "Loan not found",
+                        "schema": {
+                            "$ref": "#/definitions/PageNotFound"
+                        }
+                    }
+                }
+            }
+        },
+        "/loans/{loanId}": {
+            "get": {
+                "tags": ["admin"],
+                "summary": "Get specific loan application",
+                "description": "View specific loan application",
+                "operationId": "getLoanById",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [{
+                    "name": "loanId",
+                    "in": "path",
+                    "description": "ID of loan to return",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int64"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Successfully got loan",
+                        "schema": {
+                            "$ref": "#/definitions/SpecificLoanResp"
+                        },
+                        "headers": {}
+                    },
+                    "404": {
+                        "description": "Loan not found",
+                        "schema": {
+                            "$ref": "#/definitions/PageNotFound"
+                        }
+                    }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
+            },
+            "patch": {
+                "tags": ["admin"],
+                "summary": "Approve or reject loan",
+                "operationId": "patchLoanById",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [{
+                    "name": "loanId",
+                    "in": "path",
+                    "description": "Id of the loan",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int64"
+                }, {
+                    "name": "status",
+                    "in": "body",
+                    "description": "Status of the loan either approved or rejected",
+                    "schema": {
+                        "type": "object",
+                        "required": ["status"],
+                        "properties": {
+                            "status": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Loan approved",
+                        "schema": {
+                            "$ref": "#/definitions/ApprovedLoanResp"
+                        },
+                        "headers": {}
+                    },
+                    "404": {
+                        "description": "Loan not found",
+                        "schema": {
+                            "$ref": "#/definitions/PageNotFound"
+                        }
+                    },
+                    "409": {
+                        "description": "Loan already approved!",
+                        "schema": {
+                            "$ref": "#/definitions/LoanExists"
+                        }
+                    }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
+            }
+        },
+        "/loans/{loanId}/repayments": {
+            "get": {
+                "tags": ["user"],
+                "summary": "Get repayment history",
+                "description": "View loan repayment history",
+                "operationId": "getRepaymentById",
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "parameters": [{
+                    "name": "loanId",
+                    "in": "path",
+                    "description": "ID of loan to return",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int64"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Successfully got repayments history",
+                        "schema": {
+                            "$ref": "#/definitions/GetRepaymentsResp"
+                        },
+                        "headers": {}
+                    },
+                    "404": {
+                        "description": "Repayment record not found",
+                        "schema": {
+                            "$ref": "#/definitions/PageNotFound"
+                        }
+                    }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
+            }
+        },
+        "/loans/{loanId}/repayment": {
+            "post": {
+                "tags": ["admin"],
+                "summary": "Post loan repayment transaction for client",
+                "description": "View loan repayment history",
+                "operationId": "postRepaymentById",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [{
+                    "name": "loanId",
+                    "in": "path",
+                    "description": "ID of loan to return",
+                    "required": true,
+                    "type": "integer",
+                    "format": "int64"
+                }, {
+                    "name": "paidAmount",
+                    "in": "body",
+                    "description": "Amount Paid",
+                    "schema": {
+                        "type": "object",
+                        "required": ["paidAmount"],
+                        "properties": {
+                            "paidAmount": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Successfully posted repayment transaction",
+                        "schema": {
+                            "$ref": "#/definitions/PostRepaymentResp"
+                        },
+                        "headers": {}
+                    },
+                    "404": {
+                        "description": "Repayment record not found",
+                        "schema": {
+                            "$ref": "#/definitions/PageNotFound"
+                        }
+                    }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
+            }
+        },
+        "/users/{email}/verify": {
+            "patch": {
+                "tags": ["admin"],
+                "summary": "Verify registered user",
+                "description": "Verify registered user with using their home or office address",
+                "produces": ["application/json"],
+                "consumes": ["application/json"],
+                "parameters": [{
+                    "name": "email",
+                    "in": "path",
+                    "description": "email of user to verify",
+                    "required": true,
+                    "type": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Successfully verified user",
+                        "schema": {
+                            "$ref": "#/definitions/VerifiedUser"
+                        },
+                        "headers": {}
+                    },
+                    "404": {
+                        "description": "Email not found",
+                        "schema": {
+                            "$ref": "#/definitions/PageNotFound"
+                        }
+                    },
+                    "409": {
+                        "description": "User already verified",
+                        "schema": {
+                            "$ref": "#/definitions/UserExists"
+                        }
+                    }
+                },
+                "security": [{
+                    "Bearer": []
+                }]
+            }
+        }
+    },
+    "definitions": {
+        "User": {
+            "title": "signUp",
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                }
+            }
+        },
+        "UserSignupRes": {
+            "title": "UserSignupRes",
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 201
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "token": {
+                                "type": "string"
+                            },
+                            "id": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "firstName": {
+                                "type": "string"
+                            },
+                            "lastName": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "address": {
+                                "type": "string"
+                            },
+                            "isAdmin": {
+                                "type": "boolean"
+                            },
+                            "status": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "UserSignin": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "UserSignedinResp": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 200
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "token": {
+                                "type": "integer"
+                            },
+                            "id": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "firstName": {
+                                "type": "string"
+                            },
+                            "lastName": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "address": {
+                                "type": "string"
+                            },
+                            "isAdmin": {
+                                "type": "boolean"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "UserNotFound": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "number",
+                    "format": "int32",
+                    "example": 404
+                },
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "Loans": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "tenor": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "amount": {
+                    "type": "integer",
+                    "format": "int64"
+                }
+            }
+        },
+        "LoanCreatedResp": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 201
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "loanId": {
+                                "type": "integer"
+                            },
+                            "id": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "user": {
+                                "type": "string"
+                            },
+                            "createdOn": {
+                                "type": "string"
+                            },
+                            "status": {
+                                "type": "string"
+                            },
+                            "repaid": {
+                                "type": "boolean"
+                            },
+                            "tenor": {
+                                "type": "integer"
+                            },
+                            "amount": {
+                                "type": "integer"
+                            },
+                            "paymentInstallments": {
+                                "type": "integer"
+                            },
+                            "balance": {
+                                "type": "integer"
+                            },
+                            "interest": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "SpecificLoanResp": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 200
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "loanId": {
+                                "type": "integer"
+                            },
+                            "id": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "user": {
+                                "type": "string"
+                            },
+                            "createdOn": {
+                                "type": "string"
+                            },
+                            "status": {
+                                "type": "string"
+                            },
+                            "repaid": {
+                                "type": "boolean"
+                            },
+                            "tenor": {
+                                "type": "integer"
+                            },
+                            "amount": {
+                                "type": "integer"
+                            },
+                            "paymentInstallments": {
+                                "type": "integer"
+                            },
+                            "balance": {
+                                "type": "integer"
+                            },
+                            "interest": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "AllLoansResp": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 200
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "loanId": {
+                                    "type": "integer"
+                                },
+                                "id": {
+                                    "type": "integer",
+                                    "format": "int64"
+                                },
+                                "user": {
+                                    "type": "string"
+                                },
+                                "createdOn": {
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "repaid": {
+                                    "type": "boolean"
+                                },
+                                "tenor": {
+                                    "type": "integer"
+                                },
+                                "amount": {
+                                    "type": "integer"
+                                },
+                                "paymentInstallments": {
+                                    "type": "integer"
+                                },
+                                "balance": {
+                                    "type": "integer"
+                                },
+                                "interest": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "ApprovedLoanResp": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 200
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "loanId": {
+                                "type": "integer"
+                            },
+                            "loanAmount": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "status": {
+                                "type": "string"
+                            },
+                            "tenor": {
+                                "type": "integer"
+                            },
+                            "monthlyInstallments": {
+                                "type": "integer"
+                            },
+                            "interest": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "PostRepaymentResp": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 200
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "loanId": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "firstName": {
+                                "type": "string"
+                            },
+                            "lastName": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "tenor": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "amount": {
+                                "type": "integer"
+                            },
+                            "paymentInstallments": {
+                                "type": "integer"
+                            },
+                            "status": {
+                                "type": "string"
+                            },
+                            "balance": {
+                                "type": "integer"
+                            },
+                            "interest": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "GetRepaymentsResp": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 200
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "loanId": {
+                                "type": "integer",
+                                "format": "int64"
+                            },
+                            "createdOn": {
+                                "type": "string"
+                            },
+                            "amount": {
+                                "type": "integer"
+                            },
+                            "monthlyInstallments": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "VerifiedUser": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "integer",
+                    "format": "int64",
+                    "example": 200
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "firstName": {
+                                "type": "string"
+                            },
+                            "lastName": {
+                                "type": "string"
+                            },
+                            "email": {
+                                "type": "string"
+                            },
+                            "password": {
+                                "type": "string"
+                            },
+                            "address": {
+                                "type": "string"
+                            },
+                            "status": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "UserExists": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "number",
+                    "format": "int32",
+                    "example": 409
+                },
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "LoanExists": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "number",
+                    "format": "int32",
+                    "example": 409
+                },
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "BadRequest": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "number",
+                    "format": "int32",
+                    "example": 400
+                },
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "InvalidToken": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "number",
+                    "format": "int32",
+                    "example": 401
+                },
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "UnauthorizedEntry": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "number",
+                    "format": "int32",
+                    "example": 401
+                },
+                "error": {
+                    "type": "string"
+                }
+            }
+        },
+        "PageNotFound": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "number",
+                    "format": "int32",
+                    "example": 404
+                },
+                "error": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

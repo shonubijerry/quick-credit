@@ -43,27 +43,52 @@ describe('Repayment Controller', () => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('data');
-          expect(res.body.data).to.be.a('array');
-          expect(res.body.data[0]).to.be.a('object');
-          expect(res.body.data[0]).to.have.property('id');
-          expect(res.body.data[0]).to.have.property('loanid');
-          expect(res.body.data[0]).to.have.property('createdon');
-          expect(res.body.data[0]).to.have.property('amount');
-          expect(res.body.data[0]).to.have.property('monthlyinstallment');
+          expect(res.body.data).to.be.a('object');
+          expect(res.body.data.repayments).to.be.a('array');
+          expect(res.body.data.repayments[0]).to.have.property('id');
+          expect(res.body.data.repayments[0]).to.have.property('loanid');
+          expect(res.body.data.repayments[0]).to.have.property('createdon');
+          expect(res.body.data.repayments[0]).to.have.property('amount');
           done();
         });
     });
 
     it('it should return empty data set if no repayment is found', (done) => {
       chai.request(app)
-        .get(`${loansUrl}/00298627-71e4-4ede-af91-aec1862ffe55/repayments`)
+        .get(`${loansUrl}/ff741315-7075-4488-8627-8f8ccccbada6/repayments`)
         .set('Authorization', currentToken)
         .end((error, res) => {
           expect(res).to.have.status(200);
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('data');
-          expect(res.body.data).to.be.a('array');
-          expect(res.body.data).to.eql([]);
+          expect(res.body.data).to.be.a('object');
+          expect(res.body.data.repayments).to.eql([]);
+          done();
+        });
+    });
+
+    it('it should not get repayment if uuid is wrong', (done) => {
+      chai.request(app)
+        .get(`${loansUrl}/ff741315-7075-4488-8627-8f8ccccbada67/repayments`)
+        .set('Authorization', currentToken)
+        .end((error, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal(errorStrings.validLoanId);
+          done();
+        });
+    });
+
+    it('it should not get repayments if uuid is correct but loan does not exist in database', (done) => {
+      chai.request(app)
+        .get(`${loansUrl}/ff741315-7075-4488-8627-8f8cc7cbada6/repayments`)
+        .set('Authorization', currentToken)
+        .end((error, res) => {
+          expect(res).to.have.status(404);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal(errorStrings.noLoan);
           done();
         });
     });
@@ -129,13 +154,14 @@ describe('Repayment Controller', () => {
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('data');
           expect(res.body.data).to.be.a('object');
-          expect(res.body.data).to.have.property('id');
-          expect(res.body.data).to.have.property('loanid');
-          expect(res.body.data).to.have.property('createdon');
+          expect(res.body.data).to.have.property('repayment');
           expect(res.body.data).to.have.property('amount');
-          expect(res.body.data).to.have.property('monthlyinstallment');
-          expect(res.body.data).to.have.property('paidamount');
-          expect(res.body.data).to.have.property('balance');
+          expect(res.body.data).to.have.property('tenor');
+          expect(res.body.data.repayment).to.be.a('object');
+          expect(res.body.data.repayment).to.have.property('id');
+          expect(res.body.data.repayment).to.have.property('loanid');
+          expect(res.body.data.repayment).to.have.property('createdon');
+          expect(res.body.data.repayment).to.have.property('amount');
           done();
         });
     });
@@ -150,13 +176,14 @@ describe('Repayment Controller', () => {
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('data');
           expect(res.body.data).to.be.a('object');
-          expect(res.body.data).to.have.property('id');
-          expect(res.body.data).to.have.property('loanid');
-          expect(res.body.data).to.have.property('createdon');
+          expect(res.body.data).to.have.property('repayment');
           expect(res.body.data).to.have.property('amount');
-          expect(res.body.data).to.have.property('monthlyinstallment');
-          expect(res.body.data).to.have.property('paidamount');
-          expect(res.body.data).to.have.property('balance');
+          expect(res.body.data).to.have.property('tenor');
+          expect(res.body.data.repayment).to.be.a('object');
+          expect(res.body.data.repayment).to.have.property('id');
+          expect(res.body.data.repayment).to.have.property('loanid');
+          expect(res.body.data.repayment).to.have.property('createdon');
+          expect(res.body.data.repayment).to.have.property('amount');
           done();
         });
     });

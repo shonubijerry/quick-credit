@@ -174,16 +174,6 @@ const repayments = [
     amount: 11760.00,
   },
   {
-    id: '70798c7b-02b7-4145-a412-7e24fb0c694b',
-    loanid: loans[1].id,
-    amount: 12000.00,
-  },
-  {
-    id: 'd389e5ff-a831-464e-8603-eea1eae8caef',
-    loanid: loans[1].id,
-    amount: 11000.00,
-  },
-  {
     id: '51eec787-ed02-43fc-8c30-f505bbd7b1b5',
     loanid: loans[2].id,
     amount: 81600.00,
