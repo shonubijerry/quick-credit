@@ -83,7 +83,7 @@ class ValidateLoans {
 
   static validateRepayment(req, res, next) {
     const errors = [];
-    const { amount } = req.body;
+    const { amount, tenor } = req.body;
 
     const loanIdError = Validator.validate(
       req.params.loanId, rules.empty, rules.validUuid, errorStrings.validLoanId,
@@ -94,6 +94,11 @@ class ValidateLoans {
       amount, rules.empty, rules.validAmount, errorStrings.validAmount,
     );
     errors.push(amountError);
+
+    const tenorError = Validator.validate(
+      tenor, rules.empty, rules.validTenor, errorStrings.validTenor,
+    );
+    errors.push(tenorError);
 
     const error = Validator.findErrors(errors);
 

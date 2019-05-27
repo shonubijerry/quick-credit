@@ -32,7 +32,7 @@ class RepaymentsController {
       }
       return ResponseHelper.success(res, 200, loanRepayments);
     } catch (error) {
-      return ResponseHelper.error(res, 500, error.message);
+      return ResponseHelper.error(res, 500, errorStrings.serverError);
     }
   }
 
@@ -46,35 +46,49 @@ class RepaymentsController {
   static async createRepayment(req, res) {
     try {
       const { loanId } = req.params;
-      const amount = Number.parseFloat(req.body.amount);
-      const newRepayment = await repaymentModel.createRepayment(loanId, amount);
-      let errorInfo = {};
-      switch (newRepayment) {
-        case 'no-loan': {
-          errorInfo = { status: 404, error: errorStrings.noLoan };
-          break;
-        }
-        case 'not-approved': {
-          errorInfo = { status: 400, error: errorStrings.notApproved };
-          break;
-        }
-        case 'not-amount': {
-          const theLoan = await loansModel.getSingleLoanById(loanId);
-          errorInfo = { status: 409, error: `${errorStrings.notAmount} ${theLoan.paymentinstallment}` };
-          break;
-        }
-        case 'loan-repaid': {
-          errorInfo = { status: 409, error: errorStrings.loanRepaid };
-          break;
-        }
-        default: {
-          return ResponseHelper.success(res, 201, newRepayment);
-        }
+      const inputAmount = Number.parseFloat(req.body.amount);
+      const inputTenor = Number.parseInt(req.body.tenor, 10);
+      const loan = await loansModel.getSingleLoanById(loanId);
+      const repayment = await repaymentModel.createRepayment(loanId, loan, inputAmount, inputTenor);
+      const error = await RepaymentsController.validateRepayment(repayment, inputTenor, loan);
+
+      if (error) {
+        return ResponseHelper.error(res, error.status, error.error);
       }
-      return ResponseHelper.error(res, errorInfo.status, errorInfo.error);
+      return ResponseHelper.success(res, 201, repayment);
     } catch (error) {
       return ResponseHelper.error(res, 500, errorStrings.serverError);
     }
+  }
+
+  static async validateRepayment(newRepayment, tenor, loan) {
+    let responseData = {};
+    switch (newRepayment) {
+      case 'no-loan': {
+        responseData = { status: 404, error: errorStrings.noLoan };
+        break;
+      }
+      case 'not-approved': {
+        responseData = { status: 400, error: errorStrings.notApproved };
+        break;
+      }
+      case 'not-amount': {
+        responseData = { status: 409, error: `${errorStrings.notAmount} ${loan.paymentinstallment}` };
+        break;
+      }
+      case 'loan-repaid': {
+        responseData = { status: 409, error: errorStrings.loanRepaid };
+        break;
+      }
+      case 'over-payment': {
+        responseData = { status: 409, error: `${errorStrings.notBalance} ${loan.balance}` };
+        break;
+      }
+      default: {
+        return false;
+      }
+    }
+    return responseData;
   }
 }
 

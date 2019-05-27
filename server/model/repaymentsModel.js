@@ -47,21 +47,21 @@ class RepaymentsModel extends Model {
      * @returns {object} return object with loan repayment
      */
 
-  async createRepayment(loanId, amount) {
+  async createRepayment(loanId, loan, amount, tenor) {
     try {
-      const loan = await loansModel.getSingleLoanById(loanId);
-      const validationError = RepaymentsModel.validateRepayment(loan, amount);
+      const validationError = RepaymentsModel.validateRepayment(loan, amount, tenor);
       if (validationError) {
         return validationError;
       }
-      const { rows } = await this.insert('id, loanid, amount', '$1, $2, $3', [uuid(), loanId, Number.parseFloat(amount)]);
-      const updatedLoan = await loansModel.updateLoanAfterRepayment(loanId, amount, loan.balance);
+      const paidAmount = amount * tenor;
+      const { rows } = await this.insert('id, loanid, amount', '$1, $2, $3', [uuid(), loanId, paidAmount]);
+      const update = await loansModel.updateLoanAfterRepayment(loanId, paidAmount, loan.balance);
 
       const user = await loansModel.selectWithJoin(
         'amount, tenor, balance, createdon loandate, paymentinstallment monthlyinstallment, loanuser, firstname, lastname, address',
         'loans.id=$1',
         'JOIN users ON (loans.loanuser = users.email)',
-        [updatedLoan.id],
+        [update.id],
       );
 
       const result = user.rows[0];
@@ -72,18 +72,23 @@ class RepaymentsModel extends Model {
     }
   }
 
-  static validateRepayment(loan, amount) {
+  static validateRepayment(loan, amount, tenor) {
     if (!loan) {
       return 'no-loan';
     }
+    const expectedAmount = Number.parseFloat(loan.paymentinstallment);
+    const paidAmount = Number.parseFloat(amount);
     if (loan.status !== 'approved') {
       return 'not-approved';
     }
-    if (Number.parseFloat(loan.paymentinstallment) !== Number.parseFloat(amount)) {
+    if (expectedAmount !== paidAmount) {
       return 'not-amount';
     }
     if (loan.repaid) {
       return 'loan-repaid';
+    }
+    if ((amount * tenor) > loan.balance) {
+      return 'over-payment';
     }
     return '';
   }

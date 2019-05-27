@@ -258,7 +258,21 @@ describe('Repayment Controller', () => {
         });
     });
 
-    it('it should return error if loan post parameter is wrong', (done) => {
+    it('it should return error if loan balance is more than amount paid', (done) => {
+      chai.request(app)
+        .post(`${loansUrl}/ff741315-7075-4488-8627-8f8ccccbada6/repayment`)
+        .send(testDb.repaymentAmount[7])
+        .set('Authorization', currentToken)
+        .end((error, res) => {
+          expect(res).to.have.status(409);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.equal(`${errorStrings.notBalance} 72000.00`);
+          done();
+        });
+    });
+
+    it('it should return error if amount post parameter is wrong', (done) => {
       chai.request(app)
         .post(`${loansUrl}/8502d3d7-9c27-4a3e-bcd0-b1ecf914e628/repayment`)
         .send(testDb.repaymentAmount[5])
@@ -268,6 +282,34 @@ describe('Repayment Controller', () => {
           expect(res.body).to.be.a('object');
           expect(res.body).to.have.property('error');
           expect(res.body.error).to.eql([`${errorStrings.validAmount}`]);
+          done();
+        });
+    });
+
+    it('it should return error if tenor does not reange from 1 - 12', (done) => {
+      chai.request(app)
+        .post(`${loansUrl}/8502d3d7-9c27-4a3e-bcd0-b1ecf914e628/repayment`)
+        .send(testDb.repaymentAmount[8])
+        .set('Authorization', currentToken)
+        .end((error, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.eql([`${errorStrings.validTenor}`]);
+          done();
+        });
+    });
+
+    it('it should return error if tenor post parameter is wrong', (done) => {
+      chai.request(app)
+        .post(`${loansUrl}/8502d3d7-9c27-4a3e-bcd0-b1ecf914e628/repayment`)
+        .send(testDb.repaymentAmount[9])
+        .set('Authorization', currentToken)
+        .end((error, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body.error).to.eql([`${errorStrings.validTenor}`]);
           done();
         });
     });
