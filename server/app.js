@@ -37,12 +37,12 @@ app.use(cors('*'));
 
 routes(app);
 
-app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.get('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // At the moment GET request on '/' should show documentation
-app.use('/api/v1', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.get('/', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-// declare 404 route
+// invalid url
 app.all('*', (req, res) => ResponseHelper.error(res, 404, errorStrings.pageNotFound));
 
 // listen to app port
