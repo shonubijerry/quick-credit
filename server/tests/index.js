@@ -9,7 +9,7 @@ chai.should();
 describe('Home page', () => {
   it('it should take users to the landing page', (done) => {
     chai.request(app)
-      .get('/api/v1/')
+      .get('/')
       .end((error, res) => {
         res.should.have.status(200);
         res.body.should.be.a('object');
