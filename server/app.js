@@ -42,15 +42,6 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 // At the moment GET request on '/' should show documentation
 app.use('/api/v1', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-// handles 500 error
-app.use((err, req, res, next) => {
-  if (!err) return next();
-  return res.status(500).json({
-    status: 500,
-    error: 'OOps! Looks like something broke',
-  });
-});
-
 // declare 404 route
 app.all('*', (req, res) => ResponseHelper.error(res, 404, errorStrings.pageNotFound));
 

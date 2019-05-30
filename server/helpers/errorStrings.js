@@ -4,7 +4,8 @@
  * */
 
 const errorStrings = {
-  serverError: 'Something went wrong',
+  serverError: 'Oops! Looks like something broke',
+  badRequest: 'Error! Bad request',
   pageNotFound: 'Oops! Page not found. Looks like you entered an invalid url',
   validFirstName: 'Firstname field cannot be empty and must be only letters',
   validLastName: 'Lastname field cannot be empty and must be only letters.',
