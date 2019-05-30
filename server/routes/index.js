@@ -4,8 +4,6 @@ import RepaymentsController from '../controllers/repaymentsController';
 import ValidateUser from '../middleware/ValidateUser';
 import Auth from '../middleware/Auth';
 import ValidateLoans from '../middleware/ValidateLoans';
-import ResponseHelper from '../helpers/responseHelper';
-import errorStrings from '../helpers/errorStrings';
 
 /**
  * @fileOverview This file manages all routes in the application
@@ -36,9 +34,6 @@ const routes = (app) => {
 
   app.patch(`${api}/users/:email/verify`, Auth.authenticateAdmin, ValidateUser.validateParamEmail, UsersController.verifyUser);
   app.patch(`${api}/loans/:loanId`, Auth.authenticateAdmin, ValidateLoans.validateApproveLoan, LoansController.approveRejectLoan);
-
-  // declare 404 route
-  app.all('*', (req, res) => ResponseHelper.error(res, 404, errorStrings.pageNotFound));
 };
 
 export default routes;
