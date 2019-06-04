@@ -12,6 +12,9 @@ Quick Credit is an online lending platform that provides short term soft loans t
 ## UI hosted on gh pages
 https://shonubijerry.github.io/quick-credit/UI/
 
+## Working frontend hosted on gh pages
+https://shonubijerry.github.io/quick-credit-frontend/
+
 ## Pivotal Tracker Project
 https://www.pivotaltracker.com/n/projects/2326551
 
