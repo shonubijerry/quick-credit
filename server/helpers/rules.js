@@ -17,6 +17,7 @@ const rules = {
   validAmount: /^[0-9]+(\.[0-9]{1,2})?$/,
   validNumber: /^[0-9]*$/,
   validApproveLoan: /(approved|rejected)/,
+  validUserStatus: /(verified|unverified)/,
   validUuid: /^[0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12}$/,
 };
 

@@ -101,10 +101,8 @@ class UsersController {
 
   static async getUsers(req, res) {
     try {
-      const users = await usersModel.getUsers();
-      if (!users) {
-        throw new Error(errorStrings.serverError);
-      }
+      const { status } = req.query;
+      const users = await usersModel.getUsers(status);
       return ResponseHelper.success(res, 200, users);
     } catch (error) {
       return ResponseHelper.error(res, 500, errorStrings.serverError);

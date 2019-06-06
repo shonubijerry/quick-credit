@@ -137,6 +137,30 @@ class ValidateUser {
   }
 
   /**
+   * validate email parameter from request.params.email
+   * @param {Object} req request object
+   * @param {Object} res response object
+   * @callback {Function} next
+   * @return {Object} error json object
+   */
+
+  static validateUsersEndpointQuery(request, response, next) {
+    const filter = Object.keys(request.query);
+    if (filter.length > 0) {
+      if (filter.indexOf('status') === -1) {
+        return responseHelper.error(response, 404, errorStrings.pageNotFound);
+      }
+      const val = Object.values(request.query);
+      if (val.indexOf('verified') !== -1 || val.indexOf('unverified') !== -1) {
+        return next();
+      }
+      const error = errorStrings.validUserStatus;
+      return responseHelper.error(response, 400, error);
+    }
+    return next();
+  }
+
+  /**
   * Check user is verified so as to allow perform actions
   * @param {object} req
   * @param {object} res
