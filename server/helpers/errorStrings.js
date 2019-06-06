@@ -21,6 +21,7 @@ const errorStrings = {
   validTenor: 'Tenor cannot be empty and must range from 1 to 12 months',
   validAmount: 'Amount must be positive number',
   noRepayments: 'There are currently no repayments for this loan',
+  validUserStatus: 'If status is specified, its value must be verified/unverified',
   noUsers: 'There are currently no registered users',
   noUser: 'User does not exist',
   notAllowed: 'You are forbidden from accessing this section of the app',

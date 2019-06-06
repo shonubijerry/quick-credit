@@ -255,6 +255,76 @@ describe('User Controller', () => {
             done();
           });
       });
+
+      it('It should get verified users for admin', (done) => {
+        chai.request(app)
+          .get(`${usersUrl}/?status=verified`)
+          .set('Authorization', currentToken)
+          .end((error, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.have.property('data');
+            expect(res.body.data).to.be.a('array');
+            expect(res.body.data[0]).to.be.a('object');
+            expect(res.body.data[0]).to.have.property('id');
+            expect(res.body.data[0]).to.have.property('email');
+            expect(res.body.data[0]).to.have.property('firstname');
+            expect(res.body.data[0]).to.have.property('lastname');
+            expect(res.body.data[0]).to.have.property('address');
+            expect(res.body.data[0]).to.have.property('status');
+            expect(res.body.data[0]).to.have.property('isadmin');
+            expect(res.body.data[0].status).to.equal('verified');
+            done();
+          });
+      });
+
+      it('It should get unverified users for admin', (done) => {
+        chai.request(app)
+          .get(`${usersUrl}/?status=unverified`)
+          .set('Authorization', currentToken)
+          .end((error, res) => {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.have.property('data');
+            expect(res.body.data).to.be.a('array');
+            expect(res.body.data[0]).to.be.a('object');
+            expect(res.body.data[0]).to.have.property('id');
+            expect(res.body.data[0]).to.have.property('email');
+            expect(res.body.data[0]).to.have.property('firstname');
+            expect(res.body.data[0]).to.have.property('lastname');
+            expect(res.body.data[0]).to.have.property('address');
+            expect(res.body.data[0]).to.have.property('status');
+            expect(res.body.data[0]).to.have.property('isadmin');
+            expect(res.body.data[0].status).to.equal('unverified');
+            done();
+          });
+      });
+
+      it('it should not get users if query param is not status', (done) => {
+        chai.request(app)
+          .get(`${usersUrl}/?stater=apa`)
+          .set('Authorization', currentToken)
+          .end((error, res) => {
+            expect(res).to.have.status(404);
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.have.property('error');
+            expect(res.body.error).to.equal(errorStrings.pageNotFound);
+            done();
+          });
+      });
+
+      it('it should not get users if query param is status but value is wrong', (done) => {
+        chai.request(app)
+          .get(`${usersUrl}/?status=apa`)
+          .set('Authorization', currentToken)
+          .end((error, res) => {
+            expect(res).to.have.status(400);
+            expect(res.body).to.be.an('object');
+            expect(res.body).to.have.property('error');
+            expect(res.body.error).to.equal(errorStrings.validUserStatus);
+            done();
+          });
+      });
     });
   });
 

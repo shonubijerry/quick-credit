@@ -112,10 +112,15 @@ class UsersModel extends Model {
   * @returns verified user
   */
 
-  async getUsers() {
+  async getUsers(filter) {
+    let users = [];
     try {
-      const { rows } = await this.select('*');
-      return rows;
+      if (!filter) {
+        users = await this.select('*');
+      } else if (filter === 'verified' || filter === 'unverified') {
+        users = await this.selectWhere('*', 'status=$1', [filter]);
+      }
+      return users.rows;
     } catch (error) {
       throw error;
     }
