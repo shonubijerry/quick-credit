@@ -37,10 +37,10 @@ app.use(cors('*'));
 
 routes(app);
 
-app.get('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // At the moment GET request on '/' should show documentation
-app.get('/', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+app.use('/', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // invalid url
 app.all('*', (req, res) => ResponseHelper.error(res, 404, errorStrings.pageNotFound));
